@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by incre on 28.01.2017.
- */
 public abstract class View {
     final String HEADER_TEXT = "Добро пожаловать в учебный проект Incretio \"sqlcmd!\"\n" +
             "Тут вы можете работать с базой данных. Для того, чтобы получить список возможных комманд, используйте комманду help.\n";
@@ -17,7 +14,7 @@ public abstract class View {
         write(HEADER_TEXT);
     }
 
-    public void wtireFood(){
+    public void wtireFoot(){
         write(FOOTER_TEXT);
     }
 

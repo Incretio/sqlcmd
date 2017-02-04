@@ -1,13 +1,10 @@
-package ru.incretio.juja.sqlcmd.controls;
+package ru.incretio.juja.sqlcmd.commands;
 
 import javax.activation.UnsupportedDataTypeException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by incre on 31.01.2017.
- */
 public enum CommandType {
     CONNECT("connect"),
     TABLES("tables"),
@@ -21,6 +18,16 @@ public enum CommandType {
     HELP("help"),
     EXIT("exit");
 
+    private final String name;
+
+    public String getName() {
+        return name;
+    }
+
+    CommandType(String name) {
+        this.name = name;
+    }
+
     public static List<CommandType> getCommandsList() {
         List<CommandType> list = new ArrayList<>();
         Collections.addAll(
@@ -32,28 +39,12 @@ public enum CommandType {
         return list;
     }
 
-    public static CommandType getCommandByName(String commandName) throws UnsupportedDataTypeException {
+    public static CommandType getCommandTypeByName(String commandName) throws UnsupportedDataTypeException {
         for (CommandType commandType : getCommandsList()) {
-            if (commandType.getName().equals(commandName)){
+            if (commandType.getName().equals(commandName)) {
                 return commandType;
             }
         }
         throw new UnsupportedDataTypeException("Command \"" + commandName + "\" does not supported!");
     }
-
-    private final String name;
-
-    public String getName() {
-        return name;
-    }
-
-    CommandType(String name) {
-        this.name = name;
-    }
-
-
-    public boolean is(String commandName) {
-        return this.getName().toLowerCase().equals(commandName.toLowerCase());
-    }
-
 }
