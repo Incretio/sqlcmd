@@ -1,13 +1,10 @@
-package ru.incretio.sqlcmd.command.perform;
+package ru.incretio.juja.sqlcmd.command.perform;
 
-import ru.incretio.sqlcmd.command.Command;
+import ru.incretio.juja.sqlcmd.command.Command;
 
 import java.sql.Connection;
 import java.util.List;
 
-/**
- * Created by ProgDelphi on 03.02.2017.
- */
 public class InsertCommandPerform implements Command {
 
     @Override

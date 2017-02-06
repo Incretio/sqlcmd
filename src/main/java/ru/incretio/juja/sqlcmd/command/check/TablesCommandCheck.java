@@ -1,6 +1,6 @@
-package ru.incretio.sqlcmd.command.check;
+package ru.incretio.juja.sqlcmd.command.check;
 
-import ru.incretio.sqlcmd.command.Checkable;
+import ru.incretio.juja.sqlcmd.command.Checkable;
 
 import java.util.List;
 

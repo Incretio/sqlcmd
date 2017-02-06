@@ -8,19 +8,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class TablesCommandPerform implements Command {
+public class FindCommandPerform implements Command {
 
     @Override
     public String perform(Connection connection, List<String> params) throws SQLException {
         Statement statement = connection.createStatement();
+        String tableName = params.get(0);
         ResultSet resultSet = statement.executeQuery(
-                "select table_name\n" +
-                        "from information_schema.tables\n" +
-                        "where table_schema='public'");
+                "SELECT * FROM \"" + tableName + "\"");
         String result = "";
         while (resultSet.next()) {
             result += resultSet.getString(1) + "\n";
         }
         return result;
     }
+
 }

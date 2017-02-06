@@ -1,14 +1,15 @@
-package ru.incretio.sqlcmd.command;
+package ru.incretio.juja.sqlcmd.command;
 
-import ru.incretio.sqlcmd.command.check.*;
-import ru.incretio.sqlcmd.command.perform.*;
+import ru.incretio.juja.sqlcmd.command.check.*;
+import ru.incretio.juja.sqlcmd.command.perform.*;
 
-/**
- * Created by ProgDelphi on 03.02.2017.
- */
+
 public enum CommandType {
     TABLES("table", new TablesCommandCheck(), new TablesCommandPerform()),
     CLEAR("clear", new ClearCommandCheck(), new ClearCommandPerform()),
+    DROP("drop", new DropCommandCheck(), new DropCommandPerform()),
+    CREATE("create", new CreateCommandCheck(), new CreateCommandPerform()),
+    FIND("find", new FindCommandCheck(), new FindCommandPerform()),
     INSERT("insert", new InsertCommandCheck(), new InsertCommandPerform()),
     READ("read", new ReadCommandCheck(), new ReadCommandPerform()),
     UPDATE("update", new UpdateCommandCheck(), new UpdateCommandPerform()),
