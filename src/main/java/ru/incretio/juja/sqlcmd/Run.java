@@ -22,11 +22,6 @@ public class Run {
 
 
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
-        byte b = (byte)0b1000_0001;
-        System.out.println(b);
-
-
-
         connection = JDBCConnectableFactory.makePostgreSQLConnection("localhost", "sqlcmd").getConnection("postgres", "postgres");
 
         view.writeHeader();
