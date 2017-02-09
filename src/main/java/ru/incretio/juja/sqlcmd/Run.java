@@ -34,6 +34,7 @@ public class Run {
             String outputResult = command.perform(connection, parsedLine.getParamsList());
 
             view.write(outputResult);
+
         }
 
         view.wtireFoot();

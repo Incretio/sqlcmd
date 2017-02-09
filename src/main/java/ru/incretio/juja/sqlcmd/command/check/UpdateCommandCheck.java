@@ -10,6 +10,6 @@ import java.util.List;
 public class UpdateCommandCheck implements Checkable {
     @Override
     public boolean isCorrectParams(List<String> params) {
-        return false;
+        return params.size() == 5;
     }
 }
