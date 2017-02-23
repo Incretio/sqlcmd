@@ -4,12 +4,9 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Checkable;
 
 import java.util.List;
 
-/**
- * Created by ProgDelphi on 03.02.2017.
- */
-public class CreateCommandCheck implements Checkable {
+public class ConnectCommandCheck implements Checkable {
     @Override
     public boolean checkParams(List<String> params) {
-        return params.size() > 1;
+        return params.size() == 4;
     }
 }

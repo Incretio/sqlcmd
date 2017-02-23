@@ -3,75 +3,54 @@ package ru.incretio.juja.sqlcmd;
 
 import ru.incretio.juja.sqlcmd.command.Command;
 import ru.incretio.juja.sqlcmd.command.CommandFactory;
-import ru.incretio.juja.sqlcmd.data.JDBCConnectableFactory;
+import ru.incretio.juja.sqlcmd.exceptions.commandexception.CommandException;
+import ru.incretio.juja.sqlcmd.exceptions.commandexception.CommandParamsCountNotMatchException;
+import ru.incretio.juja.sqlcmd.utils.ParsedCommandLine;
 import ru.incretio.juja.sqlcmd.view.ConsoleView;
 import ru.incretio.juja.sqlcmd.view.View;
 
-import javax.activation.UnsupportedDataTypeException;
 import java.io.*;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 public class Run {
+    private static final String EXIT_APP_COMMAND = "EXIT";
     private static View view = new ConsoleView();
-    private static Connection connection;
-
 
     public static void main(String[] args) throws IOException, SQLException, ClassNotFoundException {
-        connection = JDBCConnectableFactory.makePostgreSQLConnection("localhost", "sqlcmd").getConnection("postgres", "postgres");
 
         view.writeHeader();
 
         boolean isWorking = true;
         while (isWorking) {
-            ParsedLine parsedLine = new ParsedLine(view.read());
+            try {
+                ParsedCommandLine parsedCommandLine = new ParsedCommandLine(view.read());
+                if (parsedCommandLine.getCommandName().equals(EXIT_APP_COMMAND)) {
+                    isWorking = false;
+                }
 
-            Command command = CommandFactory.makeByCommandName(parsedLine.getCommandName());
-            String outputResult = command.perform(connection, parsedLine.getParamsList());
+                Command command = CommandFactory.makeCommand(parsedCommandLine.getCommandName());
+                String output = performCommand(command, parsedCommandLine);
+                view.write(output);
 
-            view.write(outputResult);
+            } catch (CommandException e) {
+                view.write(e.getMessage());
+            }
 
         }
 
         view.wtireFoot();
     }
 
-
-}
-
-class ParsedLine {
-    private final List<String> list;
-
-    public ParsedLine(String line) throws UnsupportedDataTypeException {
-        this.list = parse(line);
-    }
-
-    public String getCommandName() {
-        return (list == null || list.size() == 0) ? "" : list.get(0).toUpperCase();
-    }
-
-    public List<String> getParamsList() {
-        if (list == null || list.size() < 2) {
-            return Collections.emptyList();
+    private static String performCommand(Command command, ParsedCommandLine parsedCommandLine) throws CommandParamsCountNotMatchException, SQLException {
+        if (command.checkParams(parsedCommandLine.getParamsList())) {
+            return command.perform(ConnectionConfig.getInstance(), parsedCommandLine.getParamsList());
+        } else {
+            throw new CommandParamsCountNotMatchException(command.getNotation());
         }
-
-        return list.subList(1, list.size());
-    }
-
-    public List<String> parse(String line) throws UnsupportedDataTypeException {
-        if (line == null || line.length() == 0) {
-            throw new UnsupportedDataTypeException("Empty data.");
-        }
-
-        List<String> result = new ArrayList<>();
-        result.addAll(Arrays.asList(line.split(" ")));
-
-        return result;
     }
 
 
 }
+
+
+

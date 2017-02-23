@@ -1,6 +1,6 @@
 package ru.incretio.juja.sqlcmd.command.check;
 
-import ru.incretio.juja.sqlcmd.command.Checkable;
+import ru.incretio.juja.sqlcmd.command.interfaces.Checkable;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class TablesCommandCheck implements Checkable {
     @Override
-    public boolean isCorrectParams(List<String> params) {
+    public boolean checkParams(List<String> params) {
         return params.size() == 0;
     }
 }

@@ -5,21 +5,20 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.query.Querable;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
-public class TablesCommandPerform implements Performable {
+public class ExitCommandPerform implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException {
-        Statement statement = connectionConfig.getConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery(connectionConfig.getQuerable().getSelectTablesQuery());
         String result = "";
-        while (resultSet.next()) {
-            result += resultSet.getString(1) + "\n";
+        if (connectionConfig.isConnected()) {
+            connectionConfig.getConnection().close();
+            connectionConfig.setConnection(null);
+            result = "Отключились от БД. ";
         }
-        return result;
+
+        return result + "Программа будет закрыта.";
     }
 }

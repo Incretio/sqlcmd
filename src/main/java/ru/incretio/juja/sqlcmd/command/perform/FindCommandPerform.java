@@ -1,22 +1,24 @@
 package ru.incretio.juja.sqlcmd.command.perform;
 
-import ru.incretio.juja.sqlcmd.command.Command;
+import ru.incretio.juja.sqlcmd.ConnectionConfig;
+import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
+import ru.incretio.juja.sqlcmd.query.Querable;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FindCommandPerform implements Command {
+public class FindCommandPerform implements Performable {
 
     @Override
-    public String perform(Connection connection, List<String> params) throws SQLException {
-        Statement statement = connection.createStatement();
+    public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException {
         String tableName = params.get(0);
+
+        Statement statement = connectionConfig.getConnection().createStatement();
         String result = "";
         try {
-            ResultSet resultSet = statement.executeQuery(
-                    "SELECT * FROM public.\"" + tableName + "\"");
+            ResultSet resultSet = statement.executeQuery(connectionConfig.getQuerable().getSelectQuery(tableName));
             ResultSetMetaData metaData = resultSet.getMetaData();
 
             for (int i = 1; i < metaData.getColumnCount() + 1; i++) {

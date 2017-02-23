@@ -1,33 +1,31 @@
 package ru.incretio.juja.sqlcmd.command.perform;
 
-import ru.incretio.juja.sqlcmd.command.Command;
+import ru.incretio.juja.sqlcmd.ConnectionConfig;
+import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
+import ru.incretio.juja.sqlcmd.query.Querable;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
-public class InsertCommandPerform implements Command {
+public class InsertCommandPerform implements Performable {
 
     @Override
-    public String perform(Connection connection, List<String> params) throws SQLException {
+    public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException {
         String tableName = params.get(0);
-        String fields = "";
-        String values = "";
+        List<String> columns = new ArrayList<>();
+        List<String> values = new ArrayList<>();
         for (int i = 1; i < params.size(); i += 2) {
-            fields += params.get(i) + ", ";
-            values += "'" + params.get(i + 1) + "'" + ", ";
+            columns.add(params.get(i));
+            values.add(params.get(i + 1));
         }
-        fields = fields.substring(0, fields.length() - 2);
-        values = values.substring(0, values.length() - 2);
 
-        Statement statement = connection.createStatement();
+        Statement statement = connectionConfig.getConnection().createStatement();
         String result = "";
         try {
-            statement.execute(
-                    "INSERT INTO \"" + tableName + "\"" +
-                            " (" + fields + ") " +
-                            " VALUES (" + values + ")");
+            statement.execute(connectionConfig.getQuerable().getInsertQuery(tableName, columns, values));
             result = "В таблицу " + tableName + " добавлена запись.";
         } catch (SQLException e) {
             result = e.getMessage();
