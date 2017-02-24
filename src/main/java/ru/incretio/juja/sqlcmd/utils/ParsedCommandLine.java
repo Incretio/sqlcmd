@@ -1,15 +1,12 @@
 package ru.incretio.juja.sqlcmd.utils;
 
-import ru.incretio.juja.sqlcmd.exceptions.commandexception.EmptyCommandException;
+import ru.incretio.juja.sqlcmd.exceptions.command.EmptyCommandException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by incre on 18.02.2017.
- */
 public class ParsedCommandLine {
     private final List<String> list;
 
@@ -18,7 +15,7 @@ public class ParsedCommandLine {
     }
 
     public String getCommandName() {
-        return (list == null || list.size() == 0) ? "" : list.get(0).toUpperCase();
+        return (list == null || list.size() == 0) ? "" : list.get(0);
     }
 
     public List<String> getParamsList() {
