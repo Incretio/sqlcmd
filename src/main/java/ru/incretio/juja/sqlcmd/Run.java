@@ -10,19 +10,23 @@ import ru.incretio.juja.sqlcmd.utils.ParsedCommandLine;
 import ru.incretio.juja.sqlcmd.view.ConsoleView;
 import ru.incretio.juja.sqlcmd.view.View;
 
-import java.io.*;
 import java.sql.SQLException;
 
 public class Run {
-    private static final String EXIT_APP_COMMAND = CommandTypes.EXIT.toString();
-    private static View view = new ConsoleView();
 
     public static void main(String[] args) {
+        String EXIT_APP_COMMAND = CommandTypes.EXIT.toString();
+        View view = new ConsoleView();
 
         view.writeHeader();
 
-        boolean isExit = true;
-        while (isExit) {
+        boolean isExit = false;
+        while (!isExit) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             try {
                 ParsedCommandLine parsedCommandLine = new ParsedCommandLine(view.read());
 

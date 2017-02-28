@@ -20,7 +20,7 @@ public class ClearCommandPerform implements Performable {
         try {
             statement.execute(connectionConfig.getQuerable().getDeleteAllRecordsQuery(tableName));
             result = "Таблица " + tableName + " очищена.";
-        } catch (SQLException e){
+        } catch (SQLException e) {
             result = e.getMessage();
         }
 
