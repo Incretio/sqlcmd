@@ -1,11 +1,9 @@
 
-import junit.framework.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import ru.incretio.juja.sqlcmd.Run;
+import ru.incretio.juja.sqlcmd.query.PostgreSQLQuery;
 
-import java.io.*;
-import java.util.Scanner;
+import java.io.PrintStream;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -13,20 +11,40 @@ import static junit.framework.TestCase.assertEquals;
  * Created by incre on 27.02.2017.
  */
 public class ItegrationTest {
-    private TestInputStream in;
-    private TestOutputStream out;
+    private final static TestInputStream in = new TestInputStream();
+    private final static TestOutputStream out = new TestOutputStream();
 
     @Before
-    public void setup() throws UnsupportedEncodingException {
-        in = new TestInputStream();
+    public void setupTest() {
         System.setIn(in);
-
-        out = new TestOutputStream();
         System.setOut(new PrintStream(out));
+
+        in.add(TestConstants.CONNECTION_STRING);
+        in.add("execute '" + new PostgreSQLQuery().getDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
+        in.add("execute '" + new PostgreSQLQuery().getCreateDBQuery(TestConstants.TEST_DB_NAME) + "'");
+        in.add("exit");
+        Run.main(new String[0]);
+        in.reset();
+        out.reset();
     }
 
+    @AfterClass
+    public static void clearDataAfterTest() {
+        in.add(TestConstants.CONNECTION_STRING);
+        in.add("execute '" + new PostgreSQLQuery().getDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
+        in.add("exit");
+        Run.main(new String[0]);
+    }
+
+    @Before
+    public void setup() {
+        in.reset();
+        out.reset();
+    }
+
+
     @Test
-    public void testOnlyExit() throws IOException {
+    public void testOnlyExit() {
         in.add("exit");
         Run.main(new String[0]);
         String expected = "Добро пожаловать в учебный проект Incretio \"sqlcmd!\"\n" +
@@ -39,7 +57,7 @@ public class ItegrationTest {
     }
 
     @Test
-    public void testOnlyHelp() {
+    public void testHelp() {
         in.add("help");
         in.add("exit");
         Run.main(new String[0]);
@@ -65,15 +83,107 @@ public class ItegrationTest {
                 "\t\tобновить записи, удовлетворяющие условию в указанной таблице;\n" +
                 "\tdelete tableName whereColumn whereValue:\n" +
                 "\t\tудалить записи, удовлетворяющие условию;\n" +
-                "\thelp:\n" +
-                "\t\tпоказать список команд и их описаниями;\n" +
                 "\texit:\n" +
                 "\t\tзакрыть соединение и выйти из программы;\n" +
+                "\tclose:\n" +
+                "\t\tзакрыть соединение с базой данных;\n" +
+                "\thelp:\n" +
+                "\t\tпоказать список команд и их описаниями;\n" +
+                "\texecute:\n" +
+                "\t\tвыполнить пользовательский запрос (должен быть указан в одинарных ковычках);\n" +
+                "\tdrop dbName:\n" +
+                "\t\tудалить базу данных;\n" +
+                "\tcreatedb dbName:\n" +
+                "\t\tдобавить новую базу данных;\n" +
+                "\n"+
                 "Программа будет закрыта.\n" +
                 "\n" +
                 "Спасибо за использование нашей программы! Мы старались ;)\n";
         assertEquals(expected, out.getData());
     }
+
+    @Test
+    public void testCreateFindDelete() {
+        in.add(TestConstants.CONNECTION_STRING);
+        in.add("create table1 id field1 field2 field3");
+        in.add("find table1");
+        // TODO список таблиц
+        in.add("insert table1 id 1 field1 field11Value field2 field21Value field3 field31Value");
+        in.add("insert table1 id 2 field1 field12Value field2 field22Value field3 field32Value");
+        in.add("insert table1 id 3 field1 field13Value field2 field23Value field3 field33Value");
+        in.add("find table1");
+        in.add("delete table1 id 2");
+        in.add("find table1");
+        in.add("delete table1 id 3");
+        in.add("find table1");
+        in.add("update table1 id 1 field1 field11ValueNew");
+        in.add("find table1");
+        in.add("clear table1");
+        in.add("find table1");
+        in.add("drop table1");
+        // TODO список таблиц
+        in.add("exit");
+
+        Run.main(new String[0]);
+
+        String expected = "Добро пожаловать в учебный проект Incretio \"sqlcmd!\"\n" +
+                "Тут вы можете работать с базой данных. Для того, чтобы получить список возможных комманд, используйте комманду help.\n" +
+                "\n" +
+                "Вы успешно подключились к базе данных " + TestConstants.MASTER_DB + "\n" +
+                "Таблица table1 добавлена.\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "+ id                  + field1              + field2              + field3              +\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "\n" +
+                "В таблицу table1 добавлена запись.\n" +
+                "В таблицу table1 добавлена запись.\n" +
+                "В таблицу table1 добавлена запись.\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "+ id                  + field1              + field2              + field3              +\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "+ 1                   + field11Value        + field21Value        + field31Value        +\n" +
+                "+ 2                   + field12Value        + field22Value        + field32Value        +\n" +
+                "+ 3                   + field13Value        + field23Value        + field33Value        +\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "\n" +
+                "Из таблицы table1 удалена запись.\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "+ id                  + field1              + field2              + field3              +\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "+ 1                   + field11Value        + field21Value        + field31Value        +\n" +
+                "+ 3                   + field13Value        + field23Value        + field33Value        +\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "\n" +
+                "Из таблицы table1 удалена запись.\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "+ id                  + field1              + field2              + field3              +\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "+ 1                   + field11Value        + field21Value        + field31Value        +\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "\n" +
+                "В таблице table1 обновлена запись.\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "+ id                  + field1              + field2              + field3              +\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "+ 1                   + field11ValueNew     + field21Value        + field31Value        +\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "\n" +
+                "Таблица table1 очищена.\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "+ id                  + field1              + field2              + field3              +\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "+---------------------+---------------------+---------------------+---------------------+\n" +
+                "\n" +
+                "Таблица table1 удалена.\n" +
+                "Отключились от БД. Программа будет закрыта.\n" +
+                "\n" +
+                "Спасибо за использование нашей программы! Мы старались ;)\n";
+
+        assertEquals(expected, out.getData());
+
+    }
+
 }
 
 

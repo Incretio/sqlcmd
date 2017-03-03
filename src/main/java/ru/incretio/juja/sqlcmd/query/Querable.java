@@ -14,4 +14,6 @@ public interface Querable {
     String getSelectTablesQuery();
     String getCreateTableQuery(String tableName, List<String> columns);
     String getDropTableQuery(String tableName);
+    String getDropDBQuery(String dbName);
+    String getCreateDBQuery(String dbName);
 }

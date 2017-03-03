@@ -66,4 +66,20 @@ public class PostgreSQLQuery implements Querable {
     public String getDropTableQuery(String tableName) {
         return "DROP TABLE \"" + tableName + "\"";
     }
+
+    @Override
+    public String getDropDBQuery(String dbName) {
+        return "DROP DATABASE " + dbName;
+    }
+
+    @Override
+    public String getCreateDBQuery(String dbName) {
+        return "CREATE DATABASE " + dbName + "\n" +
+                "  WITH OWNER = postgres\n" +
+                "       ENCODING = 'UTF8'\n" +
+                "       TABLESPACE = pg_default\n" +
+                "       LC_COLLATE = 'Russian_Russia.1251'\n" +
+                "       LC_CTYPE = 'Russian_Russia.1251'\n" +
+                "       CONNECTION LIMIT = -1;";
+    }
 }

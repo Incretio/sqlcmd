@@ -10,10 +10,12 @@ import ru.incretio.juja.sqlcmd.utils.ParsedCommandLine;
 import ru.incretio.juja.sqlcmd.view.ConsoleView;
 import ru.incretio.juja.sqlcmd.view.View;
 
+import java.io.Console;
 import java.sql.SQLException;
 
 public class Run {
-
+    // connect localhost sqlcmd postgres postgres
+    // execute create_&_table_&_table123456789(id_&_serial,name_&_text,location_&_text)
     public static void main(String[] args) {
         String EXIT_APP_COMMAND = CommandTypes.EXIT.toString();
         View view = new ConsoleView();
@@ -22,11 +24,6 @@ public class Run {
 
         boolean isExit = false;
         while (!isExit) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             try {
                 ParsedCommandLine parsedCommandLine = new ParsedCommandLine(view.read());
 

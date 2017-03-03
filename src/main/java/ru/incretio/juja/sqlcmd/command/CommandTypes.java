@@ -5,6 +5,9 @@ import ru.incretio.juja.sqlcmd.command.notation.*;
 import ru.incretio.juja.sqlcmd.command.perform.*;
 import ru.incretio.juja.sqlcmd.exceptions.command.CommandNotFoundException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum CommandTypes {
     CONNECT("connect", new Command(new ConnectCommandCheck(), new ConnectCommandPerform(), new ConnectCommandNotation())),
     TABLES("tables", new Command(new TablesCommandCheck(), new TablesCommandPerform(), new TablesCommandNotation())),
@@ -17,7 +20,10 @@ public enum CommandTypes {
     DELETE("delete", new Command(new DeleteCommandCheck(), new DeleteCommandPerform(), new DeleteCommandNotation())),
     EXIT("exit", new Command(new ExitCommandCheck(), new ExitCommandPerform(), new ExitCommandNotation())),
     CLOSE("close", new Command(new CloseCommandCheck(), new CloseCommandPerform(), new CloseCommandNotation())),
-    HELP("help", new Command(new HelpCommandCheck(), new HelpCommandPerform(), new HelpCommandNotation()));
+    HELP("help", new Command(new HelpCommandCheck(), new HelpCommandPerform(), new HelpCommandNotation())),
+    EXECUTE("execute", new Command(new ExecuteCommandCheck(), new ExecuteCommandPerform(), new ExecuteCommandNotation())),
+    DROPDB("dropdb", new Command(new DropDBCommandCheck(), new DropDBCommandPerform(), new DropDBCommandNotation())),
+    CREATEDB("createdb", new Command(new CreateDBCommandCheck(), new CreateDBCommandPerform(), new CreateDBCommandNotation()));
 
     private String commandName;
     private Command command;
@@ -34,6 +40,23 @@ public enum CommandTypes {
             }
         }
         throw new CommandNotFoundException(commandName);
+    }
+
+    public static List<String> getNotationsList() {
+        List<String> result = new ArrayList<>();
+
+        for (CommandTypes commandType : CommandTypes.values()) {
+            if (commandType.command == null) {
+                continue;
+            }
+
+            String notation = commandType.command.getNotation();
+            if (notation != null) {
+                result.add(notation);
+            }
+        }
+
+        return result;
     }
 
     @Override

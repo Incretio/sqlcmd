@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ParsedCommandLine {
+    private final String ESCAPE_STRING = "_&_";
     private final List<String> list;
 
     public ParsedCommandLine(String line) throws EmptyCommandException {
@@ -32,14 +33,56 @@ public class ParsedCommandLine {
         }
 
         List<String> result = new ArrayList<>();
-        result.addAll(Arrays.asList(line.split(" ")));
+
+        String newLine = escapeSpacesInQuotes(line, ' ', ESCAPE_STRING);
+
+        result.addAll(Arrays.asList(newLine.split("\\s'|'\\s|'|\\s")));
+
+        result = replaceString(result, ESCAPE_STRING, " ");
 
         return result;
     }
 
-    public String getValue(int index){
+    public String getValue(int index) {
         return list.get(index);
     }
 
+    private String escapeSpacesInQuotes(String sourceText, char charQuote, String escapeString) {
+        Boolean inQuotes = false;
+        String result = "";
 
+        for (int i = 0; i < sourceText.length(); i++) {
+            inQuotes = (sourceText.charAt(i) == '\'') ? !inQuotes : inQuotes;
+
+            if (sourceText.charAt(i) == charQuote && inQuotes) {
+                result += escapeString;
+            } else {
+                result += sourceText.charAt(i);
+            }
+
+        }
+        return result;
+    }
+
+    private List<String> replaceString(List<String> list, String s, String s1) {
+        List<String> result = new ArrayList<>();
+        for (String value : list) {
+            result.add(value);
+        }
+
+        for (int i = 0; i < result.size(); i++) {
+            result.set(i, result.get(i).replace(s, s1));
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) throws EmptyCommandException {
+        ParsedCommandLine parsedCommandLine = new ParsedCommandLine("execute 'select * from table'");
+        for (String string : parsedCommandLine.getParamsList()) {
+            System.out.println(string);
+        }
+    }
 }
+
+
