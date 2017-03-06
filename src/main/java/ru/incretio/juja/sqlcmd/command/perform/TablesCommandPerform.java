@@ -14,11 +14,13 @@ public class TablesCommandPerform implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException {
-        Statement statement = connectionConfig.getConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery(connectionConfig.getQuerable().getSelectTablesQuery());
         String result = "";
-        while (resultSet.next()) {
-            result += resultSet.getString(1) + "\n";
+        try (Statement statement = connectionConfig.getConnection().createStatement();
+             ResultSet resultSet = statement.executeQuery(connectionConfig.getQuerable().getSelectTablesQuery())) {
+            while (resultSet.next()) {
+                result += resultSet.getString(1) + "\n";
+            }
+
         }
         return result;
     }

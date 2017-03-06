@@ -16,9 +16,9 @@ public class CreateCommandPerform implements Performable {
         String tableName = params.get(0);
         List<String> columns = params.subList(1, params.size());
 
-        Statement statement = connectionConfig.getConnection().createStatement();
         String result = "";
-        try {
+
+        try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getCreateTableQuery(tableName, columns));
             result = "Таблица " + tableName + " добавлена.";
         } catch (SQLException e) {

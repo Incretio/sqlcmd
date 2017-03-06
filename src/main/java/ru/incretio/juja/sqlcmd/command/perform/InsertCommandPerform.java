@@ -22,13 +22,14 @@ public class InsertCommandPerform implements Performable {
             values.add(params.get(i + 1));
         }
 
-        Statement statement = connectionConfig.getConnection().createStatement();
         String result = "";
-        try {
-            statement.execute(connectionConfig.getQuerable().getInsertQuery(tableName, columns, values));
-            result = "В таблицу " + tableName + " добавлена запись.";
-        } catch (SQLException e) {
-            result = e.getMessage();
+        try (Statement statement = connectionConfig.getConnection().createStatement()) {
+            try {
+                statement.execute(connectionConfig.getQuerable().getInsertQuery(tableName, columns, values));
+                result = "В таблицу " + tableName + " добавлена запись.";
+            } catch (SQLException e) {
+                result = e.getMessage();
+            }
         }
 
         return result;

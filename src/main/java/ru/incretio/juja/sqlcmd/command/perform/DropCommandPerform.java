@@ -15,12 +15,11 @@ public class DropCommandPerform implements Performable {
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException {
         String tableName = params.get(0);
 
-        Statement statement = connectionConfig.getConnection().createStatement();
         String result = "";
-        try {
+        try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getDropTableQuery(tableName));
             result = "Таблица " + tableName + " удалена.";
-        } catch (SQLException e){
+        } catch (SQLException e) {
             result = e.getMessage();
         }
 

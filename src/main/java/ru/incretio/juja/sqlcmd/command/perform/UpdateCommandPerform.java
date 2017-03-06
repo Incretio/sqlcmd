@@ -19,13 +19,14 @@ public class UpdateCommandPerform implements Performable {
         String setColumnName = params.get(3);
         String setColumnValue = params.get(4);
 
-        Statement statement = connectionConfig.getConnection().createStatement();
         String result = "";
-        try {
-            statement.execute(connectionConfig.getQuerable().getUpdateQuery(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue));
-            result = "В таблице " + tableName + " обновлена запись.";
-        } catch (SQLException e) {
-            result = e.getMessage();
+        try (Statement statement = connectionConfig.getConnection().createStatement()) {
+            try {
+                statement.execute(connectionConfig.getQuerable().getUpdateQuery(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue));
+                result = "В таблице " + tableName + " обновлена запись.";
+            } catch (SQLException e) {
+                result = e.getMessage();
+            }
         }
 
         return result;

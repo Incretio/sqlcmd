@@ -15,9 +15,9 @@ public class CreateDBCommandPerform implements Performable {
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException {
         String dbName = params.get(0);
 
-        Statement statement = connectionConfig.getConnection().createStatement();
+
         String result = "";
-        try {
+        try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getCreateDBQuery(dbName));
             result = "База данных " + dbName + " добавлена.";
         } catch (SQLException e) {

@@ -15,14 +15,15 @@ public class ClearCommandPerform implements Performable {
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException {
         String tableName = params.get(0);
-        Statement statement = connectionConfig.getConnection().createStatement();
         String result = "";
-        try {
+        
+        try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getDeleteAllRecordsQuery(tableName));
             result = "Таблица " + tableName + " очищена.";
         } catch (SQLException e) {
             result = e.getMessage();
         }
+
 
         return result;
     }

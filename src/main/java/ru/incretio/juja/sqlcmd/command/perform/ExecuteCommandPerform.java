@@ -16,12 +16,11 @@ public class ExecuteCommandPerform implements Performable {
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException {
         String queryText = params.get(0).replace("_&_", " ");
 
-        Statement statement = connectionConfig.getConnection().createStatement();
         String result = "";
-        try {
+        try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(queryText);
             result = "Пользовательский запрос выполнен.";
-        } catch (SQLException e){
+        } catch (SQLException e) {
             result = e.getMessage();
         }
 

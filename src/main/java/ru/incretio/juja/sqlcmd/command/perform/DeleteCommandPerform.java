@@ -17,9 +17,8 @@ public class DeleteCommandPerform implements Performable {
         String whereColumnName = params.get(1);
         String whereColumnValue = params.get(2);
 
-        Statement statement = connectionConfig.getConnection().createStatement();
         String result = "";
-        try {
+        try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getDeleteQuery(tableName, whereColumnName, whereColumnValue));
             result = "Из таблицы " + tableName + " удалена запись.";
         } catch (SQLException e) {
