@@ -3,7 +3,7 @@ package ru.incretio.juja.sqlcmd.command;
 import ru.incretio.juja.sqlcmd.command.check.*;
 import ru.incretio.juja.sqlcmd.command.notation.*;
 import ru.incretio.juja.sqlcmd.command.perform.*;
-import ru.incretio.juja.sqlcmd.exceptions.command.CommandNotFoundException;
+import ru.incretio.juja.sqlcmd.exceptions.CommandNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package ru.incretio.juja.sqlcmd.exceptions.command;
+package ru.incretio.juja.sqlcmd.exceptions;
 
 public class CommandParamsCountNotMatchException extends CommandException {
     public CommandParamsCountNotMatchException(String correntCommandFormat) {

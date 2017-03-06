@@ -1,6 +1,6 @@
 package ru.incretio.juja.sqlcmd.utils;
 
-import ru.incretio.juja.sqlcmd.exceptions.command.EmptyCommandException;
+import ru.incretio.juja.sqlcmd.exceptions.EmptyCommandException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

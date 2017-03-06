@@ -2,9 +2,8 @@ package ru.incretio.juja.sqlcmd.command.perform;
 
 import ru.incretio.juja.sqlcmd.ConnectionConfig;
 import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
-import ru.incretio.juja.sqlcmd.query.Querable;
+import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 public class UpdateCommandPerform implements Performable {
 
     @Override
-    public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException {
+    public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
         String tableName = params.get(0);
         String whereColumnName = params.get(1);
         String whereColumnValue = params.get(2);
@@ -20,7 +19,7 @@ public class UpdateCommandPerform implements Performable {
         String setColumnValue = params.get(4);
 
         String result = "";
-        try (Statement statement = connectionConfig.getConnection().createStatement()) {
+        try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             try {
                 statement.execute(connectionConfig.getQuerable().getUpdateQuery(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue));
                 result = "В таблице " + tableName + " обновлена запись.";

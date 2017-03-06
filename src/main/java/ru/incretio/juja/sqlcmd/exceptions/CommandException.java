@@ -1,4 +1,4 @@
-package ru.incretio.juja.sqlcmd.exceptions.command;
+package ru.incretio.juja.sqlcmd.exceptions;
 
 public class CommandException extends Exception {
     public CommandException() {

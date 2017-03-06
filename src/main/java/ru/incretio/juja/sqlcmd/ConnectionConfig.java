@@ -1,7 +1,7 @@
 package ru.incretio.juja.sqlcmd;
 
-import ru.incretio.juja.sqlcmd.data.Connectable;
 import ru.incretio.juja.sqlcmd.data.JDBCConnectionType;
+import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.query.Querable;
 import ru.incretio.juja.sqlcmd.query.QueryFactory;
 
@@ -36,15 +36,23 @@ public class ConnectionConfig {
         this.connection = connection;
     }
 
-    public Connection getConnection() {
+    public Connection testAndGetConnection() throws MissingConnectionException, SQLException {
+        testConnection();
         return connection;
     }
 
-    public Querable getQuerable(){
+    public Querable getQuerable() {
         return querable;
     }
 
     public JDBCConnectionType getJDBCConnectionType() {
         return jdbcConnectionType;
+    }
+
+    public boolean testConnection() throws MissingConnectionException, SQLException {
+        if (!isConnected()) {
+            throw new MissingConnectionException();
+        }
+        return true;
     }
 }
