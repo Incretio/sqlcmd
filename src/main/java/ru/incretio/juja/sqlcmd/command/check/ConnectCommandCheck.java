@@ -7,6 +7,6 @@ import java.util.List;
 public class ConnectCommandCheck implements Checkable {
     @Override
     public boolean checkParams(List<String> params) {
-        return params.size() == 4;
+        return params != null && params.size() == 4;
     }
 }

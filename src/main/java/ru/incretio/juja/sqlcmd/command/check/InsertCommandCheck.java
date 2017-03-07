@@ -7,6 +7,6 @@ import java.util.List;
 public class InsertCommandCheck implements Checkable {
     @Override
     public boolean checkParams(List<String> params) {
-        return params.size() > 2 && (params.size() % 2 == 1);
+        return params != null && params.size() > 2 && (params.size() % 2 == 1);
     }
 }

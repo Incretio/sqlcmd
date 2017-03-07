@@ -10,6 +10,6 @@ import java.util.List;
 public class HelpCommandCheck implements Checkable {
     @Override
     public boolean checkParams(List<String> params) {
-        return params.size() == 0;
+        return params != null && params.size() == 0;
     }
 }
