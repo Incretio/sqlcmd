@@ -4,9 +4,11 @@ package ru.incretio.juja.sqlcmd.command.perform;
 import ru.incretio.juja.sqlcmd.ConnectionConfig;
 import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
+import ru.incretio.juja.sqlcmd.exceptions.MissingTableException;
 
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreateCommandPerform implements Performable {
@@ -17,12 +19,18 @@ public class CreateCommandPerform implements Performable {
 
         String result = "";
 
-        try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
-            statement.execute(connectionConfig.getQuerable().getCreateTableQuery(tableName, columns));
-            result = "Таблица " + tableName + " добавлена.";
-        } catch (SQLException e) {
-            result = e.getMessage();
+        List<String> newParams = new ArrayList<>();
+        newParams.add(tableName);
+        try {
+            new TableExistsCommandPerform().perform(connectionConfig, newParams);
+            result = "Таблица " + tableName + " уже существует.";
+        } catch (MissingTableException e) {
+            try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
+                statement.execute(connectionConfig.getQuerable().getCreateTableQuery(tableName, columns));
+                result = "Таблица " + tableName + " добавлена.";
+            }
         }
+
 
         return result;
     }

@@ -49,7 +49,8 @@ public class PostgreSQLQuery implements Querable {
     public String getSelectTablesQuery() {
         return "select table_name\n" +
                 "from information_schema.tables\n" +
-                "where table_schema='public'";
+                "where table_schema='public'\n" +
+                "order by table_name";
     }
 
     @Override
@@ -59,7 +60,7 @@ public class PostgreSQLQuery implements Querable {
             columnsString += column + " varchar(20),";
         }
         columnsString = columnsString.substring(0, columnsString.length() - 1);
-        return "CREATE TABLE " + tableName + " ( " + columnsString + ");";
+        return "CREATE TABLE " + "\"" + tableName + "\"" + " ( " + columnsString + ");";
     }
 
     @Override

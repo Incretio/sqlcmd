@@ -1,5 +1,6 @@
 package ru.incretio.juja.sqlcmd.command.notation;
 
+import ru.incretio.juja.sqlcmd.command.CommandTypes;
 import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 
 /**
@@ -8,7 +9,7 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 public class ExitCommandNotation implements Notationable{
     @Override
     public String getNotation() {
-        return "\texit:\n" +
+        return "\t" + CommandTypes.EXIT.toString() + ":\n" +
                 "\t\tзакрыть соединение и выйти из программы;";
     }
 }

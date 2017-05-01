@@ -3,6 +3,7 @@ package ru.incretio.juja.sqlcmd.command.perform;
 import ru.incretio.juja.sqlcmd.ConnectionConfig;
 import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
+import ru.incretio.juja.sqlcmd.exceptions.MissingTableException;
 
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,8 +13,11 @@ import java.util.List;
 public class InsertCommandPerform implements Performable {
 
     @Override
-    public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
+    public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
         String tableName = params.get(0);
+
+        new TableExistsCommandPerform().perform(connectionConfig, params);
+
         List<String> columns = new ArrayList<>();
         List<String> values = new ArrayList<>();
         for (int i = 1; i < params.size(); i += 2) {

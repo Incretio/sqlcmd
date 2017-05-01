@@ -23,7 +23,8 @@ public enum CommandTypes {
     HELP("help", new Command(new HelpCommandCheck(), new HelpCommandPerform(), new HelpCommandNotation())),
     EXECUTE("execute", new Command(new ExecuteCommandCheck(), new ExecuteCommandPerform(), new ExecuteCommandNotation())),
     DROPDB("dropdb", new Command(new DropDBCommandCheck(), new DropDBCommandPerform(), new DropDBCommandNotation())),
-    CREATEDB("createdb", new Command(new CreateDBCommandCheck(), new CreateDBCommandPerform(), new CreateDBCommandNotation()));
+    CREATEDB("createdb", new Command(new CreateDBCommandCheck(), new CreateDBCommandPerform(), new CreateDBCommandNotation())),
+    TABLEEXISTS("table_exists", new Command(new TableExistsCommandCheck(), new TableExistsCommandPerform(), new TableExistsCommandNotation()));
 
     private String commandName;
     private Command command;

@@ -1,5 +1,6 @@
 package ru.incretio.juja.sqlcmd.command.notation;
 
+import ru.incretio.juja.sqlcmd.command.CommandTypes;
 import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 
 /**
@@ -8,7 +9,7 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 public class CreateDBCommandNotation implements Notationable{
     @Override
     public String getNotation() {
-        return "\tcreatedb dbName:\n" +
+        return "\t" + CommandTypes.CREATEDB.toString() + " dbName:\n" +
                 "\t\tдобавить новую базу данных;";
     }
 }

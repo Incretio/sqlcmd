@@ -1,5 +1,6 @@
 package ru.incretio.juja.sqlcmd.command.notation;
 
+import ru.incretio.juja.sqlcmd.command.CommandTypes;
 import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 
 /**
@@ -8,7 +9,7 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 public class InsertCommandNotation implements Notationable{
     @Override
     public String getNotation() {
-        return "\tinsert tableName column1 value1 [column2 value2] [columnN valueN]:\n" +
+        return "\t" + CommandTypes.INSERT.toString() + " tableName column1 value1 [column2 value2] [columnN valueN]:\n" +
                 "\t\tдобавить запись в указанную таблицу;";
     }
 }

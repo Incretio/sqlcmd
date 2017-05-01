@@ -7,6 +7,7 @@ import ru.incretio.juja.sqlcmd.command.CommandTypes;
 import ru.incretio.juja.sqlcmd.exceptions.CommandException;
 import ru.incretio.juja.sqlcmd.exceptions.CommandParamsCountNotMatchException;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
+import ru.incretio.juja.sqlcmd.exceptions.MissingTableException;
 import ru.incretio.juja.sqlcmd.utils.ParsedCommandLine;
 import ru.incretio.juja.sqlcmd.view.ConsoleView;
 import ru.incretio.juja.sqlcmd.view.View;
@@ -33,23 +34,22 @@ public class Run {
                 view.write(output);
 
                 isExit = parsedCommandLine.getCommandName().equals(EXIT_APP_COMMAND);
-            } catch (CommandException e) {
-                view.write(e.getMessage());
-            } catch (MissingConnectionException e) {
+            } catch (CommandException | MissingConnectionException | MissingTableException e) {
                 view.write(e.getMessage());
             } catch (SQLException e) {
-                view.write(e.getMessage());
+                view.write("Ошибка при работе с СУБД: " + e.getMessage());
             } catch (NullPointerException e) {
                 view.write("Программа некорректно настроена.");
                 e.printStackTrace();
+            } catch (Exception e) {
+                view.write(e.getMessage());
             }
-
         }
 
         view.wtireFoot();
     }
 
-    private static String performCommand(Command command, ParsedCommandLine parsedCommandLine) throws CommandParamsCountNotMatchException, SQLException, MissingConnectionException {
+    private static String performCommand(Command command, ParsedCommandLine parsedCommandLine) throws Exception {
         if (command.checkParams(parsedCommandLine.getParamsList())) {
             return command.perform(ConnectionConfig.getInstance(), parsedCommandLine.getParamsList());
         } else {

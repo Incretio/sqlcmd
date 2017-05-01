@@ -1,5 +1,6 @@
 package ru.incretio.juja.sqlcmd.command.notation;
 
+import ru.incretio.juja.sqlcmd.command.CommandTypes;
 import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 
 /**
@@ -8,6 +9,7 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 public class CloseCommandNotation implements Notationable{
     @Override
     public String getNotation() {
-        return "\tclose:\n\t\tзакрыть соединение с базой данных;";
+        return "\t" + CommandTypes.CLOSE.toString() + ":\n" +
+                "\t\tзакрыть соединение с базой данных;";
     }
 }

@@ -12,7 +12,7 @@ public class ParsedCommandLine {
     private final List<String> list;
 
     public ParsedCommandLine(String line) throws EmptyCommandException {
-        this.list = parse(line);
+        this.list = parse(line.trim());
     }
 
     public String getCommandName() {

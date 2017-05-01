@@ -1,5 +1,6 @@
 package ru.incretio.juja.sqlcmd.command.notation;
 
+import ru.incretio.juja.sqlcmd.command.CommandTypes;
 import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 
 /**
@@ -8,7 +9,7 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 public class CreateCommandNotation implements Notationable{
     @Override
     public String getNotation() {
-        return "\tcreate tableName column1 [column2] [columnN]:\n" +
+        return "\t" + CommandTypes.CREATE.toString() + " tableName column1 [column2] [columnN]:\n" +
                 "\t\tдобавить новую таблицу;";
     }
 }

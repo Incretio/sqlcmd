@@ -17,9 +17,13 @@ public class TablesCommandPerform implements Performable {
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement();
              ResultSet resultSet = statement.executeQuery(connectionConfig.getQuerable().getSelectTablesQuery())) {
             while (resultSet.next()) {
-                result += resultSet.getString(1) + "\n";
+                result += resultSet.getString(1) + System.lineSeparator();
             }
 
+        }
+
+        if (result.trim().isEmpty()){
+            result = "В базе данных нет таблиц.";
         }
         return result;
     }

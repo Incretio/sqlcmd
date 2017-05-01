@@ -36,7 +36,7 @@ public class Command implements Checkable, Performable, Notationable {
     }
 
     @Override
-    public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
+    public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
         return perform.perform(connectionConfig, params);
     }
 }
