@@ -16,7 +16,7 @@ public class DropCommandPerform implements Performable {
         String tableName = params.get(0);
         String result = "";
 
-        new TableExistsCommandPerform().perform(connectionConfig, params);
+        new TableExistCommandPerform().perform(connectionConfig, params);
 
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getDropTableQuery(tableName));
