@@ -12,7 +12,7 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 
-public class TableExistsCommandPerform implements Performable {
+public class TableExistCommandPerform implements Performable {
 
     /**
      Кидает исключение MissingTableException, если таблица не найдена. Если найдена, то вернёт TRUE.toString();
@@ -23,7 +23,7 @@ public class TableExistsCommandPerform implements Performable {
         String tablesList = new TablesCommandPerform().perform(connectionConfig, Collections.emptyList());
         boolean tableFound = false;
 
-        for (String curTableName : tablesList.split(System.lineSeparator())) {
+        for (String curTableName : tablesList.split("\n")) {
             if (curTableName.equals(tableName)){
                 tableFound = true;
                 break;

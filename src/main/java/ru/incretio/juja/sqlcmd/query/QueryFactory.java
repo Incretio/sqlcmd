@@ -1,11 +1,9 @@
 package ru.incretio.juja.sqlcmd.query;
 
-/**
- * Created by incre on 20.02.2017.
- */
+import ru.incretio.juja.sqlcmd.data.JDBCConnectionType;
+
 public class QueryFactory {
     public static Querable makePostgreSQLQuery(){
-        return new PostgreSQLQuery();
+        return new PostgreSQLQuery(JDBCConnectionType.PostgreSQL);
     }
-
 }

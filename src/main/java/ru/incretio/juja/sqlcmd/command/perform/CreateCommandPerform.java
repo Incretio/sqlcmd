@@ -22,7 +22,7 @@ public class CreateCommandPerform implements Performable {
         List<String> newParams = new ArrayList<>();
         newParams.add(tableName);
         try {
-            new TableExistsCommandPerform().perform(connectionConfig, newParams);
+            new TableExistCommandPerform().perform(connectionConfig, newParams);
             result = "Таблица " + tableName + " уже существует.";
         } catch (MissingTableException e) {
             try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
@@ -30,7 +30,6 @@ public class CreateCommandPerform implements Performable {
                 result = "Таблица " + tableName + " добавлена.";
             }
         }
-
 
         return result;
     }

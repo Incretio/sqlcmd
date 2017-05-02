@@ -1,15 +1,14 @@
 
 import org.junit.*;
+import ru.incretio.juja.sqlcmd.Main;
 import ru.incretio.juja.sqlcmd.Run;
 import ru.incretio.juja.sqlcmd.query.PostgreSQLQuery;
+import ru.incretio.juja.sqlcmd.query.QueryFactory;
 
 import java.io.PrintStream;
 
 import static junit.framework.TestCase.assertEquals;
 
-/**
- * Created by incre on 27.02.2017.
- */
 public class ItegrationTest {
     private final static TestInputStream in = new TestInputStream();
     private final static TestOutputStream out = new TestOutputStream();
@@ -20,8 +19,8 @@ public class ItegrationTest {
         System.setOut(new PrintStream(out));
 
         in.add(TestConstants.MASTER_CONNECTION_STRING);
-        in.add("execute '" + new PostgreSQLQuery().getDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
-        in.add("execute '" + new PostgreSQLQuery().getCreateDBQuery(TestConstants.TEST_DB_NAME) + "'");
+        in.add("execute '" + QueryFactory.makePostgreSQLQuery().getDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
+        in.add("execute '" + QueryFactory.makePostgreSQLQuery().getCreateDBQuery(TestConstants.TEST_DB_NAME) + "'");
         in.add("exit");
         Run.main(new String[0]);
         in.reset();
@@ -31,7 +30,7 @@ public class ItegrationTest {
     @AfterClass
     public static void clearDataAfterTest() {
         in.add(TestConstants.MASTER_CONNECTION_STRING);
-        in.add("execute '" + new PostgreSQLQuery().getDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
+        in.add("execute '" + QueryFactory.makePostgreSQLQuery().getDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
         in.add("exit");
         Run.main(new String[0]);
     }
@@ -61,11 +60,11 @@ public class ItegrationTest {
 
         Run.main(new String[0]);
 
-        String expected = "Добро пожаловать в учебный проект Incretio \"sqlcmd!\"\n" +
+        String expected = "Добро пожаловать в учебный проект Incretio \"sqlcmd\"!\n" +
                 "Тут вы можете работать с базой данных. Для того, чтобы получить список возможных комманд, используйте комманду help.\n" +
                 "\n" +
-                "Вы успешно подключились к базе данных " + TestConstants.TEST_DB_NAME  + "\n" +
-                "\n" +
+                "Вы успешно подключились к базе данных " + TestConstants.TEST_DB_NAME + "\n" +
+                "В базе данных нет таблиц.\n" +
                 "Таблица table1 добавлена.\n" +
                 "table1\n" +
                 "\n" +
@@ -101,7 +100,7 @@ public class ItegrationTest {
                 "table3\n" +
                 "\n" +
                 "Таблица table3 удалена.\n" +
-                "\n" +
+                "В базе данных нет таблиц.\n" +
                 "Отключились от БД. Программа будет закрыта.\n" +
                 "\n" +
                 "Спасибо за использование нашей программы! Мы старались ;)\n";
@@ -130,7 +129,7 @@ public class ItegrationTest {
 
         Run.main(new String[0]);
 
-        String expected = "Добро пожаловать в учебный проект Incretio \"sqlcmd!\"\n" +
+        String expected = "Добро пожаловать в учебный проект Incretio \"sqlcmd\"!\n" +
                 "Тут вы можете работать с базой данных. Для того, чтобы получить список возможных комманд, используйте комманду help.\n" +
                 "\n" +
                 "Вы успешно подключились к базе данных " + TestConstants.TEST_DB_NAME + "\n" +
@@ -198,7 +197,7 @@ public class ItegrationTest {
     public void testOnlyExitCommand() {
         in.add("exit");
         Run.main(new String[0]);
-        String expected = "Добро пожаловать в учебный проект Incretio \"sqlcmd!\"\n" +
+        String expected = "Добро пожаловать в учебный проект Incretio \"sqlcmd\"!\n" +
                 "Тут вы можете работать с базой данных. Для того, чтобы получить список возможных комманд, используйте комманду help.\n" +
                 "\n" +
                 "Программа будет закрыта.\n" +
@@ -212,7 +211,7 @@ public class ItegrationTest {
         in.add("help");
         in.add("exit");
         Run.main(new String[0]);
-        String expected = "Добро пожаловать в учебный проект Incretio \"sqlcmd!\"\n" +
+        String expected = "Добро пожаловать в учебный проект Incretio \"sqlcmd\"!\n" +
                 "Тут вы можете работать с базой данных. Для того, чтобы получить список возможных комманд, используйте комманду help.\n" +
                 "\n" +
                 "Список доступных комманд:\n" +
@@ -225,7 +224,7 @@ public class ItegrationTest {
                 "\tdrop tableName:\n" +
                 "\t\tудалить указанную таблицу;\n" +
                 "\tcreate tableName column1 [column2] [columnN]:\n" +
-                "\t\tдобавить новую таблицу;\n" +
+                "\t\tдобавить новую таблицу (имя столбца не может начинаться с цифры);\n" +
                 "\tfind tableName:\n" +
                 "\t\tпоказать содержимое указанной таблицы;\n" +
                 "\tinsert tableName column1 value1 [column2 value2] [columnN valueN]:\n" +
@@ -240,16 +239,23 @@ public class ItegrationTest {
                 "\t\tзакрыть соединение с базой данных;\n" +
                 "\thelp:\n" +
                 "\t\tпоказать список команд и их описаниями;\n" +
-                "\texecute:\n" +
+                "\texecute 'textQuery':\n" +
                 "\t\tвыполнить пользовательский запрос (должен быть указан в одинарных ковычках);\n" +
-                "\tdrop dbName:\n" +
+                "\tdropdb dbName:\n" +
                 "\t\tудалить базу данных;\n" +
                 "\tcreatedb dbName:\n" +
                 "\t\tдобавить новую базу данных;\n" +
+                "\ttable_exist tableName:\n" +
+                "\t\tпроверить наличие указанной таблицы в базе данных;\n" +
+                "\tcolumns tableName:\n" +
+                "\t\tпоказать список столбцов указанной таблицы;\n" +
+                "\tcolumn_exist tableName columnName:\n" +
+                "\t\tпроверить наличие указанной колонки в указанной таблице;\n" +
                 "\n" +
                 "Программа будет закрыта.\n" +
                 "\n" +
                 "Спасибо за использование нашей программы! Мы старались ;)\n";
+
         assertEquals(expected, out.getData());
     }
 
@@ -276,7 +282,7 @@ public class ItegrationTest {
 
         Run.main(new String[0]);
 
-        String expected = "Добро пожаловать в учебный проект Incretio \"sqlcmd!\"\n" +
+        String expected = "Добро пожаловать в учебный проект Incretio \"sqlcmd\"!\n" +
                 "Тут вы можете работать с базой данных. Для того, чтобы получить список возможных комманд, используйте комманду help.\n" +
                 "\n" +
                 "Вы успешно подключились к базе данных " + TestConstants.TEST_DB_NAME + "\n" +
@@ -317,7 +323,7 @@ public class ItegrationTest {
                 "+---------------------+---------------------+---------------------+---------------------+\n" +
                 "\n" +
                 "Таблица table1 удалена.\n" +
-                "\n" +
+                "В базе данных нет таблиц.\n" +
                 "Список доступных комманд:\n" +
                 "\tconnect serverName dbName username password:\n" +
                 "\t\tподключиться к базе данных;\n" +
@@ -328,7 +334,7 @@ public class ItegrationTest {
                 "\tdrop tableName:\n" +
                 "\t\tудалить указанную таблицу;\n" +
                 "\tcreate tableName column1 [column2] [columnN]:\n" +
-                "\t\tдобавить новую таблицу;\n" +
+                "\t\tдобавить новую таблицу (имя столбца не может начинаться с цифры);\n" +
                 "\tfind tableName:\n" +
                 "\t\tпоказать содержимое указанной таблицы;\n" +
                 "\tinsert tableName column1 value1 [column2 value2] [columnN valueN]:\n" +
@@ -343,12 +349,18 @@ public class ItegrationTest {
                 "\t\tзакрыть соединение с базой данных;\n" +
                 "\thelp:\n" +
                 "\t\tпоказать список команд и их описаниями;\n" +
-                "\texecute:\n" +
+                "\texecute 'textQuery':\n" +
                 "\t\tвыполнить пользовательский запрос (должен быть указан в одинарных ковычках);\n" +
-                "\tdrop dbName:\n" +
+                "\tdropdb dbName:\n" +
                 "\t\tудалить базу данных;\n" +
                 "\tcreatedb dbName:\n" +
                 "\t\tдобавить новую базу данных;\n" +
+                "\ttable_exist tableName:\n" +
+                "\t\tпроверить наличие указанной таблицы в базе данных;\n" +
+                "\tcolumns tableName:\n" +
+                "\t\tпоказать список столбцов указанной таблицы;\n" +
+                "\tcolumn_exist tableName columnName:\n" +
+                "\t\tпроверить наличие указанной колонки в указанной таблице;\n" +
                 "\n" +
                 "Отключились от БД. Программа будет закрыта.\n" +
                 "\n" +
@@ -357,6 +369,8 @@ public class ItegrationTest {
         assertEquals(expected, out.getData());
 
     }
+
+
 
 }
 

@@ -3,10 +3,7 @@ package ru.incretio.juja.sqlcmd.command.perform;
 import ru.incretio.juja.sqlcmd.ConnectionConfig;
 import ru.incretio.juja.sqlcmd.command.CommandTypes;
 import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
-import ru.incretio.juja.sqlcmd.command.notation.*;
-import ru.incretio.juja.sqlcmd.query.Querable;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 

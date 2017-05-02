@@ -16,7 +16,7 @@ public class FindCommandPerform implements Performable {
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
         String tableName = params.get(0);
 
-        new TableExistsCommandPerform().perform(connectionConfig, params);
+        new TableExistCommandPerform().perform(connectionConfig, params);
 
         String result = "";
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {

@@ -3,26 +3,18 @@ package ru.incretio.juja.sqlcmd;
 import ru.incretio.juja.sqlcmd.data.JDBCConnectionType;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.query.Querable;
-import ru.incretio.juja.sqlcmd.query.QueryFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-/**
- * Created by incre on 22.02.2017.
- */
 public class ConnectionConfig {
-    private static ConnectionConfig instance = new ConnectionConfig();
     private Connection connection;
-    private JDBCConnectionType jdbcConnectionType = JDBCConnectionType.PostgreSQL;
-    private Querable querable = QueryFactory.makePostgreSQLQuery();
+    private final Querable querable;
 
-    private ConnectionConfig() {
+    public ConnectionConfig(Querable querable) {
+        this.querable = querable;
     }
 
-    public static ConnectionConfig getInstance() {
-        return instance;
-    }
 
     public boolean isConnected() {
         try {
@@ -43,10 +35,6 @@ public class ConnectionConfig {
 
     public Querable getQuerable() {
         return querable;
-    }
-
-    public JDBCConnectionType getJDBCConnectionType() {
-        return jdbcConnectionType;
     }
 
     public boolean testConnection() throws MissingConnectionException, SQLException {
