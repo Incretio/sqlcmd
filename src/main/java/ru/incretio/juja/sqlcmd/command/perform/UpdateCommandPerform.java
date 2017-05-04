@@ -27,7 +27,7 @@ public class UpdateCommandPerform implements Performable {
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             try {
                 statement.execute(connectionConfig.getQuerable().getUpdateQuery(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue));
-                result = String.format(OUT_PUT_TEXT);
+                result = String.format(OUT_PUT_TEXT, tableName);
             } catch (SQLException e) {
                 result = e.getMessage();
             }
