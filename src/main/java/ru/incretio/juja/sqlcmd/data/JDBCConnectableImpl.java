@@ -1,8 +1,5 @@
 package ru.incretio.juja.sqlcmd.data;
 
-/**
- * Created by incre on 26.01.2017.
- */
 public class JDBCConnectableImpl extends JDBCConnectable {
     private final String jdbcUrl;
 

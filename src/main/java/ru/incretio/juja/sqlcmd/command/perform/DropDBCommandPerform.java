@@ -8,18 +8,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-/**
- * Created by incre on 03.03.2017.
- */
 public class DropDBCommandPerform implements Performable {
+    private final String OUT_PUT_TEXT = "База данных %s удалена.";
+
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
         String dbName = params.get(0);
 
-        String result = "";
+        String result;
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getDropDBQuery(dbName));
-            result = "База данных " + dbName + " удалена.";
+            result = String.format(OUT_PUT_TEXT, dbName);
         } catch (SQLException e) {
             result = e.getMessage();
         }

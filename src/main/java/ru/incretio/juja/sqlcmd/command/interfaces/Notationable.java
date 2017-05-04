@@ -1,7 +1,7 @@
 package ru.incretio.juja.sqlcmd.command.interfaces;
 
 /**
- * Created by incre on 17.02.2017.
+ * Объект, для которого можно получить описание
  */
 public interface Notationable {
     String getNotation();

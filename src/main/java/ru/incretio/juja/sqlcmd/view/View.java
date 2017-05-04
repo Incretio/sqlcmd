@@ -14,24 +14,11 @@ public abstract class View {
         write(HEADER_TEXT);
     }
 
-    public void wtireFoot(){
+    public void writeFoot(){
         write(FOOTER_TEXT);
     }
 
     public abstract void write(String text);
 
     public abstract String read();
-
-    public List<String> readData() throws UnsupportedDataTypeException{
-        String data = this.read();
-        if (data == null || data.length() == 0) {
-            throw new UnsupportedDataTypeException("Empty data.");
-        }
-
-        List<String> result = new ArrayList<>();
-        result.addAll(Arrays.asList(data.split(" ")));
-
-        return result;
-    }
-
 }

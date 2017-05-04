@@ -7,6 +7,9 @@ import ru.incretio.juja.sqlcmd.command.perform.TableExistCommandPerform;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Вспомогательный класс для выполнения команд
+ */
 public class CommandPerformHelper {
     private final ConnectionConfig connectionConfig;
 

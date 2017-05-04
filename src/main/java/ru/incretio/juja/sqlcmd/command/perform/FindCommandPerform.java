@@ -11,9 +11,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FindCommandPerform implements Performable {
+    private final String EMPTY_DATA = "В таблице %s отсутствуют данные.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
+
         String tableName = params.get(0);
 
         new TableExistCommandPerform().perform(connectionConfig, params);
@@ -52,7 +54,7 @@ public class FindCommandPerform implements Performable {
             result += "+\n";
 
 
-            result = (result.trim().isEmpty()) ? "В таблице " + tableName + " отсутствуют данные." : result;
+            result = (result.trim().isEmpty()) ? String.format(EMPTY_DATA, tableName) : result;
         }
 
         return result;

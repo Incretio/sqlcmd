@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.List;
 
 public class TablesCommandPerform implements Performable {
+    private final String EMPTY_DB = "В базе данных нет таблиц.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
@@ -19,11 +20,10 @@ public class TablesCommandPerform implements Performable {
             while (resultSet.next()) {
                 result += resultSet.getString(1) + "\n";
             }
-
         }
 
         if (result.trim().isEmpty()){
-            result = "В базе данных нет таблиц.";
+            result = EMPTY_DB;
         }
         return result;
     }

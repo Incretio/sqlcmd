@@ -4,9 +4,7 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Checkable;
 
 import java.util.List;
 
-/**
- * Created by incre on 02.05.2017.
- */
+
 public class CommandCheckFactory {
     public static Checkable getClearCommandCheck() {
         return params -> isNotNull(params) && hasOneParams(params);

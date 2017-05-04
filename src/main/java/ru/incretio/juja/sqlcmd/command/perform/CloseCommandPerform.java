@@ -8,12 +8,13 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CloseCommandPerform implements Performable {
+    private final String OUT_PUT_TEXT = "Отключились от БД.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
         connectionConfig.testAndGetConnection().close();
         connectionConfig.setConnection(null);
 
-        return "Отключились от БД.";
+        return OUT_PUT_TEXT;
     }
 }

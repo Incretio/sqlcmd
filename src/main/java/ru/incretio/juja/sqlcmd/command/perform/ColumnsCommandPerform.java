@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.List;
 
 public class ColumnsCommandPerform implements Performable {
+    private final String OUT_PUT_TEXT = "В таблице нет полей.";
+
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
         String tableName = params.get(0);
@@ -21,7 +23,7 @@ public class ColumnsCommandPerform implements Performable {
         }
 
         if (result.trim().isEmpty()){
-            result = "В таблице нет полей.";
+            result = OUT_PUT_TEXT;
         }
         return result;
     }

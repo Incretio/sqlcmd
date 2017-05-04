@@ -13,6 +13,9 @@ import java.sql.SQLException;
 // connect localhost sqlcmd postgres postgres
 // execute create_&_table_&_table123456789(id_&_serial,name_&_text,location_&_text)
 public class Main {
+    private final String SQL_ERROR_TEXT = "Ошибка при работе с СУБД: %s";
+    private final String BAD_APP_CONFIGURATION = "Программа некорректно настроена.";
+
     final View view;
     final ConnectionConfig connectionConfig;
 
@@ -40,7 +43,7 @@ public class Main {
             }
         }
 
-        view.wtireFoot();
+        view.writeFoot();
     }
 
     private void processingException(Exception exception) {
@@ -49,9 +52,9 @@ public class Main {
         } catch (CommandException | MissingConnectionException | MissingTableException e) {
             view.write(e.getMessage());
         } catch (SQLException e) {
-            view.write("Ошибка при работе с СУБД: " + e.getMessage());
+            view.write(String.format(SQL_ERROR_TEXT, e.getMessage()));
         } catch (NullPointerException e) {
-            view.write("Программа некорректно настроена.");
+            view.write(BAD_APP_CONFIGURATION);
             e.printStackTrace();
         } catch (Exception e) {
             view.write(e.getMessage());

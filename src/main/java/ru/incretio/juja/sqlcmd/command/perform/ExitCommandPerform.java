@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ExitCommandPerform implements Performable {
+    private final String DB_DISCONNECTED_TEXT = "Отключились от БД. ";
+    private final String APP_WILL_BE_CLOSE = "Программа будет закрыта.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
@@ -17,10 +19,10 @@ public class ExitCommandPerform implements Performable {
         if (connectionConfig.isConnected()) {
             connectionConfig.testAndGetConnection().close();
             connectionConfig.setConnection(null);
-            result = "Отключились от БД. ";
+            result = DB_DISCONNECTED_TEXT;
         }
 
-        result += "Программа будет закрыта.";
+        result += APP_WILL_BE_CLOSE;
         throw new NeedExitException(result);
     }
 }

@@ -1,6 +1,5 @@
 package ru.incretio.juja.sqlcmd;
 
-import ru.incretio.juja.sqlcmd.data.JDBCConnectionType;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.query.Querable;
 

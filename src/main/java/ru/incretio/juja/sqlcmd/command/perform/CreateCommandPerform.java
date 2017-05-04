@@ -12,22 +12,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateCommandPerform implements Performable {
+    private final String TABLE_EXIST_TEXT = "Таблица %s уже существует.";
+    private final String TABLE_ADDED_TEXT = "Таблица %s добавлена.";
+
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
         String tableName = params.get(0);
         List<String> columns = params.subList(1, params.size());
 
-        String result = "";
+        String result;
 
         List<String> newParams = new ArrayList<>();
         newParams.add(tableName);
         try {
             new TableExistCommandPerform().perform(connectionConfig, newParams);
-            result = "Таблица " + tableName + " уже существует.";
+            result = String.format(TABLE_EXIST_TEXT, tableName);
         } catch (MissingTableException e) {
             try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
                 statement.execute(connectionConfig.getQuerable().getCreateTableQuery(tableName, columns));
-                result = "Таблица " + tableName + " добавлена.";
+                result = String.format(TABLE_ADDED_TEXT, tableName);
             }
         }
 

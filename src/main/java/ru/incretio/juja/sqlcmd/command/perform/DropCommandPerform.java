@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.util.List;
 
 public class DropCommandPerform implements Performable {
+    private final String OUT_PUT_TEXT = "Таблица %s удалена.";
+
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
         String tableName = params.get(0);
@@ -20,7 +22,7 @@ public class DropCommandPerform implements Performable {
 
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getDropTableQuery(tableName));
-            result = "Таблица " + tableName + " удалена.";
+            result = String.format(OUT_PUT_TEXT, tableName);
         }
 
         return result;

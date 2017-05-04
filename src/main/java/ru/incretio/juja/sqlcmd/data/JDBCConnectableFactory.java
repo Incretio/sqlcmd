@@ -1,11 +1,5 @@
 package ru.incretio.juja.sqlcmd.data;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
-/**
- * Created by incre on 29.01.2017.
- */
 public class JDBCConnectableFactory {
     public static Connectable makeJdbcConnection(
             JDBCConnectionType jdbcConnectionType, String dbHost, String dbName) throws ClassNotFoundException {

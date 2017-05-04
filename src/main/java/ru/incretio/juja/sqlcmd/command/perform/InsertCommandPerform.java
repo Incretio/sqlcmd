@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InsertCommandPerform implements Performable {
+    private final String OUT_PUT_TEXT = "В таблицу %s добавлена запись.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
         String tableName = params.get(0);
-
 
         List<String> columns = new ArrayList<>();
         List<String> values = new ArrayList<>();
@@ -31,7 +31,7 @@ public class InsertCommandPerform implements Performable {
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             try {
                 statement.execute(connectionConfig.getQuerable().getInsertQuery(tableName, columns, values));
-                result = "В таблицу " + tableName + " добавлена запись.";
+                result = String.format(OUT_PUT_TEXT, tableName);
             } catch (SQLException e) {
                 result = e.getMessage();
             }

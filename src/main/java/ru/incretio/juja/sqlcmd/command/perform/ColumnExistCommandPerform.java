@@ -10,6 +10,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class ColumnExistCommandPerform implements Performable {
+
+    /**
+     Кидает исключение MissingColumnException, если поле не найдено. Если найдено, то вернёт TRUE.toString();
+     */
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
         String tableName = params.get(0);
