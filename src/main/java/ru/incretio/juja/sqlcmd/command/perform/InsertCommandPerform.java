@@ -27,14 +27,10 @@ public class InsertCommandPerform implements Performable {
         commandPerformHelper.checkTableExist(tableName);
         commandPerformHelper.checkColumnExist(tableName, columns);
 
-        String result = "";
+        String result;
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
-            try {
-                statement.execute(connectionConfig.getQuerable().getInsertQuery(tableName, columns, values));
-                result = String.format(OUT_PUT_TEXT, tableName);
-            } catch (SQLException e) {
-                result = e.getMessage();
-            }
+            statement.execute(connectionConfig.getQuerable().getInsertQuery(tableName, columns, values));
+            result = String.format(OUT_PUT_TEXT, tableName);
         }
 
         return result;

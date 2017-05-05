@@ -248,8 +248,21 @@ public class ClearCommandCheckTest {
         assertTrue(check.checkParams(params));
         params.add(PARAM_VALUE);
         assertFalse(check.checkParams(params));
-
     }
 
+    @Test
+    public void testColumnExistCommandCheck() {
+        Checkable check = getColumnExistCommandCheck();
+        params = null;
+        assertFalse(check.checkParams(params));
+        params = new ArrayList<>();
+        assertFalse(check.checkParams(params));
+        params.add(PARAM_VALUE);
+        assertFalse(check.checkParams(params));
+        params.add(PARAM_VALUE);
+        assertTrue(check.checkParams(params));
+        params.add(PARAM_VALUE);
+        assertFalse(check.checkParams(params));
+    }
 
 }

@@ -21,8 +21,6 @@ public class ExecuteCommandPerform implements Performable {
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             statement.execute(queryText);
             result = OUT_PUT_TEXT;
-        } catch (SQLException e) {
-            result = e.getMessage();
         }
 
         return result;

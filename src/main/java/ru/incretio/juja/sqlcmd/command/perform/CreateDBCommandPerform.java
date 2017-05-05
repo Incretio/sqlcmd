@@ -20,8 +20,6 @@ public class CreateDBCommandPerform implements Performable {
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getCreateDBQuery(dbName));
             result = String.format(OUT_PUT_TEXT, dbName);
-        } catch (SQLException e) {
-            result = e.getMessage();
         }
 
         return result;

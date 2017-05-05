@@ -207,6 +207,23 @@ public class ItegrationTest {
     }
 
     @Test
+    public void testCloseConnectionAndExitCommand() {
+        in.add(TestConstants.TEST_CONNECTION_STRING);
+        in.add("close");
+        in.add("exit");
+        Run.main(new String[0]);
+        String expected = "Добро пожаловать в учебный проект Incretio \"sqlcmd\"!\n" +
+                "Тут вы можете работать с базой данных. Для того, чтобы получить список возможных комманд, используйте комманду help.\n" +
+                "\n" +
+                "Вы успешно подключились к базе данных testdb_a5d8e6\n" +
+                "Отключились от БД.\n" +
+                "Программа будет закрыта.\n" +
+                "\n" +
+                "Спасибо за использование нашей программы! Мы старались ;)\n";
+        assertEquals(expected, out.getData());
+    }
+
+    @Test
     public void testOnlyHelpCommand() {
         in.add("help");
         in.add("exit");
@@ -367,10 +384,80 @@ public class ItegrationTest {
                 "Спасибо за использование нашей программы! Мы старались ;)\n";
 
         assertEquals(expected, out.getData());
-
     }
 
+    @Test
+    public void testErrorData() {
+        in.add("tables");
+        in.add(TestConstants.TEST_CONNECTION_STRING);
+        in.add(TestConstants.TEST_CONNECTION_STRING);
+        in.add("unsupported_command");
+        in.add("");
+        in.add("find table");
+        in.add("create table1 id name");
+        in.add("update table1 idd 1 name newName");
+        in.add("execute 'bla'");
+        in.add("create table1 id name");
+        in.add("column exist idd");
+        in.add("create table2 3id name");
+        in.add("exit ha");
+        in.add("exit");
 
+        Run.main(new String[0]);
+
+        String expected =
+                "Добро пожаловать в учебный проект Incretio \"sqlcmd\"!\n" +
+                        "Тут вы можете работать с базой данных. Для того, чтобы получить список возможных комманд, используйте комманду help.\n" +
+                        "\n" +
+                        "Отсутствует подключение к базе данных.\n" +
+                        "Вы успешно подключились к базе данных " + TestConstants.TEST_DB_NAME + "\n" +
+                        "Вы успешно подключились к базе данных " + TestConstants.TEST_DB_NAME + "\n" +
+                        "Команда 'unsupported_command' не найдена.\n" +
+                        "Введена пустая команда.\n" +
+                        "Таблица table отсутствует.\n" +
+                        "Таблица table1 добавлена.\n" +
+                        "Колонка idd отсутствует.\n" +
+                        "Ошибка при работе с СУБД: ERROR: syntax error at or near \"bla\"\n" +
+                        "  Позиция: 1\n" +
+                        "Таблица table1 уже существует.\n" +
+                        "Команда 'column' не найдена.\n" +
+                        "Параметры команды указаны не корректно. \n" +
+                        "Формат команды: \n" +
+                        "\tcreate tableName column1 [column2] [columnN]:\n" +
+                        "\t\tдобавить новую таблицу (имя столбца не может начинаться с цифры);\n" +
+                        "Параметры команды указаны не корректно. \n" +
+                        "Формат команды: \n" +
+                        "\texit:\n" +
+                        "\t\tзакрыть соединение и выйти из программы;\n" +
+                        "Отключились от БД. Программа будет закрыта.\n" +
+                        "\n" +
+                        "Спасибо за использование нашей программы! Мы старались ;)\n";
+
+        assertEquals(expected, out.getData());
+    }
+
+    @Test
+    public void testDropDB() {
+        in.add(TestConstants.TEST_CONNECTION_STRING);
+        in.add("createdb test321db");
+        in.add("dropdb test321db");
+        in.add("exit");
+
+        Run.main(new String[0]);
+
+        String expected =
+                "Добро пожаловать в учебный проект Incretio \"sqlcmd\"!\n" +
+                        "Тут вы можете работать с базой данных. Для того, чтобы получить список возможных комманд, используйте комманду help.\n" +
+                        "\n" +
+                        "Вы успешно подключились к базе данных " + TestConstants.TEST_DB_NAME + "\n" +
+                        "База данных test321db добавлена.\n" +
+                        "База данных test321db удалена.\n" +
+                        "Отключились от БД. Программа будет закрыта.\n" +
+                        "\n" +
+                        "Спасибо за использование нашей программы! Мы старались ;)\n";
+
+        assertEquals(expected, out.getData());
+    }
 
 }
 

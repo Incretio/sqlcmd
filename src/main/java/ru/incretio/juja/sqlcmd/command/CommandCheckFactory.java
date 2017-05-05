@@ -127,10 +127,6 @@ public class CommandCheckFactory {
         return params.size() > x;
     }
 
-    private static boolean hasEvenParams(List params) {
-        return (params.size() % 2 == 0);
-    }
-
     private static boolean hasOddParams(List params) {
         return (params.size() % 2 == 1);
     }

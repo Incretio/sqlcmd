@@ -43,10 +43,6 @@ public class ParsedCommandLine {
         return result;
     }
 
-    public String getValue(int index) {
-        return list.get(index);
-    }
-
     private String escapeSpacesInQuotes(String sourceText, char charQuote, String escapeString) {
         Boolean inQuotes = false;
         String result = "";
@@ -77,12 +73,6 @@ public class ParsedCommandLine {
         return result;
     }
 
-    public static void main(String[] args) throws EmptyCommandException {
-        ParsedCommandLine parsedCommandLine = new ParsedCommandLine("execute 'select * from table'");
-        for (String string : parsedCommandLine.getParamsList()) {
-            System.out.println(string);
-        }
-    }
 }
 
 

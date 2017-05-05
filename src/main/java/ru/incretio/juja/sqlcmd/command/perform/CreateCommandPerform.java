@@ -9,6 +9,7 @@ import ru.incretio.juja.sqlcmd.exceptions.MissingTableException;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CreateCommandPerform implements Performable {
@@ -18,7 +19,10 @@ public class CreateCommandPerform implements Performable {
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
         String tableName = params.get(0);
-        List<String> columns = params.subList(1, params.size());
+        List<String> columns = Collections.emptyList();
+        if (params.size() > 1) {
+            columns = params.subList(1, params.size());
+        }
 
         String result;
 

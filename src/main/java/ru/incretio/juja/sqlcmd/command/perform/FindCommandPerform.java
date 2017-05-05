@@ -60,18 +60,4 @@ public class FindCommandPerform implements Performable {
         return result;
     }
 
-    public static void main(String[] args) {
-        List<List<String>> list = new ArrayList<>();
-        list.add(Arrays.asList(new String[]{"123", "stiven", "pupkin"}));
-        list.add(Arrays.asList(new String[]{"456", "stiv", "pupk"}));
-        list.add(Arrays.asList(new String[]{"789", "sti", "pup"}));
-        System.out.print("+");
-        for (int i = 0; i < list.size(); i++) {
-            for (int j = 0; j < list.get(i).size(); j++) {
-                System.out.print(String.format(" %s%" + (10 - list.get(i).get(j).length()) + "s", list.get(i).get(j), "+"));
-
-            }
-        }
-    }
-
 }
