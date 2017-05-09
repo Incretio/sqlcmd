@@ -1,3 +1,4 @@
+package ru.incretio.juja.sqlcmd;
 
 import org.junit.*;
 import ru.incretio.juja.sqlcmd.Main;
@@ -9,7 +10,7 @@ import java.io.PrintStream;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class ItegrationTest {
+public class IntegrationTest {
     private final static TestInputStream in = new TestInputStream();
     private final static TestOutputStream out = new TestOutputStream();
 

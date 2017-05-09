@@ -1,3 +1,5 @@
+package ru.incretio.juja.sqlcmd;
+
 import java.io.ByteArrayOutputStream;
 
 /**

@@ -14,7 +14,7 @@ public class ClearCommandPerform implements Performable {
     private final String OUT_PUT_TEXT = "Таблица %s очищена.";
 
     @Override
-    public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
+    public String perform(ConnectionConfig connectionConfig, List<String>params ) throws SQLException, MissingConnectionException, MissingTableException {
         String tableName = params.get(0);
         String result;
 

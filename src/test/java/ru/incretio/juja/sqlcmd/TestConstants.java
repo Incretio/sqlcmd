@@ -1,3 +1,5 @@
+package ru.incretio.juja.sqlcmd;
+
 /**
  * Created by incre on 03.03.2017.
  */

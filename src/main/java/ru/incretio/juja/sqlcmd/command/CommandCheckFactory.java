@@ -8,7 +8,6 @@ import java.util.List;
 public class CommandCheckFactory {
     public static Checkable getClearCommandCheck() {
         return params -> isNotNull(params) && hasOneParams(params);
-
     }
 
     public static Checkable getCloseCommandCheck() {

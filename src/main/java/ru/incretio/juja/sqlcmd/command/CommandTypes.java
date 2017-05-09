@@ -50,10 +50,6 @@ public enum CommandTypes {
         List<String> result = new ArrayList<>();
 
         for (CommandTypes commandType : CommandTypes.values()) {
-            if (commandType.command == null) {
-                continue;
-            }
-
             String notation = commandType.command.getNotation();
             if (notation != null) {
                 result.add(notation);
