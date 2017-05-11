@@ -1,7 +1,6 @@
 package ru.incretio.juja.sqlcmd.query;
 
 import ru.incretio.juja.sqlcmd.data.JDBCConnectionType;
-
 import java.util.List;
 
 public interface Querable {

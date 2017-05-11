@@ -1,17 +1,10 @@
 package ru.incretio.juja.sqlcmd.view;
 
-import javax.activation.UnsupportedDataTypeException;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-/**
- * Created by incre on 27.01.2017.
- */
 public class ConsoleView extends View {
-    public final BufferedReader reader;
-    public final BufferedWriter writer;
+    private final BufferedReader reader;
+    private final BufferedWriter writer;
 
     public ConsoleView() {
         reader = new BufferedReader(new InputStreamReader(System.in));

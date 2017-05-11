@@ -1,19 +1,11 @@
 package ru.incretio.juja.sqlcmd.utils;
 
-import junit.framework.TestCase;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.experimental.ParallelComputer;
 import org.junit.rules.ExpectedException;
 import ru.incretio.juja.sqlcmd.exceptions.EmptyCommandException;
-
-import java.util.ArrayList;
-
 import static org.junit.Assert.*;
 
-/**
- * Created by incre on 08.05.2017.
- */
 public class ParsedCommandLineTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();

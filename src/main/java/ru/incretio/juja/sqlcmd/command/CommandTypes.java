@@ -2,10 +2,8 @@ package ru.incretio.juja.sqlcmd.command;
 
 import ru.incretio.juja.sqlcmd.command.perform.*;
 import ru.incretio.juja.sqlcmd.exceptions.CommandNotFoundException;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static ru.incretio.juja.sqlcmd.command.CommandCheckFactory.*;
 import static ru.incretio.juja.sqlcmd.command.CommandNotationFactory.*;
 
@@ -29,8 +27,8 @@ public enum CommandTypes {
     COLUMNS("columns", new Command(getColumnsCommandCheck(), new ColumnsCommandPerform(), getColumnsCommandNotation())),
     COLUMN_EXIST("column_exist", new Command(getColumnExistCommandCheck(), new ColumnExistCommandPerform(), getColumnExistCommandNotation()));
 
-    private String commandName;
-    private Command command;
+    private final String commandName;
+    private final Command command;
 
     CommandTypes(String commandName, Command command) {
         this.commandName = commandName;

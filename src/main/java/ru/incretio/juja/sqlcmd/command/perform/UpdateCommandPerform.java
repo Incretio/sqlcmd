@@ -3,13 +3,11 @@ package ru.incretio.juja.sqlcmd.command.perform;
 import ru.incretio.juja.sqlcmd.ConnectionConfig;
 import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.command.perform.utils.CommandPerformHelper;
-
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 public class UpdateCommandPerform implements Performable {
-    private final String OUT_PUT_TEXT = "В таблице %s обновлена запись.";
+    private final String outputText = "В таблице %s обновлена запись.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
@@ -26,7 +24,7 @@ public class UpdateCommandPerform implements Performable {
         String result;
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getUpdateQuery(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue));
-            result = String.format(OUT_PUT_TEXT, tableName);
+            result = String.format(outputText, tableName);
         }
 
         return result;

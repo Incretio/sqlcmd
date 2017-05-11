@@ -15,7 +15,7 @@ public abstract class JDBCConnectable implements Connectable {
     private final String dbHost;
     private final String dbName;
 
-    public JDBCConnectable(String dbHost, String dbName) throws ClassNotFoundException {
+    JDBCConnectable(String dbHost, String dbName) {
         this.dbHost = dbHost;
         this.dbName = dbName;
     }
@@ -26,9 +26,8 @@ public abstract class JDBCConnectable implements Connectable {
         Properties props = new Properties();
         props.setProperty(USER_PROPERTY_NAME, userName);
         props.setProperty(PASSWORD_PROPERTY_NAME, password);
-        Connection connection = DriverManager.getConnection(url, props);
 
-        return connection;
+        return DriverManager.getConnection(url, props);
     }
 
     protected abstract String getJDBCUrl();

@@ -3,14 +3,12 @@ package ru.incretio.juja.sqlcmd.command.perform;
 import ru.incretio.juja.sqlcmd.ConnectionConfig;
 import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.command.perform.utils.CommandPerformHelper;
-
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InsertCommandPerform implements Performable {
-    private final String OUT_PUT_TEXT = "В таблицу %s добавлена запись.";
+    private final String outPutText = "В таблицу %s добавлена запись.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
@@ -30,7 +28,7 @@ public class InsertCommandPerform implements Performable {
         String result;
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getInsertQuery(tableName, columns, values));
-            result = String.format(OUT_PUT_TEXT, tableName);
+            result = String.format(outPutText, tableName);
         }
 
         return result;

@@ -2,7 +2,7 @@ package ru.incretio.juja.sqlcmd.command;
 
 import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 
-public class CommandNotationFactory {
+class CommandNotationFactory {
     private static String getFormattedNotation(String commandFormat, String commandDescription) {
         return "\t" + commandFormat + ":\n" +
                 "\t\t" + commandDescription + ";";

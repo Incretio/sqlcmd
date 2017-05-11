@@ -16,7 +16,8 @@ import static org.junit.Assert.*;
 import static ru.incretio.juja.sqlcmd.TestConstants.*;
 
 public class CommandsTest {
-    private static ConnectionConfig connectionConfig = new ConnectionConfig(QueryFactory.makePostgreSQLQuery());
+    private static final ConnectionConfig connectionConfig =
+            new ConnectionConfig(QueryFactory.makePostgreSQLQuery());
 
     @BeforeClass
     public static void setup() throws Exception {

@@ -1,8 +1,5 @@
 package ru.incretio.juja.sqlcmd.data;
 
-/**
- * Created by incre on 29.01.2017.
- */
 public enum JDBCConnectionType {
     PostgreSQL("postgresql", "org.postgresql.Driver"),
     MySQL("mysql", "com.mysql.jdbc.Driver"),

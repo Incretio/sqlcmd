@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.List;
 
 public class DeleteCommandPerform implements Performable {
-    private final String OUT_PUT_TEXT = "Из таблицы %s удалена запись.";
+    private final String outputText = "Из таблицы %s удалена запись.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
@@ -22,7 +22,7 @@ public class DeleteCommandPerform implements Performable {
 
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getDeleteQuery(tableName, whereColumnName, whereColumnValue));
-            result = String.format(OUT_PUT_TEXT, tableName);
+            result = String.format(outputText, tableName);
         }
 
         return result;

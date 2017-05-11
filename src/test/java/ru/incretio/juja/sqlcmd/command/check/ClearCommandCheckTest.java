@@ -1,19 +1,12 @@
 package ru.incretio.juja.sqlcmd.command.check;
 
-import org.junit.Before;
 import org.junit.Test;
-import ru.incretio.juja.sqlcmd.command.CommandCheckFactory;
 import ru.incretio.juja.sqlcmd.command.interfaces.Checkable;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.junit.Assert.*;
 import static ru.incretio.juja.sqlcmd.command.CommandCheckFactory.*;
 
-/**
- * Created by incre on 07.03.2017.
- */
 public class ClearCommandCheckTest {
     private final String PARAM_VALUE = "value";
     private List<String> params;

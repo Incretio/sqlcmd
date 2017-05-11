@@ -1,23 +1,18 @@
 package ru.incretio.juja.sqlcmd;
 
-
 import ru.incretio.juja.sqlcmd.command.Command;
 import ru.incretio.juja.sqlcmd.command.CommandTypes;
 import ru.incretio.juja.sqlcmd.exceptions.*;
 import ru.incretio.juja.sqlcmd.utils.ParsedCommandLine;
 import ru.incretio.juja.sqlcmd.view.View;
-
 import java.sql.SQLException;
 
-
-// connect localhost sqlcmd postgres postgres
-// execute create_&_table_&_table123456789(id_&_serial,name_&_text,location_&_text)
-public class Main {
-    private final String SQL_ERROR_TEXT = "Ошибка при работе с СУБД: %s";
+class Main {
+    private final String SQL_ERROR_TEXT = "Ошибка при работе с СУБД: %s.";
     private final String BAD_APP_CONFIGURATION = "Программа некорректно настроена.";
 
-    final View view;
-    final ConnectionConfig connectionConfig;
+    private final View view;
+    private final ConnectionConfig connectionConfig;
 
     public Main(View view, ConnectionConfig connectionConfig) {
         this.view = view;

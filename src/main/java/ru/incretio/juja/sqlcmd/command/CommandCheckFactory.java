@@ -1,9 +1,7 @@
 package ru.incretio.juja.sqlcmd.command;
 
 import ru.incretio.juja.sqlcmd.command.interfaces.Checkable;
-
 import java.util.List;
-
 
 public class CommandCheckFactory {
     public static Checkable getClearCommandCheck() {

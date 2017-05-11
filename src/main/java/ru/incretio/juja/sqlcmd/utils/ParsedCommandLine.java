@@ -1,8 +1,8 @@
 package ru.incretio.juja.sqlcmd.utils;
 
 import ru.incretio.juja.sqlcmd.exceptions.EmptyCommandException;
-
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ParsedCommandLine {
     private final String ESCAPE_STRING = "_&_";
@@ -62,10 +62,7 @@ public class ParsedCommandLine {
     }
 
     private List<String> replaceString(List<String> list, String s, String s1) {
-        List<String> result = new ArrayList<>();
-        for (String value : list) {
-            result.add(value);
-        }
+        List<String> result = list.stream().collect(Collectors.toList());
 
         for (int i = 0; i < result.size(); i++) {
             result.set(i, result.get(i).replace(s, s1));
@@ -75,7 +72,7 @@ public class ParsedCommandLine {
     }
 
     private String trimDoubleSpaces(String text) {
-        String result = new String(text);
+        String result = text;
         while (result.contains("  ")) {
             result = result.replace("  ", " ");
         }

@@ -1,8 +1,5 @@
 package ru.incretio.juja.sqlcmd;
 
-/**
- * Created by incre on 03.03.2017.
- */
 public class TestConstants {
     public final static String TEST_DB_NAME = "testdb_a5d8e6";
     public final static String SERVER_NAME = "localhost";

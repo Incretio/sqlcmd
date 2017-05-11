@@ -5,7 +5,7 @@ import ru.incretio.juja.sqlcmd.query.QueryFactory;
 import ru.incretio.juja.sqlcmd.view.ConsoleView;
 import ru.incretio.juja.sqlcmd.view.View;
 
-public class Run {
+class Run {
     public static void main(String[] args) {
         View view = new ConsoleView();
         Querable querable = QueryFactory.makePostgreSQLQuery();

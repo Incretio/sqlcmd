@@ -3,10 +3,7 @@ package ru.incretio.juja.sqlcmd.command.perform;
 import ru.incretio.juja.sqlcmd.ConnectionConfig;
 import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.exceptions.MissingColumnException;
-import ru.incretio.juja.sqlcmd.exceptions.MissingTableException;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ColumnExistCommandPerform implements Performable {

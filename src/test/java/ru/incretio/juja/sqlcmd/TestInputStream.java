@@ -2,12 +2,8 @@ package ru.incretio.juja.sqlcmd;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.CharacterCodingException;
 
-/**
- * Created by incre on 27.02.2017.
- */
-public class TestInputStream extends InputStream {
+class TestInputStream extends InputStream {
     private String input = "";
 
     @Override

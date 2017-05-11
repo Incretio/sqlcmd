@@ -3,14 +3,13 @@ package ru.incretio.juja.sqlcmd.command.perform;
 import ru.incretio.juja.sqlcmd.ConnectionConfig;
 import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
 public class TablesCommandPerform implements Performable {
-    private final String EMPTY_DB = "В базе данных нет таблиц.";
+    private final String emptyDb = "В базе данных нет таблиц.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
@@ -23,7 +22,7 @@ public class TablesCommandPerform implements Performable {
         }
 
         if (result.trim().isEmpty()){
-            result = EMPTY_DB;
+            result = emptyDb;
         }
         return result;
     }

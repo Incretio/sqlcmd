@@ -4,14 +4,11 @@ import ru.incretio.juja.sqlcmd.ConnectionConfig;
 import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.exceptions.MissingTableException;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class FindCommandPerform implements Performable {
-    private final String EMPTY_DATA = "В таблице %s отсутствуют данные.";
+    private final String emptyData = "В таблице %s отсутствуют данные.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
@@ -54,7 +51,7 @@ public class FindCommandPerform implements Performable {
             result += "+\n";
 
 
-            result = (result.trim().isEmpty()) ? String.format(EMPTY_DATA, tableName) : result;
+            result = (result.trim().isEmpty()) ? String.format(emptyData, tableName) : result;
         }
 
         return result;

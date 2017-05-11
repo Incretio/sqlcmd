@@ -4,13 +4,12 @@ import ru.incretio.juja.sqlcmd.ConnectionConfig;
 import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.data.JDBCConnectableFactory;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
-
 import java.sql.SQLException;
 import java.util.List;
 
 public class ConnectCommandPerform implements Performable {
-    private final String CONNECTION_SUCCESS_TEXT = "Вы успешно подключились к базе данных %s";
-    private final String DRIVER_LOADING_ERROR_TEXT = "Ошибка подключения драйвера";
+    private final String connectionSuccessText = "Вы успешно подключились к базе данных %s.";
+    private final String driverLoadingErrorText = "Ошибка подключения драйвера.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
@@ -19,7 +18,7 @@ public class ConnectCommandPerform implements Performable {
         String userName = params.get(2);
         String password = params.get(3);
 
-        String result = "";
+        String result;
         if (connectionConfig.isConnected()) {
             connectionConfig.testAndGetConnection().close();
         }
@@ -28,9 +27,9 @@ public class ConnectCommandPerform implements Performable {
                     JDBCConnectableFactory.makeJdbcConnection(
                             connectionConfig.getQuerable().getJdbcConnectionType(),
                             serverName, dbName).getConnection(userName, password));
-            result = String.format(CONNECTION_SUCCESS_TEXT, dbName);
+            result = String.format(connectionSuccessText, dbName);
         } catch (ClassNotFoundException e) {
-            result = DRIVER_LOADING_ERROR_TEXT;
+            result = driverLoadingErrorText;
         }
 
         return result;
