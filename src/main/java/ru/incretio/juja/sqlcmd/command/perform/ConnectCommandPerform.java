@@ -8,8 +8,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ConnectCommandPerform implements Performable {
-    private final String connectionSuccessText = "Вы успешно подключились к базе данных %s.";
-    private final String driverLoadingErrorText = "Ошибка подключения драйвера.";
+    private final static String CONNECTION_SUCCESS_TEXT = "Вы успешно подключились к базе данных %s.";
+    private final static String DRIVER_LOADING_ERROR_TEXT = "Ошибка подключения драйвера.";
+
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
@@ -27,9 +28,9 @@ public class ConnectCommandPerform implements Performable {
                     JDBCConnectableFactory.makeJdbcConnection(
                             connectionConfig.getQuerable().getJdbcConnectionType(),
                             serverName, dbName).getConnection(userName, password));
-            result = String.format(connectionSuccessText, dbName);
+            result = String.format(CONNECTION_SUCCESS_TEXT, dbName);
         } catch (ClassNotFoundException e) {
-            result = driverLoadingErrorText;
+            result = DRIVER_LOADING_ERROR_TEXT;
         }
 
         return result;

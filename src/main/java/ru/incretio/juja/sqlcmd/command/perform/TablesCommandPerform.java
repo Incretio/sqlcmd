@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.List;
 
 public class TablesCommandPerform implements Performable {
-    private final String emptyDb = "В базе данных нет таблиц.";
+    private final static String EMPTY_DB = "В базе данных нет таблиц.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
@@ -22,7 +22,7 @@ public class TablesCommandPerform implements Performable {
         }
 
         if (result.trim().isEmpty()){
-            result = emptyDb;
+            result = EMPTY_DB;
         }
         return result;
     }

@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.List;
 
 public class CreateDBCommandPerform implements Performable {
-    private final String outputText = "База данных %s добавлена.";
+    private final static String OUTPUT_TEXT = "База данных %s добавлена.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
@@ -18,7 +18,7 @@ public class CreateDBCommandPerform implements Performable {
         String result;
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getCreateDBQuery(dbName));
-            result = String.format(outputText, dbName);
+            result = String.format(OUTPUT_TEXT, dbName);
         }
 
         return result;

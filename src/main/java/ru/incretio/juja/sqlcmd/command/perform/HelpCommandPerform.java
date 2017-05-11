@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class HelpCommandPerform implements Performable {
-    private final String commandsListText = "Список доступных комманд:\n";
+    private final static String COMMANDS_LIST_TEXT = "Список доступных комманд:\n";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException {
-        String result = commandsListText;
+        String result = COMMANDS_LIST_TEXT;
 
         for (String notation : CommandTypes.getNotationsList()) {
             result += notation + "\n";

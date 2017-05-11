@@ -8,8 +8,8 @@ import ru.incretio.juja.sqlcmd.view.View;
 import java.sql.SQLException;
 
 class Main {
-    private final String SQL_ERROR_TEXT = "Ошибка при работе с СУБД: %s.";
-    private final String BAD_APP_CONFIGURATION = "Программа некорректно настроена.";
+    private final static String SQL_ERROR_TEXT = "Ошибка при работе с СУБД: %s.";
+    private final static String BAD_APP_CONFIGURATION = "Программа некорректно настроена.";
 
     private final View view;
     private final ConnectionConfig connectionConfig;

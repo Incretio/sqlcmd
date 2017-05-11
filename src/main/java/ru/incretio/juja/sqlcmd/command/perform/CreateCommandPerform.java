@@ -11,8 +11,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class CreateCommandPerform implements Performable {
-    private final String tableExistText = "Таблица %s уже существует.";
-    private final String tableAddedText = "Таблица %s добавлена.";
+    private final static String TABLE_EXIST_TEXT = "Таблица %s уже существует.";
+    private final static String TABLE_ADDED_TEXT = "Таблица %s добавлена.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
@@ -28,11 +28,11 @@ public class CreateCommandPerform implements Performable {
         newParams.add(tableName);
         try {
             new TableExistCommandPerform().perform(connectionConfig, newParams);
-            result = String.format(tableExistText, tableName);
+            result = String.format(TABLE_EXIST_TEXT, tableName);
         } catch (MissingTableException e) {
             try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
                 statement.execute(connectionConfig.getQuerable().getCreateTableQuery(tableName, columns));
-                result = String.format(tableAddedText, tableName);
+                result = String.format(TABLE_ADDED_TEXT, tableName);
             }
         }
 

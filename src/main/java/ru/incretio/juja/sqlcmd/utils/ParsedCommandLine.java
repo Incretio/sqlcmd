@@ -5,7 +5,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ParsedCommandLine {
-    private final String ESCAPE_STRING = "_&_";
+    private final static String ESCAPE_STRING = "_&_";
     private final List<String> list;
 
     public ParsedCommandLine(String line) throws EmptyCommandException {

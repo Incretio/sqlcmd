@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.List;
 
 public class UpdateCommandPerform implements Performable {
-    private final String outputText = "В таблице %s обновлена запись.";
+    private final static String OUTPUT_TEXT = "В таблице %s обновлена запись.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
@@ -24,7 +24,7 @@ public class UpdateCommandPerform implements Performable {
         String result;
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getUpdateQuery(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue));
-            result = String.format(outputText, tableName);
+            result = String.format(OUTPUT_TEXT, tableName);
         }
 
         return result;

@@ -7,10 +7,10 @@ import java.util.Properties;
 
 public abstract class JDBCConnectable implements Connectable {
 
-    private final String CONNECTIVITY_TYPE = "jdbc";
-    private final String URL_TEMPLATE = "%s:%s://%s/%s";
-    private final String USER_PROPERTY_NAME = "user";
-    private final String PASSWORD_PROPERTY_NAME = "password";
+    private final static String CONNECTIVITY_TYPE = "jdbc";
+    private final static String URL_TEMPLATE = "%s:%s://%s/%s";
+    private final static String USER_PROPERTY_NAME = "user";
+    private final static String PASSWORD_PROPERTY_NAME = "password";
 
     private final String dbHost;
     private final String dbName;

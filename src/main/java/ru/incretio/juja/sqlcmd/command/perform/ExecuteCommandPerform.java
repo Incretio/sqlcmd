@@ -8,18 +8,18 @@ import java.sql.Statement;
 import java.util.List;
 
 public class ExecuteCommandPerform implements Performable {
-    private final String outputText = "Пользовательский запрос выполнен.";
-    private final String tempDelimiter = "_&_";
-    private final String originalDelimiter = " ";
+    private final static String OUTPUT_TEXT = "Пользовательский запрос выполнен.";
+    private final static String TEMP_DELIMITER = "_&_";
+    private final static String ORIGINAL_DELIMITER = " ";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
-        String queryText = params.get(0).replace(tempDelimiter, originalDelimiter);
+        String queryText = params.get(0).replace(TEMP_DELIMITER, ORIGINAL_DELIMITER);
 
         String result;
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             statement.execute(queryText);
-            result = outputText;
+            result = OUTPUT_TEXT;
         }
 
         return result;

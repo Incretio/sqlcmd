@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.List;
 
 public class ClearCommandPerform implements Performable {
-    private final String outputText = "Таблица %s очищена.";
+    private final static String OUTPUT_TEXT = "Таблица %s очищена.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
@@ -20,7 +20,7 @@ public class ClearCommandPerform implements Performable {
 
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
             statement.execute(connectionConfig.getQuerable().getDeleteAllRecordsQuery(tableName));
-            result = String.format(outputText, tableName);
+            result = String.format(OUTPUT_TEXT, tableName);
         }
 
         return result;
