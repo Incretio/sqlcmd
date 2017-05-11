@@ -3,7 +3,7 @@ package ru.incretio.juja.sqlcmd.query;
 import ru.incretio.juja.sqlcmd.data.JDBCConnectionType;
 import java.util.List;
 
-public interface Querable {
+public interface Queryable {
     JDBCConnectionType getJdbcConnectionType();
     String getSelectQuery(String tableName);
     String getInsertQuery(String tableName, List<String> columns, List<String> values);

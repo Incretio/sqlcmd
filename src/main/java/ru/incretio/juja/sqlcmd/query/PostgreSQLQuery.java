@@ -3,7 +3,7 @@ package ru.incretio.juja.sqlcmd.query;
 import ru.incretio.juja.sqlcmd.data.JDBCConnectionType;
 import java.util.List;
 
-public class PostgreSQLQuery implements Querable {
+public class PostgreSQLQuery implements Queryable {
     private final JDBCConnectionType jdbcConnectionType;
 
     public PostgreSQLQuery(JDBCConnectionType jdbcConnectionType) {

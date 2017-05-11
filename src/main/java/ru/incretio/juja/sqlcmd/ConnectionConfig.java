@@ -1,16 +1,16 @@
 package ru.incretio.juja.sqlcmd;
 
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
-import ru.incretio.juja.sqlcmd.query.Querable;
+import ru.incretio.juja.sqlcmd.query.Queryable;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ConnectionConfig {
     private Connection connection;
-    private final Querable querable;
+    private final Queryable queryable;
 
-    public ConnectionConfig(Querable querable) {
-        this.querable = querable;
+    public ConnectionConfig(Queryable queryable) {
+        this.queryable = queryable;
     }
 
 
@@ -31,8 +31,8 @@ public class ConnectionConfig {
         return connection;
     }
 
-    public Querable getQuerable() {
-        return querable;
+    public Queryable getQueryable() {
+        return queryable;
     }
 
     private void testConnection() throws MissingConnectionException {

@@ -26,7 +26,7 @@ public class ConnectCommandPerform implements Performable {
         try {
             connectionConfig.setConnection(
                     JDBCConnectableFactory.makeJdbcConnection(
-                            connectionConfig.getQuerable().getJdbcConnectionType(),
+                            connectionConfig.getQueryable().getJdbcConnectionType(),
                             serverName, dbName).getConnection(userName, password));
             result = String.format(CONNECTION_SUCCESS_TEXT, dbName);
         } catch (ClassNotFoundException e) {

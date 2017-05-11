@@ -31,7 +31,7 @@ public class CreateCommandPerform implements Performable {
             result = String.format(TABLE_EXIST_TEXT, tableName);
         } catch (MissingTableException e) {
             try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
-                statement.execute(connectionConfig.getQuerable().getCreateTableQuery(tableName, columns));
+                statement.execute(connectionConfig.getQueryable().getCreateTableQuery(tableName, columns));
                 result = String.format(TABLE_ADDED_TEXT, tableName);
             }
         }

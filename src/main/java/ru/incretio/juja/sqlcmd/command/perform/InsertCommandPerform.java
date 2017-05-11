@@ -27,7 +27,7 @@ public class InsertCommandPerform implements Performable {
 
         String result;
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
-            statement.execute(connectionConfig.getQuerable().getInsertQuery(tableName, columns, values));
+            statement.execute(connectionConfig.getQueryable().getInsertQuery(tableName, columns, values));
             result = String.format(OUT_PUT_TEXT, tableName);
         }
 

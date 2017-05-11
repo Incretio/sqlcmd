@@ -19,7 +19,7 @@ public class ClearCommandPerform implements Performable {
         new TableExistCommandPerform().perform(connectionConfig, params);
 
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
-            statement.execute(connectionConfig.getQuerable().getDeleteAllRecordsQuery(tableName));
+            statement.execute(connectionConfig.getQueryable().getDeleteAllRecordsQuery(tableName));
             result = String.format(OUTPUT_TEXT, tableName);
         }
 

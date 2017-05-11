@@ -19,7 +19,7 @@ public class FindCommandPerform implements Performable {
 
         String result = "";
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
-            ResultSet resultSet = statement.executeQuery(connectionConfig.getQuerable().getSelectQuery(tableName));
+            ResultSet resultSet = statement.executeQuery(connectionConfig.getQueryable().getSelectQuery(tableName));
             ResultSetMetaData metaData = resultSet.getMetaData();
 
             for (int i = 1; i < metaData.getColumnCount() + 1; i++) {

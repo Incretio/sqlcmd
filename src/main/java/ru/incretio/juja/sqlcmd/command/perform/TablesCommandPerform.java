@@ -15,7 +15,7 @@ public class TablesCommandPerform implements Performable {
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
         String result = "";
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement();
-             ResultSet resultSet = statement.executeQuery(connectionConfig.getQuerable().getSelectTablesQuery())) {
+             ResultSet resultSet = statement.executeQuery(connectionConfig.getQueryable().getSelectTablesQuery())) {
             while (resultSet.next()) {
                 result += resultSet.getString(1) + "\n";
             }
