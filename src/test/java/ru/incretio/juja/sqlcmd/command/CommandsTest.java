@@ -31,7 +31,7 @@ public class CommandsTest {
         try {
             new DropDBCommandPerform().perform(connectionConfig, params);
         } catch (SQLException e) {
-            // do nothing, DB no exist
+            e.printStackTrace();
         }
         new CreateDBCommandPerform().perform(connectionConfig, params);
         params = getListWithParams(
