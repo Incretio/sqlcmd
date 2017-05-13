@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 public class ParsedCommandLine {
     private final static String ESCAPE_STRING = "_&_";
+    private final static int MIN_PARAMS_COUNT = 2;
     private final List<String> list;
 
     public ParsedCommandLine(String line) throws EmptyCommandException {
@@ -20,7 +21,7 @@ public class ParsedCommandLine {
     }
 
     public List<String> getParamsList() {
-        if (list == null || list.size() < 2) {
+        if (list == null || list.size() < MIN_PARAMS_COUNT) {
             return Collections.emptyList();
         }
         return list.subList(1, list.size());

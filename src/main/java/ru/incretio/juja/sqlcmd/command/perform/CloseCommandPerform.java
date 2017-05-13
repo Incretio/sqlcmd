@@ -18,13 +18,4 @@ public class CloseCommandPerform implements Performable {
 
         return OUTPUT_TEXT;
     }
-
-    public static void main(String[] args) {
-//        FileInputStream fis = new FileInputStream("ru.incretio.juja.sqlcmd.resources.strings");
-//        String text = new PropertyResourceBundle(fis).getString("OUTPUT_TEXT");
-//        System.out.println(text);
-        ResourceBundle bundle = ResourceBundle.getBundle("ru.incretio.juja.sqlcmd.resources.strings");
-        String text = bundle.getString("OUTPUT_TEXT");
-        System.out.println(text);
-    }
 }
