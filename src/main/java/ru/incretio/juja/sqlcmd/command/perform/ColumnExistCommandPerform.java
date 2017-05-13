@@ -13,8 +13,10 @@ public class ColumnExistCommandPerform implements Performable {
      */
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
-        String tableName = params.get(0);
-        String columnName = params.get(1);
+        int tableNameInd = 0;
+        int columnNameInd = 1;
+        String tableName = params.get(tableNameInd);
+        String columnName = params.get(columnNameInd);
 
         List<String> newParams = new ArrayList<>();
         newParams.add(tableName);

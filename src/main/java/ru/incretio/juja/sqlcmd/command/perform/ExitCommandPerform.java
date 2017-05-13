@@ -11,7 +11,6 @@ public class ExitCommandPerform implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
-
         String result = "";
         if (connectionConfig.isConnected()) {
             connectionConfig.testAndGetConnection().close();

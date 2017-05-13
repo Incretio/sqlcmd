@@ -11,9 +11,12 @@ public class DeleteCommandPerform implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
-        String tableName = params.get(0);
-        String whereColumnName = params.get(1);
-        String whereColumnValue = params.get(2);
+        int tableNameInd = 0;
+        int whereColumnNameInd = 1;
+        int whereColumnValueInd = 2;
+        String tableName = params.get(tableNameInd);
+        String whereColumnName = params.get(whereColumnNameInd);
+        String whereColumnValue = params.get(whereColumnValueInd);
         String result;
 
         CommandPerformHelper commandPerformHelper = new CommandPerformHelper(connectionConfig);

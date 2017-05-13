@@ -14,7 +14,8 @@ public class ExecuteCommandPerform implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
-        String queryText = params.get(0).replace(TEMP_DELIMITER, ORIGINAL_DELIMITER);
+        int queryTextInd = 0;
+        String queryText = params.get(queryTextInd).replace(TEMP_DELIMITER, ORIGINAL_DELIMITER);
 
         String result;
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {

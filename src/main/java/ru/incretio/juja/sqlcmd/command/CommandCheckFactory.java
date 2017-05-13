@@ -25,11 +25,12 @@ public class CommandCheckFactory {
     }
 
     public static Checkable getCreateCommandCheck() {
+        int firstCharInd = 0;
         return params -> {
             boolean hasErrorInColumnName = false;
             if (isNotNull(params)) {
                 for (String param : params) {
-                    if (Character.isDigit(param.charAt(0))) {
+                    if (Character.isDigit(param.charAt(firstCharInd))) {
                         hasErrorInColumnName = true;
                     }
                 }

@@ -1,6 +1,9 @@
 package ru.incretio.juja.sqlcmd.view;
 
+import ru.incretio.juja.sqlcmd.logger.AppLogger;
+
 import java.io.*;
+import java.util.Arrays;
 
 public class ConsoleView extends View {
     private final BufferedReader reader;
@@ -17,7 +20,7 @@ public class ConsoleView extends View {
             writer.write(text + "\n");
             writer.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            AppLogger.warning(Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -27,7 +30,7 @@ public class ConsoleView extends View {
         try {
             result = reader.readLine();
         } catch (IOException e) {
-            e.printStackTrace();
+            AppLogger.warning(Arrays.toString(e.getStackTrace()));
         }
 
         return result;

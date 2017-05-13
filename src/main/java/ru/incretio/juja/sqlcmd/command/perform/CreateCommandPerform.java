@@ -16,7 +16,8 @@ public class CreateCommandPerform implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
-        String tableName = params.get(0);
+        int tableNameInd = 0;
+        String tableName = params.get(tableNameInd);
         List<String> columns = Collections.emptyList();
         if (params.size() > 1) {
             columns = params.subList(1, params.size());

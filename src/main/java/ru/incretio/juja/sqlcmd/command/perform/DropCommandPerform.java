@@ -13,7 +13,8 @@ public class DropCommandPerform implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
-        String tableName = params.get(0);
+        int tableNameInd = 0;
+        String tableName = params.get(tableNameInd);
         String result;
 
         new TableExistCommandPerform().perform(connectionConfig, params);

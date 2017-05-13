@@ -14,10 +14,14 @@ public class ConnectCommandPerform implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
-        String serverName = params.get(0);
-        String dbName = params.get(1);
-        String userName = params.get(2);
-        String password = params.get(3);
+        int serverNameInd = 0;
+        int dbNameInd = 1;
+        int userNameInd = 2;
+        int passwordInd = 3;
+        String serverName = params.get(serverNameInd);
+        String dbName = params.get(dbNameInd);
+        String userName = params.get(userNameInd);
+        String password = params.get(passwordInd);
 
         String result;
         if (connectionConfig.isConnected()) {

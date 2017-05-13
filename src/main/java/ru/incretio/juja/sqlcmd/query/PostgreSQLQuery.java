@@ -51,17 +51,17 @@ public class PostgreSQLQuery implements Queryable {
 
     @Override
     public String getSelectTablesQuery() {
-        return "select table_name\n" +
-                "from information_schema.tables\n" +
-                "where table_schema='public'\n" +
-                "order by table_name";
+        return "SELECT table_name\n" +
+                "FROM information_schema.tables\n" +
+                "WHERE table_schema = 'public'\n" +
+                "ORDER BY table_name";
     }
 
     @Override
     public String getSelectTableColumnsQuery(String tableName) {
-        return "select column_name\n" +
-                "from information_schema.columns\n" +
-                "where table_schema='public' and table_name='"+ tableName + "'";
+        return "SELECT column_name\n" +
+                "FROM information_schema.columns\n" +
+                "WHERE table_schema='public' AND table_name='"+ tableName + "'";
     }
 
     @Override
@@ -81,7 +81,7 @@ public class PostgreSQLQuery implements Queryable {
 
     @Override
     public String getDropDBQuery(String dbName) {
-        return "DROP DATABASE " + dbName;
+        return "DROP DATABASE IF EXISTS " + dbName;
     }
 
     @Override

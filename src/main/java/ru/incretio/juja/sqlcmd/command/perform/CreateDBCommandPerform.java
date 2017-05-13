@@ -12,8 +12,8 @@ public class CreateDBCommandPerform implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
-
-        String dbName = params.get(0);
+        int dbNameInd = 0;
+        String dbName = params.get(dbNameInd);
 
         String result;
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {

@@ -11,11 +11,16 @@ public class UpdateCommandPerform implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
-        String tableName = params.get(0);
-        String whereColumnName = params.get(1);
-        String whereColumnValue = params.get(2);
-        String setColumnName = params.get(3);
-        String setColumnValue = params.get(4);
+        int tableNameInd = 0;
+        int whereColumnNameInd = 1;
+        int whereColumnValueInd = 2;
+        int setColumnNameInd = 3;
+        int setColumnValueInd = 4;
+        String tableName = params.get(tableNameInd);
+        String whereColumnName = params.get(whereColumnNameInd);
+        String whereColumnValue = params.get(whereColumnValueInd);
+        String setColumnName = params.get(setColumnNameInd);
+        String setColumnValue = params.get(setColumnValueInd);
 
         CommandPerformHelper commandPerformHelper = new CommandPerformHelper(connectionConfig);
         commandPerformHelper.checkTableExist(tableName);

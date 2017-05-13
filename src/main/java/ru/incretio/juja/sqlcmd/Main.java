@@ -5,7 +5,13 @@ import ru.incretio.juja.sqlcmd.command.CommandTypes;
 import ru.incretio.juja.sqlcmd.exceptions.*;
 import ru.incretio.juja.sqlcmd.utils.ParsedCommandLine;
 import ru.incretio.juja.sqlcmd.view.View;
+
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 class Main {
     private final static String SQL_ERROR_TEXT = "Ошибка при работе с СУБД: %s.";
@@ -30,8 +36,8 @@ class Main {
                 Command command = CommandTypes.getCommand(parsedCommandLine.getCommandName());
                 String output = performCommand(command, parsedCommandLine);
                 view.write(output);
-            } catch (Exception e){
-                if (e instanceof NeedExitException){
+            } catch (Exception e) {
+                if (e instanceof NeedExitException) {
                     isExit = true;
                 }
                 processingException(e);
@@ -50,7 +56,7 @@ class Main {
             view.write(String.format(SQL_ERROR_TEXT, e.getMessage()));
         } catch (NullPointerException e) {
             view.write(BAD_APP_CONFIGURATION);
-            e.printStackTrace();
+            view.write(Arrays.toString(e.getStackTrace()));
         } catch (Exception e) {
             view.write(e.getMessage());
         }

@@ -12,7 +12,8 @@ public class InsertCommandPerform implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
-        String tableName = params.get(0);
+        int tableNameInd = 0;
+        String tableName = params.get(tableNameInd);
 
         List<String> columns = new ArrayList<>();
         List<String> values = new ArrayList<>();

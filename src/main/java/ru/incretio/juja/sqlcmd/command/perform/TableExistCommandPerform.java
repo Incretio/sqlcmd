@@ -15,7 +15,8 @@ public class TableExistCommandPerform implements Performable {
      */
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
-        String tableName = params.get(0);
+        int tableNameInd = 0;
+        String tableName = params.get(tableNameInd);
         String tablesList = new TablesCommandPerform().perform(connectionConfig, Collections.emptyList());
         boolean tableFound = false;
 
