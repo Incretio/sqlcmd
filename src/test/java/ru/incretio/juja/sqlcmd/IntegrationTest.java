@@ -1,9 +1,6 @@
 package ru.incretio.juja.sqlcmd;
 
 import org.junit.*;
-import ru.incretio.juja.sqlcmd.Main;
-import ru.incretio.juja.sqlcmd.Run;
-import ru.incretio.juja.sqlcmd.query.PostgreSQLQuery;
 import ru.incretio.juja.sqlcmd.query.QueryFactory;
 
 import java.io.PrintStream;
@@ -20,8 +17,8 @@ public class IntegrationTest {
         System.setOut(new PrintStream(out));
 
         in.add(TestConstants.MASTER_CONNECTION_STRING);
-        in.add("execute '" + QueryFactory.makePostgreSQLQuery().getDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
-        in.add("execute '" + QueryFactory.makePostgreSQLQuery().getCreateDBQuery(TestConstants.TEST_DB_NAME) + "'");
+        in.add("execute '" + QueryFactory.makePostgreSQLQuery().takeDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
+        in.add("execute '" + QueryFactory.makePostgreSQLQuery().takeCreateDBQuery(TestConstants.TEST_DB_NAME) + "'");
         in.add("exit");
         Run.main(new String[0]);
         in.reset();
@@ -31,7 +28,7 @@ public class IntegrationTest {
     @AfterClass
     public static void clearDataAfterTest() {
         in.add(TestConstants.MASTER_CONNECTION_STRING);
-        in.add("execute '" + QueryFactory.makePostgreSQLQuery().getDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
+        in.add("execute '" + QueryFactory.makePostgreSQLQuery().takeDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
         in.add("exit");
         Run.main(new String[0]);
     }

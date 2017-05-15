@@ -18,7 +18,7 @@ public class DropDBCommandPerform implements Performable {
 
         String result;
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
-            statement.execute(connectionConfig.getQueryable().getDropDBQuery(dbName));
+            statement.execute(connectionConfig.getQueryable().takeDropDBQuery(dbName));
             result = String.format(OUTPUT_TEXT, dbName);
         }
 

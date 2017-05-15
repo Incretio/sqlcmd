@@ -2,8 +2,13 @@ package ru.incretio.juja.sqlcmd.command;
 
 import ru.incretio.juja.sqlcmd.command.perform.*;
 import ru.incretio.juja.sqlcmd.exceptions.CommandNotFoundException;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import static ru.incretio.juja.sqlcmd.command.CommandCheckFactory.*;
 import static ru.incretio.juja.sqlcmd.command.CommandNotationFactory.*;
 
@@ -36,24 +41,17 @@ public enum CommandTypes {
     }
 
     public static Command getCommand(String commandName) throws CommandNotFoundException {
-        for (CommandTypes commandType : CommandTypes.values()) {
-            if (commandType.commandName.equals(commandName)) {
-                return commandType.command;
-            }
+        try {
+            return CommandTypes.valueOf(commandName.toUpperCase()).command;
+        } catch (IllegalArgumentException e) {
+            throw new CommandNotFoundException(commandName);
         }
-        throw new CommandNotFoundException(commandName);
     }
 
     public static List<String> getNotationsList() {
-        List<String> result = new ArrayList<>();
-
-        for (CommandTypes commandType : CommandTypes.values()) {
-            String notation = commandType.command.getNotation();
-            if (notation != null) {
-                result.add(notation);
-            }
-        }
-
+        List<String> result = Stream.of(CommandTypes.values())
+                .map(commandType -> commandType.command.getNotation())
+                .collect(Collectors.toList());
         return result;
     }
 

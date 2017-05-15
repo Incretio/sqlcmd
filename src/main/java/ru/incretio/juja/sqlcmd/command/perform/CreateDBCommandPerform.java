@@ -18,7 +18,7 @@ public class CreateDBCommandPerform implements Performable {
 
         String result;
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
-            statement.execute(connectionConfig.getQueryable().getCreateDBQuery(dbName));
+            statement.execute(connectionConfig.getQueryable().takeCreateDBQuery(dbName));
             result = String.format(OUTPUT_TEXT, dbName);
         }
 

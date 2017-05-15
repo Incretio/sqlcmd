@@ -24,7 +24,7 @@ public class DeleteCommandPerform implements Performable {
         commandPerformHelper.checkColumnExist(tableName, whereColumnName);
 
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
-            statement.execute(connectionConfig.getQueryable().getDeleteQuery(tableName, whereColumnName, whereColumnValue));
+            statement.execute(connectionConfig.getQueryable().takeDeleteQuery(tableName, whereColumnName, whereColumnValue));
             result = String.format(OUTPUT_TEXT, tableName);
         }
 

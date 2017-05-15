@@ -11,13 +11,13 @@ public class PostgreSQLQuery implements Queryable {
     }
 
     @Override
-    public String getSelectQuery(String tableName) {
+    public String takeSelectQuery(String tableName) {
         return "SELECT * FROM public.\"" + tableName + "\"";
     }
 
 
     @Override
-    public String getInsertQuery(String tableName, List<String> columns, List<String> values) {
+    public String takeInsertQuery(String tableName, List<String> columns, List<String> values) {
         String columnsString = "";
         String valuesString = "";
         for (int i = 0; i < columns.size(); i++) {
@@ -32,25 +32,25 @@ public class PostgreSQLQuery implements Queryable {
     }
 
     @Override
-    public String getUpdateQuery(String tableName, String whereColumnName, String whereColumnValue, String setColumnName, String setColumnValue) {
+    public String takeUpdateQuery(String tableName, String whereColumnName, String whereColumnValue, String setColumnName, String setColumnValue) {
         return "UPDATE \"" + tableName + "\"" +
                 " SET " + setColumnName + "=" + "'" + setColumnValue + "'" +
                 " WHERE " + whereColumnName + "=" + "'" + whereColumnValue + "'";
     }
 
     @Override
-    public String getDeleteQuery(String tableName, String whereColumn, String whereValue) {
+    public String takeDeleteQuery(String tableName, String whereColumn, String whereValue) {
         return "DELETE FROM \"" + tableName + "\"" +
                 " WHERE " + whereColumn + "=" + "'" + whereValue + "'";
     }
 
     @Override
-    public String getDeleteAllRecordsQuery(String tableName) {
+    public String takeDeleteAllRecordsQuery(String tableName) {
         return "DELETE FROM public.\"" + tableName + "\"";
     }
 
     @Override
-    public String getSelectTablesQuery() {
+    public String takeSelectTablesQuery() {
         return "SELECT table_name\n" +
                 "FROM information_schema.tables\n" +
                 "WHERE table_schema = 'public'\n" +
@@ -58,14 +58,14 @@ public class PostgreSQLQuery implements Queryable {
     }
 
     @Override
-    public String getSelectTableColumnsQuery(String tableName) {
+    public String takeSelectTableColumnsQuery(String tableName) {
         return "SELECT column_name\n" +
                 "FROM information_schema.columns\n" +
                 "WHERE table_schema='public' AND table_name='"+ tableName + "'";
     }
 
     @Override
-    public String getCreateTableQuery(String tableName, List<String> columns) {
+    public String takeCreateTableQuery(String tableName, List<String> columns) {
         String columnsString = "";
         for (String column : columns) {
             columnsString += column + " varchar(20),";
@@ -75,17 +75,17 @@ public class PostgreSQLQuery implements Queryable {
     }
 
     @Override
-    public String getDropTableQuery(String tableName) {
+    public String takeDropTableQuery(String tableName) {
         return "DROP TABLE \"" + tableName + "\"";
     }
 
     @Override
-    public String getDropDBQuery(String dbName) {
+    public String takeDropDBQuery(String dbName) {
         return "DROP DATABASE IF EXISTS " + dbName;
     }
 
     @Override
-    public String getCreateDBQuery(String dbName) {
+    public String takeCreateDBQuery(String dbName) {
         return "CREATE DATABASE " + dbName + "\n" +
                 "  WITH OWNER = postgres\n" +
                 "       ENCODING = 'UTF8'\n" +

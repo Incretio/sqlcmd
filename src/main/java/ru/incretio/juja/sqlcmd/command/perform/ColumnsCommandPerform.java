@@ -19,7 +19,7 @@ public class ColumnsCommandPerform implements Performable {
         commandPerformHelper.checkTableExist(tableName);
 
         try (Statement statement = connectionConfig.testAndGetConnection().createStatement();
-             ResultSet resultSet = statement.executeQuery(connectionConfig.getQueryable().getSelectTableColumnsQuery(tableName))) {
+             ResultSet resultSet = statement.executeQuery(connectionConfig.getQueryable().takeSelectTableColumnsQuery(tableName))) {
             while (resultSet.next()) {
                 result += resultSet.getString(1) + "\n";
             }
