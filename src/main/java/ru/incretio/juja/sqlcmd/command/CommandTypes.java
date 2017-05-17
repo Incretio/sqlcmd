@@ -47,10 +47,9 @@ public enum CommandTypes {
     }
 
     public static List<String> getNotationsList() {
-        List<String> result = Stream.of(CommandTypes.values())
+        return Stream.of(CommandTypes.values())
                 .map(commandType -> commandType.command.getNotation())
                 .collect(Collectors.toList());
-        return result;
     }
 
     @Override

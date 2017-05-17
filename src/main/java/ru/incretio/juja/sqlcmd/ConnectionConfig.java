@@ -26,7 +26,7 @@ public class ConnectionConfig {
         this.connection = connection;
     }
 
-    public Connection getConnection() throws MissingConnectionException, SQLException {
+    public Connection getConnection() throws MissingConnectionException {
         if (!isConnected()) {
             throw new MissingConnectionException();
         }

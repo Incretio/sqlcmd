@@ -26,7 +26,7 @@ public class CreateTable implements Performable {
 
         String result;
         try {
-            List<String> newParams = Arrays.asList(tableName);
+            List<String> newParams = Collections.singletonList(tableName);
             new TableExists().perform(connectionConfig, newParams);
             result = String.format(TABLE_EXIST_TEXT, tableName);
         } catch (MissingTableException e) {

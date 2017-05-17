@@ -5,6 +5,7 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.exceptions.MissingColumnException;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ColumnExists implements Performable {
@@ -20,7 +21,7 @@ public class ColumnExists implements Performable {
         String tableName = params.get(tableNameInd);
         String columnName = params.get(columnNameInd);
 
-        List<String> newParams = Arrays.asList(tableName);
+        List<String> newParams = Collections.singletonList(tableName);
         String columnList = new ColumnsList().perform(connectionConfig, newParams);
 
         boolean columnFound = false;

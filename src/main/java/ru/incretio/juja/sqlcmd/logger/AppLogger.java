@@ -8,11 +8,10 @@ import java.util.logging.SimpleFormatter;
 public class AppLogger {
     private final static String LOG_FILE_NAME = "AppLog.log";
     private final static Logger LOGGER = Logger.getLogger("AppLog");
-    private static FileHandler fileHandler;
 
     static {
         try {
-            fileHandler = new FileHandler(LOG_FILE_NAME);
+            FileHandler fileHandler = new FileHandler(LOG_FILE_NAME);
             LOGGER.setUseParentHandlers(false);
             LOGGER.addHandler(fileHandler);
             fileHandler.setFormatter(new SimpleFormatter());

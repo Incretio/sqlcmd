@@ -5,6 +5,7 @@ import ru.incretio.juja.sqlcmd.command.perform.ColumnExists;
 import ru.incretio.juja.sqlcmd.command.perform.TableExists;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ public class CommandPerformHelper {
     }
 
     public void checkTableExist(String tableName) throws Exception {
-        List<String> newParams = Arrays.asList(tableName);
+        List<String> newParams = Collections.singletonList(tableName);
         new TableExists().perform(connectionConfig, newParams);
     }
 }
