@@ -5,16 +5,15 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.exceptions.NeedExitException;
 import java.util.List;
 
-public class ExitCommandPerform implements Performable {
+public class ExitApp implements Performable {
     private final static String DB_DISCONNECTED_TEXT = "Отключились от БД. ";
-    private final static String CLOSE_TEXT = "Программа будет закрыта.";
+    private final static String CLOSE_TEXT = "Закрытие программы...";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
         String result = "";
         if (connectionConfig.isConnected()) {
-            connectionConfig.testAndGetConnection().close();
-            connectionConfig.setConnection(null);
+            connectionConfig.closeConnection();
             result = DB_DISCONNECTED_TEXT;
         }
 

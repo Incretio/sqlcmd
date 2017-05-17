@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class ExecuteCommandPerform implements Performable {
+public class ExecuteAnyQuery implements Performable {
     private final static String OUTPUT_TEXT = "Пользовательский запрос выполнен.";
     private final static String TEMP_DELIMITER = "_&_";
     private final static String ORIGINAL_DELIMITER = " ";
@@ -19,7 +19,7 @@ public class ExecuteCommandPerform implements Performable {
         String queryText = params.get(queryTextInd).replace(TEMP_DELIMITER, ORIGINAL_DELIMITER);
 
         String result;
-        try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
+        try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(queryText);
             result = OUTPUT_TEXT;
         }

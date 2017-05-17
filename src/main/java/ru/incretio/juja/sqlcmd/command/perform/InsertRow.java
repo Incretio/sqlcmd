@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InsertCommandPerform implements Performable {
+public class InsertRow implements Performable {
     private final static String OUTPUT_TEXT = "В таблицу %s добавлена запись.";
 
     @Override
@@ -27,7 +27,7 @@ public class InsertCommandPerform implements Performable {
         commandPerformHelper.checkColumnExist(tableName, columns);
 
         String result;
-        try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
+        try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(connectionConfig.getQueryable().takeInsertQuery(tableName, columns, values));
             result = String.format(OUTPUT_TEXT, tableName);
         }

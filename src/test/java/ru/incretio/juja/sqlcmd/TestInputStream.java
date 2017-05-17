@@ -24,10 +24,6 @@ class TestInputStream extends InputStream {
         input += text + "\n";
     }
 
-    public String getData() {
-        return input;
-    }
-
     @Override
     public synchronized void reset() {
         input = "";

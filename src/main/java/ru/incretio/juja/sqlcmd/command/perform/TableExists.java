@@ -9,7 +9,8 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-public class TableExistCommandPerform implements Performable {
+public class TableExists implements Performable {
+    private final static String OUTPUT_TEXT = "Таблица %s имеется в наличии.";
 
     /**
      Кидает исключение MissingTableException, если таблица не найдена. Если найдена, то вернёт TRUE.toString();
@@ -18,9 +19,9 @@ public class TableExistCommandPerform implements Performable {
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
         int tableNameInd = 0;
         String tableName = params.get(tableNameInd);
-        String tablesList = new TablesCommandPerform().perform(connectionConfig, Collections.emptyList());
-        boolean tableFound = false;
+        String tablesList = new TablesList().perform(connectionConfig, Collections.emptyList());
 
+        boolean tableFound = false;
         for (String curTableName : tablesList.split("\n")) {
             if (curTableName.equals(tableName)){
                 tableFound = true;
@@ -32,6 +33,6 @@ public class TableExistCommandPerform implements Performable {
             throw new MissingTableException(tableName);
         }
 
-        return Boolean.TRUE.toString();
+        return String.format(OUTPUT_TEXT, tableName);
     }
 }

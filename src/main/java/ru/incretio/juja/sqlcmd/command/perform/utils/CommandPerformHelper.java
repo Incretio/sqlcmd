@@ -1,11 +1,10 @@
 package ru.incretio.juja.sqlcmd.command.perform.utils;
 
 import ru.incretio.juja.sqlcmd.ConnectionConfig;
-import ru.incretio.juja.sqlcmd.command.perform.ColumnExistCommandPerform;
-import ru.incretio.juja.sqlcmd.command.perform.TableExistCommandPerform;
-import java.util.ArrayList;
+import ru.incretio.juja.sqlcmd.command.perform.ColumnExists;
+import ru.incretio.juja.sqlcmd.command.perform.TableExists;
+
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,12 +25,12 @@ public class CommandPerformHelper {
     public void checkColumnExist(String tableName, List<String> columns) throws Exception {
         for (String curColumnName : columns) {
             List<String> newParams = Arrays.asList(tableName, curColumnName);
-            new ColumnExistCommandPerform().perform(connectionConfig, newParams);
+            new ColumnExists().perform(connectionConfig, newParams);
         }
     }
 
     public void checkTableExist(String tableName) throws Exception {
         List<String> newParams = Arrays.asList(tableName);
-        new TableExistCommandPerform().perform(connectionConfig, newParams);
+        new TableExists().perform(connectionConfig, newParams);
     }
 }

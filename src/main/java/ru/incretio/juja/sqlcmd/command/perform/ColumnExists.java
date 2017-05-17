@@ -4,13 +4,14 @@ import ru.incretio.juja.sqlcmd.ConnectionConfig;
 import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.exceptions.MissingColumnException;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class ColumnExistCommandPerform implements Performable {
+public class ColumnExists implements Performable {
+    private final static String OUTPUT_TEXT = "Колонка %s имеется в наличии у таблицы %s.";
 
     /**
-     Кидает исключение MissingColumnException, если поле не найдено. Если найдено, то вернёт TRUE.toString();
+     * Кидает исключение MissingColumnException, если поле не найдено. Если найдено, то вернёт TRUE.toString();
      */
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
@@ -19,22 +20,21 @@ public class ColumnExistCommandPerform implements Performable {
         String tableName = params.get(tableNameInd);
         String columnName = params.get(columnNameInd);
 
-        List<String> newParams = new ArrayList<>();
-        newParams.add(tableName);
-        String columnList = new ColumnsCommandPerform().perform(connectionConfig, newParams);
-        boolean columnFound = false;
+        List<String> newParams = Arrays.asList(tableName);
+        String columnList = new ColumnsList().perform(connectionConfig, newParams);
 
+        boolean columnFound = false;
         for (String curColumnName : columnList.split("\n")) {
-            if (curColumnName.equals(columnName)){
+            if (curColumnName.equals(columnName)) {
                 columnFound = true;
                 break;
             }
         }
 
-        if (!columnFound){
+        if (!columnFound) {
             throw new MissingColumnException(columnName);
         }
 
-        return Boolean.TRUE.toString();
+        return String.format(OUTPUT_TEXT, columnName, tableName);
     }
 }

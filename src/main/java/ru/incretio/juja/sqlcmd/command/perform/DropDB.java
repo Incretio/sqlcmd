@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class CreateDBCommandPerform implements Performable {
-    private final static String OUTPUT_TEXT = "База данных %s добавлена.";
+public class DropDB implements Performable {
+    private final static String OUTPUT_TEXT = "База данных %s удалена.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
@@ -17,8 +17,8 @@ public class CreateDBCommandPerform implements Performable {
         String dbName = params.get(dbNameInd);
 
         String result;
-        try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
-            statement.execute(connectionConfig.getQueryable().takeCreateDBQuery(dbName));
+        try (Statement statement = connectionConfig.getConnection().createStatement()) {
+            statement.execute(connectionConfig.getQueryable().takeDropDBQuery(dbName));
             result = String.format(OUTPUT_TEXT, dbName);
         }
 

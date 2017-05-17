@@ -26,8 +26,10 @@ public class ConnectionConfig {
         this.connection = connection;
     }
 
-    public Connection testAndGetConnection() throws MissingConnectionException, SQLException {
-        testConnection();
+    public Connection getConnection() throws MissingConnectionException, SQLException {
+        if (!isConnected()) {
+            throw new MissingConnectionException();
+        }
         return connection;
     }
 
@@ -35,9 +37,9 @@ public class ConnectionConfig {
         return queryable;
     }
 
-    private void testConnection() throws MissingConnectionException {
-        if (!isConnected()) {
-            throw new MissingConnectionException();
-        }
+    public void closeConnection() throws MissingConnectionException, SQLException {
+        getConnection().close();
+        connection = null;
     }
+
 }

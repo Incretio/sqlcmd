@@ -7,7 +7,7 @@ import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ConnectCommandPerform implements Performable {
+public class Connect implements Performable {
     private final static String CONNECTION_SUCCESS_TEXT = "Вы успешно подключились к базе данных %s.";
     private final static String DRIVER_LOADING_ERROR_TEXT = "Ошибка подключения драйвера.";
 
@@ -23,10 +23,11 @@ public class ConnectCommandPerform implements Performable {
         String userName = params.get(userNameInd);
         String password = params.get(passwordInd);
 
-        String result;
         if (connectionConfig.isConnected()) {
-            connectionConfig.testAndGetConnection().close();
+            connectionConfig.closeConnection();
         }
+
+        String result;
         try {
             connectionConfig.setConnection(
                     JDBCConnectableFactory.makeJdbcConnection(

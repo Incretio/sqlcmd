@@ -4,13 +4,14 @@ import ru.incretio.juja.sqlcmd.ConnectionConfig;
 import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.exceptions.MissingTableException;
+
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class CreateCommandPerform implements Performable {
+public class CreateTable implements Performable {
     private final static String TABLE_EXIST_TEXT = "Таблица %s уже существует.";
     private final static String TABLE_ADDED_TEXT = "Таблица %s добавлена.";
 
@@ -24,14 +25,12 @@ public class CreateCommandPerform implements Performable {
         }
 
         String result;
-
-        List<String> newParams = new ArrayList<>();
-        newParams.add(tableName);
         try {
-            new TableExistCommandPerform().perform(connectionConfig, newParams);
+            List<String> newParams = Arrays.asList(tableName);
+            new TableExists().perform(connectionConfig, newParams);
             result = String.format(TABLE_EXIST_TEXT, tableName);
         } catch (MissingTableException e) {
-            try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
+            try (Statement statement = connectionConfig.getConnection().createStatement()) {
                 statement.execute(connectionConfig.getQueryable().takeCreateTableQuery(tableName, columns));
                 result = String.format(TABLE_ADDED_TEXT, tableName);
             }

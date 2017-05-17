@@ -8,7 +8,7 @@ import ru.incretio.juja.sqlcmd.exceptions.MissingTableException;
 import java.sql.*;
 import java.util.List;
 
-public class FindCommandPerform implements Performable {
+public class SelectTable implements Performable {
     private final static String EMPTY_DATA = "В таблице %s отсутствуют данные.";
 
     @Override
@@ -16,10 +16,10 @@ public class FindCommandPerform implements Performable {
         int tableNameInd = 0;
         String tableName = params.get(tableNameInd);
 
-        new TableExistCommandPerform().perform(connectionConfig, params);
+        new TableExists().perform(connectionConfig, params);
 
         String result = "";
-        try (Statement statement = connectionConfig.testAndGetConnection().createStatement()) {
+        try (Statement statement = connectionConfig.getConnection().createStatement()) {
             ResultSet resultSet = statement.executeQuery(connectionConfig.getQueryable().takeSelectQuery(tableName));
             ResultSetMetaData metaData = resultSet.getMetaData();
 
