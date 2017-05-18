@@ -34,4 +34,9 @@ public class CommandPerformHelper {
         List<String> newParams = Collections.singletonList(tableName);
         new TableExists().perform(connectionConfig, newParams);
     }
+
+    public static boolean contains(String source, String value){
+        return Arrays.asList(source.split("\n"))
+                .contains(value);
+    }
 }

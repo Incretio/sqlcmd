@@ -7,7 +7,7 @@ public class JDBCConnectableImpl extends JDBCConnectable {
             JDBCConnectionType jdbcConnectionType,
             String dbHost, String dbName) throws ClassNotFoundException {
         super(dbHost, dbName);
-        this.jdbcUrl = jdbcConnectionType.getJdbcUrl();
+        jdbcUrl = jdbcConnectionType.getJdbcUrl();
         loadJDBCDriver(jdbcConnectionType.getJdbcDriverName());
 
     }

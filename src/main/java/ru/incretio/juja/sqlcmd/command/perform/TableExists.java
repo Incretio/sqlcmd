@@ -2,10 +2,12 @@ package ru.incretio.juja.sqlcmd.command.perform;
 
 import ru.incretio.juja.sqlcmd.ConnectionConfig;
 import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
+import ru.incretio.juja.sqlcmd.command.perform.utils.CommandPerformHelper;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.exceptions.MissingTableException;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,13 +23,7 @@ public class TableExists implements Performable {
         String tableName = params.get(tableNameInd);
         String tablesList = new TablesList().perform(connectionConfig, Collections.emptyList());
 
-        boolean tableFound = false;
-        for (String curTableName : tablesList.split("\n")) {
-            if (curTableName.equals(tableName)){
-                tableFound = true;
-                break;
-            }
-        }
+        boolean tableFound = CommandPerformHelper.contains(tablesList, tableName);
 
         if (!tableFound){
             throw new MissingTableException(tableName);

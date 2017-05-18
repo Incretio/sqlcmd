@@ -14,16 +14,22 @@ public class TablesList implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
-        String result = "";
+        String result;
         try (Statement statement = connectionConfig.getConnection().createStatement();
              ResultSet resultSet = statement.executeQuery(connectionConfig.getQueryable().takeSelectTablesQuery())) {
-            while (resultSet.next()) {
-                result += resultSet.getString(1) + "\n";
-            }
+            result = takeTableList(resultSet);
         }
 
-        if (result.trim().isEmpty()){
+        if (result.trim().isEmpty()) {
             result = EMPTY_DB;
+        }
+        return result;
+    }
+
+    private String takeTableList(ResultSet resultSet) throws SQLException {
+        String result = "";
+        while (resultSet.next()) {
+            result += resultSet.getString(1).concat("\n");
         }
         return result;
     }

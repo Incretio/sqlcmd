@@ -19,9 +19,11 @@ public class CreateTable implements Performable {
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
         int tableNameInd = 0;
         String tableName = params.get(tableNameInd);
-        List<String> columns = Collections.emptyList();
+        List<String> columns;
         if (params.size() > 1) {
             columns = params.subList(1, params.size());
+        } else {
+            columns = Collections.emptyList();
         }
 
         String result;

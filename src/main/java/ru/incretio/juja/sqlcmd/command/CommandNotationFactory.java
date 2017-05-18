@@ -2,99 +2,102 @@ package ru.incretio.juja.sqlcmd.command;
 
 import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 
+import static ru.incretio.juja.sqlcmd.command.CommandTypes.*;
+
 class CommandNotationFactory {
+    private final static String PATTERN_NOTATION = "\t%s:\n\t\t%s;";
+
     private static String getFormattedNotation(String commandFormat, String commandDescription) {
-        return "\t" + commandFormat + ":\n" +
-                "\t\t" + commandDescription + ";";
+        return String.format(PATTERN_NOTATION, commandFormat, commandDescription);
     }
 
     public static Notationable getClearCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.CLEAR.toString() + " tableName",
+        return () -> getFormattedNotation(CLEAR.toString().concat(" tableName"),
                 "очистить содержимое указанной таблицы");
     }
 
     public static Notationable getCloseCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.CLOSE.toString(),
+        return () -> getFormattedNotation(CLOSE.toString(),
                 "закрыть соединение с базой данных");
     }
 
     public static Notationable getColumnExistCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.COLUMN_EXIST.toString() + " tableName columnName",
+        return () -> getFormattedNotation(COLUMN_EXIST.toString().concat(" tableName columnName"),
                 "проверить наличие указанной колонки в указанной таблице");
     }
 
     public static Notationable getColumnsCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.COLUMNS.toString() + " tableName",
+        return () -> getFormattedNotation(COLUMNS.toString().concat(" tableName"),
                 "показать список столбцов указанной таблицы");
     }
 
     public static Notationable getConnectCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.CONNECT.toString() + " serverName dbName username password",
+        return () -> getFormattedNotation(CONNECT.toString().concat(" serverName dbName username password"),
                 "подключиться к базе данных");
     }
 
     public static Notationable getCreateCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.CREATE.toString() + " tableName column1 [column2] [columnN]",
+        return () -> getFormattedNotation(CREATE.toString().concat(" tableName column1 [column2] [columnN]"),
                 "добавить новую таблицу (имя столбца не может начинаться с цифры)");
     }
 
     public static Notationable getCreateDBCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.CREATEDB.toString() + " dbName",
+        return () -> getFormattedNotation(CREATEDB.toString().concat(" dbName"),
                 "добавить новую базу данных");
     }
 
     public static Notationable getDeleteCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.DELETE.toString() + " tableName whereColumn whereValue",
+        return () -> getFormattedNotation(DELETE.toString().concat(" tableName whereColumn whereValue"),
                 "удалить записи, удовлетворяющие условию");
     }
 
     public static Notationable getDropCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.DROP.toString() + " tableName",
+        return () -> getFormattedNotation(DROP.toString().concat(" tableName"),
                 "удалить указанную таблицу");
     }
 
     public static Notationable getDropDBCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.DROPDB.toString() + " dbName",
+        return () -> getFormattedNotation(DROPDB.toString().concat(" dbName"),
                 "удалить базу данных");
     }
 
     public static Notationable getExecuteCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.EXECUTE.toString() + " 'textQuery'",
+        return () -> getFormattedNotation(EXECUTE.toString().concat(" 'textQuery'"),
                 "выполнить пользовательский запрос (должен быть указан в одинарных ковычках)");
     }
 
     public static Notationable getExitCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.EXIT.toString(),
+        return () -> getFormattedNotation(EXIT.toString(),
                 "закрыть соединение и выйти из программы");
     }
 
     public static Notationable getFindCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.FIND.toString() + " tableName",
+        return () -> getFormattedNotation(FIND.toString().concat(" tableName"),
                 "показать содержимое указанной таблицы");
     }
 
     public static Notationable getHelpCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.HELP.toString(),
+        return () -> getFormattedNotation(HELP.toString(),
                 "показать список команд и их описаниями");
     }
 
     public static Notationable getInsertCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.INSERT.toString() + " tableName column1 value1 [column2 value2] [columnN valueN]",
+        return () -> getFormattedNotation(INSERT.toString().concat(" tableName column1 value1 [column2 value2] [columnN valueN]"),
                 "добавить запись в указанную таблицу");
     }
 
     public static Notationable getTableExistCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.TABLE_EXIST.toString() + " tableName",
+        return () -> getFormattedNotation(TABLE_EXIST.toString().concat(" tableName"),
                 "проверить наличие указанной таблицы в базе данных");
     }
 
     public static Notationable getTablesCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.TABLES.toString(),
+        return () -> getFormattedNotation(TABLES.toString(),
                 "показать список таблиц базы данных");
     }
 
     public static Notationable getUpdateCommandNotation() {
-        return () -> getFormattedNotation(CommandTypes.UPDATE.toString() + " tableName whereColumn whereValue setColumn setValue",
+        return () -> getFormattedNotation(UPDATE.toString().concat(" tableName whereColumn whereValue setColumn setValue"),
                 "обновить записи, удовлетворяющие условию в указанной таблице");
     }
 }

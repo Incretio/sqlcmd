@@ -21,7 +21,7 @@ public class ColumnsList implements Performable {
         try (Statement statement = connectionConfig.getConnection().createStatement();
              ResultSet resultSet = statement.executeQuery(connectionConfig.getQueryable().takeSelectTableColumnsQuery(tableName))) {
             while (resultSet.next()) {
-                result += resultSet.getString(1) + "\n";
+                result += resultSet.getString(1).concat("\n");
             }
         }
 

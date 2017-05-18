@@ -2,6 +2,7 @@ package ru.incretio.juja.sqlcmd.command.perform;
 
 import ru.incretio.juja.sqlcmd.ConnectionConfig;
 import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
+import ru.incretio.juja.sqlcmd.command.perform.utils.CommandPerformHelper;
 import ru.incretio.juja.sqlcmd.exceptions.MissingColumnException;
 
 import java.util.Arrays;
@@ -24,13 +25,7 @@ public class ColumnExists implements Performable {
         List<String> newParams = Collections.singletonList(tableName);
         String columnList = new ColumnsList().perform(connectionConfig, newParams);
 
-        boolean columnFound = false;
-        for (String curColumnName : columnList.split("\n")) {
-            if (curColumnName.equals(columnName)) {
-                columnFound = true;
-                break;
-            }
-        }
+        boolean columnFound = CommandPerformHelper.contains(columnList, columnName);
 
         if (!columnFound) {
             throw new MissingColumnException(columnName);

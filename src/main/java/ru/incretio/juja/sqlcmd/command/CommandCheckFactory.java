@@ -3,7 +3,7 @@ package ru.incretio.juja.sqlcmd.command;
 import ru.incretio.juja.sqlcmd.command.interfaces.Checkable;
 import java.util.List;
 
-class CommandCheckFactory {
+public class CommandCheckFactory {
     public static Checkable getClearCommandCheck() {
         return params -> isNotNull(params) && hasOneParams(params);
     }

@@ -17,10 +17,7 @@ public class InsertRow implements Performable {
 
         List<String> columns = new ArrayList<>();
         List<String> values = new ArrayList<>();
-        for (int i = 1; i < params.size(); i += 2) {
-            columns.add(params.get(i));
-            values.add(params.get(i + 1));
-        }
+        fillColumnsAndValues(params, columns, values);
 
         CommandPerformHelper commandPerformHelper = new CommandPerformHelper(connectionConfig);
         commandPerformHelper.checkTableExist(tableName);
@@ -33,5 +30,17 @@ public class InsertRow implements Performable {
         }
 
         return result;
+    }
+
+
+    public static void fillColumnsAndValues(
+            List<String> params, List<String> columns, List<String> values){
+        int secondElement = 1;
+        // Берём значение через одно, так как они чередуются [column][value][column][value]
+        for (int i = secondElement; i < params.size(); i += 2) {
+            columns.add(params.get(i));
+            int nextValueInd = i + 1;
+            values.add(params.get(nextValueInd));
+        }
     }
 }

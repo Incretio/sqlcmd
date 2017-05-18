@@ -23,11 +23,15 @@ public abstract class JDBCConnectable implements Connectable {
     @Override
     public Connection getConnection(String userName, String password) throws SQLException {
         String url = String.format(URL_TEMPLATE, CONNECTIVITY_TYPE, getJDBCUrl(), dbHost, dbName);
+        Properties props = getProperties(userName, password);
+        return DriverManager.getConnection(url, props);
+    }
+
+    private Properties getProperties(String userName, String password){
         Properties props = new Properties();
         props.setProperty(USER_PROPERTY_NAME, userName);
         props.setProperty(PASSWORD_PROPERTY_NAME, password);
-
-        return DriverManager.getConnection(url, props);
+        return props;
     }
 
     protected abstract String getJDBCUrl();

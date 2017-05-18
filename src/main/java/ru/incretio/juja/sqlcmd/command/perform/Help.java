@@ -13,7 +13,7 @@ public class Help implements Performable {
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException {
         String result = COMMANDS_LIST_TEXT;
         for (String notation : CommandTypes.getNotationsList()) {
-            result += notation + "\n";
+            result += notation.concat("\n");
         }
 
         return result;
