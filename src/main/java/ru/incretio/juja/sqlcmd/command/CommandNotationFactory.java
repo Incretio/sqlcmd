@@ -5,10 +5,10 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 import static ru.incretio.juja.sqlcmd.command.Command.*;
 
 abstract class CommandNotationFactory {
-    private final static String PATTERN_NOTATION = "\t%s:\n\t\t%s;";
+    private final static String NOTATION_NOTATION = "\t%s:\n\t\t%s;";
 
     private static String getFormattedNotation(String commandFormat, String commandDescription) {
-        return String.format(PATTERN_NOTATION, commandFormat, commandDescription);
+        return String.format(NOTATION_NOTATION, commandFormat, commandDescription);
     }
 
     public static Notationable makeClearCommandNotation() {

@@ -1,14 +1,48 @@
 package ru.incretio.juja.sqlcmd.query;
 
 import ru.incretio.juja.sqlcmd.data.JDBCConnectionType;
+
 import java.util.List;
+
+import static java.lang.String.format;
 
 public class PostgreSQLQuery implements Queryable {
     private final JDBCConnectionType jdbcConnectionType = JDBCConnectionType.PostgreSQL;
+    private final static String SELECT_QUERY_PATTERN = "SELECT * FROM public.\"%s\"";
+    private final static String INSERT_QUERY_PATTERN = "INSERT INTO \"%s\" (%s) VALUES (%s)";
+    private final static String UPDATE_QUERY_PATTERN = "UPDATE \"%s\" SET %s='%s' WHERE %s='%s'";
+    private final static String DELETE_QUERY_PATTERN = "DELETE FROM \"%s\" WHERE %s='%s'";
+    private final static String DELETE_ALL_QUERY_PATTERN = "DELETE FROM public.\"%s\"";
+    private final static String SELECT_TABLES_QUERY_PATTERN =
+            "SELECT table_name\n" +
+                    "FROM information_schema.tables\n" +
+                    "WHERE table_schema = 'public'\n" +
+                    "ORDER BY table_name";
+    private final static String TABLE_COLUMNS_QUERY_PATTERN =
+            "SELECT column_name\n" +
+                    "FROM information_schema.columns\n" +
+                    "WHERE table_schema='public' AND table_name='%s'";
+    private final static String CREATE_TABLE_QUERY_PATTERN = "CREATE TABLE \"%s\" ( %s);";
+    private final static String DROP_TABLE_PATTERN = "DROP TABLE \"%s\"";
+    private final static String DROP_DB_PATTERN = "DROP DATABASE IF EXISTS %s";
+    private final static String CREATE_DB_PATTERN =
+            "CREATE DATABASE %s\n" +
+                    "  WITH OWNER = postgres\n" +
+                    "       ENCODING = 'UTF8'\n" +
+                    "       TABLESPACE = pg_default\n" +
+                    "       LC_COLLATE = 'Russian_Russia.1251'\n" +
+                    "       LC_CTYPE = 'Russian_Russia.1251'\n" +
+                    "       CONNECTION LIMIT = -1;";
+
+
+    @Override
+    public JDBCConnectionType getJdbcConnectionType() {
+        return jdbcConnectionType;
+    }
 
     @Override
     public String takeSelectQuery(String tableName) {
-        return "SELECT * FROM public.\"" + tableName + "\"";
+        return format(SELECT_QUERY_PATTERN, tableName);
     }
 
     @Override
@@ -21,42 +55,34 @@ public class PostgreSQLQuery implements Queryable {
         }
         columnsString = columnsString.substring(0, columnsString.length() - 2);
         valuesString = valuesString.substring(0, valuesString.length() - 2);
-        return "INSERT INTO \"" + tableName + "\"" +
-                " (" + columnsString + ") " +
-                " VALUES (" + valuesString + ")";
+        return format(INSERT_QUERY_PATTERN, tableName, columnsString, valuesString);
     }
 
     @Override
     public String takeUpdateQuery(String tableName, String whereColumnName, String whereColumnValue, String setColumnName, String setColumnValue) {
-        return "UPDATE \"" + tableName + "\"" +
-                " SET " + setColumnName + "=" + "'" + setColumnValue + "'" +
-                " WHERE " + whereColumnName + "=" + "'" + whereColumnValue + "'";
+        return format(UPDATE_QUERY_PATTERN, tableName,
+                setColumnName, setColumnValue,
+                whereColumnName, whereColumnValue);
     }
 
     @Override
     public String takeDeleteQuery(String tableName, String whereColumn, String whereValue) {
-        return "DELETE FROM \"" + tableName + "\"" +
-                " WHERE " + whereColumn + "=" + "'" + whereValue + "'";
+        return format(DELETE_QUERY_PATTERN, tableName, whereColumn, whereValue);
     }
 
     @Override
     public String takeDeleteAllRecordsQuery(String tableName) {
-        return "DELETE FROM public.\"" + tableName + "\"";
+        return format(DELETE_ALL_QUERY_PATTERN, tableName);
     }
 
     @Override
     public String takeSelectTablesQuery() {
-        return "SELECT table_name\n" +
-                "FROM information_schema.tables\n" +
-                "WHERE table_schema = 'public'\n" +
-                "ORDER BY table_name";
+        return SELECT_TABLES_QUERY_PATTERN;
     }
 
     @Override
     public String takeSelectTableColumnsQuery(String tableName) {
-        return "SELECT column_name\n" +
-                "FROM information_schema.columns\n" +
-                "WHERE table_schema='public' AND table_name='"+ tableName + "'";
+        return format(TABLE_COLUMNS_QUERY_PATTERN, tableName);
     }
 
     @Override
@@ -66,33 +92,22 @@ public class PostgreSQLQuery implements Queryable {
             columnsString += column + " varchar(20),";
         }
         columnsString = columnsString.substring(0, columnsString.length() - 1);
-        return "CREATE TABLE " + "\"" + tableName + "\"" + " ( " + columnsString + ");";
+        return format(CREATE_TABLE_QUERY_PATTERN, tableName, columnsString);
     }
 
     @Override
     public String takeDropTableQuery(String tableName) {
-        return "DROP TABLE \"" + tableName + "\"";
+        return format(DROP_TABLE_PATTERN, tableName);
     }
 
     @Override
     public String takeDropDBQuery(String dbName) {
-        return "DROP DATABASE IF EXISTS " + dbName;
+        return format(DROP_DB_PATTERN, dbName);
     }
 
     @Override
     public String takeCreateDBQuery(String dbName) {
-        return "CREATE DATABASE " + dbName + "\n" +
-                "  WITH OWNER = postgres\n" +
-                "       ENCODING = 'UTF8'\n" +
-                "       TABLESPACE = pg_default\n" +
-                "       LC_COLLATE = 'Russian_Russia.1251'\n" +
-                "       LC_CTYPE = 'Russian_Russia.1251'\n" +
-                "       CONNECTION LIMIT = -1;";
-    }
-
-    @Override
-    public JDBCConnectionType getJdbcConnectionType() {
-        return jdbcConnectionType;
+        return format(CREATE_DB_PATTERN, dbName);
     }
 
 
