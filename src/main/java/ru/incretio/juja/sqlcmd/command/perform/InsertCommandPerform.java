@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InsertRow implements Performable {
+public class InsertCommandPerform implements Performable {
     private final static String OUTPUT_TEXT = "В таблицу %s добавлена запись.";
 
     @Override

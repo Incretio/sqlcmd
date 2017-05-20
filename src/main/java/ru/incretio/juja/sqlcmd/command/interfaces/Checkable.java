@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * Объект, для которого можно проверить корректность параметров
  */
+@FunctionalInterface
 public interface Checkable {
     boolean checkParams(List<String> params);
 }

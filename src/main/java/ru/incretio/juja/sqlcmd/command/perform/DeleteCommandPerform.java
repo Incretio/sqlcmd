@@ -6,7 +6,7 @@ import ru.incretio.juja.sqlcmd.command.perform.utils.CommandPerformHelper;
 import java.sql.Statement;
 import java.util.List;
 
-public class DeleteRow implements Performable {
+public class DeleteCommandPerform implements Performable {
     private final static String OUTPUT_TEXT = "Из таблицы %s удалена запись.";
 
     @Override

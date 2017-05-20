@@ -5,11 +5,10 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.command.perform.utils.CommandPerformHelper;
 import ru.incretio.juja.sqlcmd.exceptions.MissingColumnException;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ColumnExists implements Performable {
+public class ColumnExistsCommandPerform implements Performable {
     private final static String OUTPUT_TEXT = "Колонка %s имеется в наличии у таблицы %s.";
 
     /**
@@ -23,7 +22,7 @@ public class ColumnExists implements Performable {
         String columnName = params.get(columnNameInd);
 
         List<String> newParams = Collections.singletonList(tableName);
-        String columnList = new ColumnsList().perform(connectionConfig, newParams);
+        String columnList = new ColumnsCommandPerform().perform(connectionConfig, newParams);
 
         boolean columnFound = CommandPerformHelper.contains(columnList, columnName);
 

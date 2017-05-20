@@ -4,7 +4,7 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 
 import static ru.incretio.juja.sqlcmd.command.CommandTypes.*;
 
-class CommandNotationFactory {
+abstract class CommandNotationFactory {
     private final static String PATTERN_NOTATION = "\t%s:\n\t\t%s;";
 
     private static String getFormattedNotation(String commandFormat, String commandDescription) {

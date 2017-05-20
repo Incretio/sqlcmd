@@ -26,33 +26,33 @@ public class CommandsTest {
                 MASTER_DB,
                 USER_NAME,
                 PASSWORD);
-        new Connect().perform(connectionConfig, params);
+        new ConnectCommandPerform().perform(connectionConfig, params);
         params = getListWithParams(TEST_DB_NAME);
         try {
-            new DropDB().perform(connectionConfig, params);
+            new DropDBCommandPerform().perform(connectionConfig, params);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        new CreateDB().perform(connectionConfig, params);
+        new CreateDBCommandPerform().perform(connectionConfig, params);
         params = getListWithParams(
                 SERVER_NAME,
                 TEST_DB_NAME,
                 USER_NAME,
                 PASSWORD);
-        new Connect().perform(connectionConfig, params);
+        new ConnectCommandPerform().perform(connectionConfig, params);
         params = getListWithParams(
                 "table", "id", "name");
-        new CreateTable().perform(connectionConfig, params);
+        new CreateCommandPerform().perform(connectionConfig, params);
         params = getListWithParams(
                 "table0", "id", "name");
-        new CreateTable().perform(connectionConfig, params);
+        new CreateCommandPerform().perform(connectionConfig, params);
     }
 
     @AfterClass
     public static void clearDataAfterTest() {
         List<String> params = getListWithParams(TEST_DB_NAME);
         try {
-            new DropDB().perform(connectionConfig, params);
+            new DropDBCommandPerform().perform(connectionConfig, params);
         } catch (Exception e) {
             // do nothing, DB no exist
         }
@@ -65,16 +65,16 @@ public class CommandsTest {
                 "table1",
                 "id",
                 "name");
-        actual = new CreateTable().perform(connectionConfig, params);
+        actual = new CreateCommandPerform().perform(connectionConfig, params);
         assertEquals("Таблица table1 добавлена.", actual);
         params = getListWithParams(
                 "table1",
                 "id",
                 "name");
-        actual = new CreateTable().perform(connectionConfig, params);
+        actual = new CreateCommandPerform().perform(connectionConfig, params);
         assertEquals("Таблица table1 уже существует.", actual);
         params = getListWithParams("table1");
-        new DropTable().perform(connectionConfig, params);
+        new DropCommandPerform().perform(connectionConfig, params);
     }
 
     @Test
@@ -82,11 +82,11 @@ public class CommandsTest {
         String actual;
         List<String> params = getListWithParams("table");
 
-        actual = new ClearTable().perform(connectionConfig, params);
+        actual = new ClearCommandPerform().perform(connectionConfig, params);
         assertEquals("Таблица table очищена.", actual);
         params = getListWithParams("elbat");
         try {
-            new ClearTable().perform(connectionConfig, params);
+            new ClearCommandPerform().perform(connectionConfig, params);
         } catch (MissingTableException e) {
             assertEquals("Таблица elbat отсутствует.", e.getMessage());
         }
@@ -96,11 +96,11 @@ public class CommandsTest {
     public void testDeletePerform() throws Exception {
         String actual;
         List<String> params = getListWithParams("table", "id", "sdafasdf");
-        actual = new DeleteRow().perform(connectionConfig, params);
+        actual = new DeleteCommandPerform().perform(connectionConfig, params);
         assertEquals("Из таблицы table удалена запись.", actual);
         params = getListWithParams("table", "asdfkj", "1");
         try {
-            new DeleteRow().perform(connectionConfig, params);
+            new DeleteCommandPerform().perform(connectionConfig, params);
         } catch (MissingColumnException e) {
             assertEquals("Колонка asdfkj отсутствует.", e.getMessage());
         }
@@ -110,13 +110,13 @@ public class CommandsTest {
     public void testDropPerform() throws MissingConnectionException, SQLException, MissingTableException {
         String actual;
         List<String> params = getListWithParams("table10", "id");
-        new CreateTable().perform(connectionConfig, params);
+        new CreateCommandPerform().perform(connectionConfig, params);
         params = getListWithParams("table10");
-        actual = new DropTable().perform(connectionConfig, params);
+        actual = new DropCommandPerform().perform(connectionConfig, params);
         assertEquals("Таблица table10 удалена.", actual);
         params = getListWithParams("table10");
         try {
-            new DropTable().perform(connectionConfig, params);
+            new DropCommandPerform().perform(connectionConfig, params);
         } catch (MissingTableException e) {
             assertEquals("Таблица table10 отсутствует.", e.getMessage());
         }
@@ -126,15 +126,15 @@ public class CommandsTest {
     public void testClearInsertUpdateAndFindPerform() throws Exception {
         String actual;
         List<String> params = getListWithParams("table");
-        new ClearTable().perform(connectionConfig, params);
+        new ClearCommandPerform().perform(connectionConfig, params);
         params = getListWithParams("table", "id", "1");
-        actual = new InsertRow().perform(connectionConfig, params);
+        actual = new InsertCommandPerform().perform(connectionConfig, params);
         assertEquals("В таблицу table добавлена запись.", actual);
         params = getListWithParams("table", "id", "1", "name", "newvalue");
-        actual = new UpdateRow().perform(connectionConfig, params);
+        actual = new UpdateCommandPerform().perform(connectionConfig, params);
         assertEquals("В таблице table обновлена запись.", actual);
         params = getListWithParams("table");
-        actual = new SelectTable().perform(connectionConfig, params);
+        actual = new FindCommandPerform().perform(connectionConfig, params);
         assertEquals(
                 "+----+----------+\n" +
                         "+ id + name     +\n" +
@@ -148,7 +148,7 @@ public class CommandsTest {
     public void testTablesPerform() throws MissingConnectionException, SQLException {
         String actual;
         List<String> params = getListWithParams();
-        actual = new TablesList().perform(connectionConfig, params);
+        actual = new TablesCommandPerform().perform(connectionConfig, params);
         assertEquals(
                 "table\n" +
                         "table0\n",

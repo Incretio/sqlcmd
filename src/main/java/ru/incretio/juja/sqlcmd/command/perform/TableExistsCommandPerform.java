@@ -7,11 +7,10 @@ import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.exceptions.MissingTableException;
 
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class TableExists implements Performable {
+public class TableExistsCommandPerform implements Performable {
     private final static String OUTPUT_TEXT = "Таблица %s имеется в наличии.";
 
     /**
@@ -21,7 +20,7 @@ public class TableExists implements Performable {
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
         int tableNameInd = 0;
         String tableName = params.get(tableNameInd);
-        String tablesList = new TablesList().perform(connectionConfig, Collections.emptyList());
+        String tablesList = new TablesCommandPerform().perform(connectionConfig, Collections.emptyList());
 
         boolean tableFound = CommandPerformHelper.contains(tablesList, tableName);
 

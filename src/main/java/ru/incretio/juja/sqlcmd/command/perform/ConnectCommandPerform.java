@@ -7,7 +7,7 @@ import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class Connect implements Performable {
+public class ConnectCommandPerform implements Performable {
     private final static String CONNECTION_SUCCESS_TEXT = "Вы успешно подключились к базе данных %s.";
     private final static String DRIVER_LOADING_ERROR_TEXT = "Ошибка подключения драйвера.";
 

@@ -9,22 +9,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class ClearTable implements Performable {
-    private final static String OUTPUT_TEXT = "Таблица %s очищена.";
+public class DropCommandPerform implements Performable {
+    private final static String OUTPUT_TEXT = "Таблица %s удалена.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
-        new TableExists().perform(connectionConfig, params);
+        int tableNameInd = 0;
+        String tableName = params.get(tableNameInd);
+
+        new TableExistsCommandPerform().perform(connectionConfig, params);
 
         String result;
         try (Statement statement = connectionConfig.getConnection().createStatement()) {
-            int tableNameInd = 0;
-            String tableName = params.get(tableNameInd);
-            statement.execute(connectionConfig.getQueryable().takeDeleteAllRecordsQuery(tableName));
+            statement.execute(connectionConfig.getQueryable().takeDropTableQuery(tableName));
             result = String.format(OUTPUT_TEXT, tableName);
         }
 
         return result;
     }
-
 }

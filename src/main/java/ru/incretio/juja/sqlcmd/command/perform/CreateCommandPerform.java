@@ -7,11 +7,10 @@ import ru.incretio.juja.sqlcmd.exceptions.MissingTableException;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class CreateTable implements Performable {
+public class CreateCommandPerform implements Performable {
     private final static String TABLE_EXIST_TEXT = "Таблица %s уже существует.";
     private final static String TABLE_ADDED_TEXT = "Таблица %s добавлена.";
 
@@ -29,7 +28,7 @@ public class CreateTable implements Performable {
         String result;
         try {
             List<String> newParams = Collections.singletonList(tableName);
-            new TableExists().perform(connectionConfig, newParams);
+            new TableExistsCommandPerform().perform(connectionConfig, newParams);
             result = String.format(TABLE_EXIST_TEXT, tableName);
         } catch (MissingTableException e) {
             try (Statement statement = connectionConfig.getConnection().createStatement()) {

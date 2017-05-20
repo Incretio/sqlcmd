@@ -7,7 +7,7 @@ import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class CloseConnection implements Performable {
+public class CloseCommandPerform implements Performable {
     private final static String OUTPUT_TEXT = "Отключились от БД.";
 
     @Override

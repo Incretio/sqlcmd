@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class DropDB implements Performable {
+public class DropDBCommandPerform implements Performable {
     private final static String OUTPUT_TEXT = "База данных %s удалена.";
 
     @Override

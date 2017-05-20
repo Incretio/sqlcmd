@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.List;
 
-public class ColumnsList implements Performable {
+public class ColumnsCommandPerform implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {

@@ -6,7 +6,7 @@ import ru.incretio.juja.sqlcmd.command.perform.utils.CommandPerformHelper;
 import java.sql.Statement;
 import java.util.List;
 
-public class UpdateRow implements Performable {
+public class UpdateCommandPerform implements Performable {
     private final static String OUTPUT_TEXT = "В таблице %s обновлена запись.";
 
     @Override

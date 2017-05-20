@@ -12,28 +12,28 @@ import static ru.incretio.juja.sqlcmd.command.CommandNotationFactory.*;
 
 public enum CommandTypes {
     // Connection command
-    CONNECT("connect", new Command(getConnectCommandCheck(), new Connect(), getConnectCommandNotation())),
-    CLOSE("close", new Command(getCloseCommandCheck(), new CloseConnection(), getCloseCommandNotation())),
+    CONNECT("connect", new Command(new CommandCheckFactory().getConnectCommandCheck(), new ConnectCommandPerform(), getConnectCommandNotation())),
+    CLOSE("close", new Command(new CommandCheckFactory().getCloseCommandCheck(), new CloseCommandPerform(), getCloseCommandNotation())),
     // Tables command
-    TABLES("tables", new Command(getTablesCommandCheck(), new TablesList(), getTablesCommandNotation())),
-    COLUMNS("columns", new Command(getColumnsCommandCheck(), new ColumnsList(), getColumnsCommandNotation())),
-    CREATE("create", new Command(getCreateCommandCheck(), new CreateTable(), getCreateCommandNotation())),
-    DROP("drop", new Command(getDropCommandCheck(), new DropTable(), getDropCommandNotation())),
-    CLEAR("clear", new Command(getClearCommandCheck(), new ClearTable(), getClearCommandNotation())),
-    FIND("find", new Command(getFindCommandCheck(), new SelectTable(), getFindCommandNotation())),
-    INSERT("insert", new Command(getInsertCommandCheck(), new InsertRow(), getInsertCommandNotation())),
-    UPDATE("update", new Command(getUpdateCommandCheck(), new UpdateRow(), getUpdateCommandNotation())),
-    DELETE("delete", new Command(getDeleteCommandCheck(), new DeleteRow(), getDeleteCommandNotation())),
+    TABLES("tables", new Command(new CommandCheckFactory().getTablesCommandCheck(), new TablesCommandPerform(), getTablesCommandNotation())),
+    COLUMNS("columns", new Command(new CommandCheckFactory().getColumnsCommandCheck(), new ColumnsCommandPerform(), getColumnsCommandNotation())),
+    CREATE("create", new Command(new CommandCheckFactory().getCreateCommandCheck(), new CreateCommandPerform(), getCreateCommandNotation())),
+    DROP("drop", new Command(new CommandCheckFactory().getDropCommandCheck(), new DropCommandPerform(), getDropCommandNotation())),
+    CLEAR("clear", new Command(new CommandCheckFactory().getClearCommandCheck(), new ClearCommandPerform(), getClearCommandNotation())),
+    FIND("find", new Command(new CommandCheckFactory().getFindCommandCheck(), new FindCommandPerform(), getFindCommandNotation())),
+    INSERT("insert", new Command(new CommandCheckFactory().getInsertCommandCheck(), new InsertCommandPerform(), getInsertCommandNotation())),
+    UPDATE("update", new Command(new CommandCheckFactory().getUpdateCommandCheck(), new UpdateCommandPerform(), getUpdateCommandNotation())),
+    DELETE("delete", new Command(new CommandCheckFactory().getDeleteCommandCheck(), new DeleteCommandPerform(), getDeleteCommandNotation())),
     // Exist command
-    TABLE_EXIST("table_exist", new Command(getTableExistCommandCheck(), new TableExists(), getTableExistCommandNotation())),
-    COLUMN_EXIST("column_exist", new Command(getColumnExistCommandCheck(), new ColumnExists(), getColumnExistCommandNotation())),
+    TABLE_EXIST("table_exist", new Command(new CommandCheckFactory().getTableExistCommandCheck(), new TableExistsCommandPerform(), getTableExistCommandNotation())),
+    COLUMN_EXIST("column_exist", new Command(new CommandCheckFactory().getColumnExistCommandCheck(), new ColumnExistsCommandPerform(), getColumnExistCommandNotation())),
     // DB command
-    DROPDB("dropdb", new Command(getDropDBCommandCheck(), new DropDB(), getDropDBCommandNotation())),
-    CREATEDB("createdb", new Command(getCreateDBCommandCheck(), new CreateDB(), getCreateDBCommandNotation())),
+    DROPDB("dropdb", new Command(new CommandCheckFactory().getDropDBCommandCheck(), new DropDBCommandPerform(), getDropDBCommandNotation())),
+    CREATEDB("createdb", new Command(new CommandCheckFactory().getCreateDBCommandCheck(), new CreateDBCommandPerform(), getCreateDBCommandNotation())),
     // System command
-    EXECUTE("execute", new Command(getExecuteCommandCheck(), new ExecuteAnyQuery(), getExecuteCommandNotation())),
-    HELP("help", new Command(getHelpCommandCheck(), new Help(), getHelpCommandNotation())),
-    EXIT("exit", new Command(getExitCommandCheck(), new ExitApp(), getExitCommandNotation()));
+    EXECUTE("execute", new Command(new CommandCheckFactory().getExecuteCommandCheck(), new ExecuteCommandPerform(), getExecuteCommandNotation())),
+    HELP("help", new Command(new CommandCheckFactory().getHelpCommandCheck(), new HelpCommandPerform(), getHelpCommandNotation())),
+    EXIT("exit", new Command(new CommandCheckFactory().getExitCommandCheck(), new ExitCommandPerform(), getExitCommandNotation()));
 
     private final String commandName;
     private final Command command;
@@ -53,7 +53,7 @@ public enum CommandTypes {
 
     public static List<String> getNotationsList() {
         return Stream.of(CommandTypes.values())
-                .map(commandType -> commandType.command.getNotationable())
+                .map(commandType -> commandType.command.getNotation())
                 .collect(Collectors.toList());
     }
 

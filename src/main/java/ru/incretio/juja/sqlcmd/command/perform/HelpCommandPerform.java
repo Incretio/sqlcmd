@@ -6,7 +6,7 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import java.sql.SQLException;
 import java.util.List;
 
-public class Help implements Performable {
+public class HelpCommandPerform implements Performable {
     private final static String COMMANDS_LIST_TEXT = "Список доступных комманд:\n";
 
     @Override

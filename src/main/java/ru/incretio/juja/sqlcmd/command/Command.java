@@ -22,8 +22,9 @@ public class Command implements Checkable, Performable, Notationable {
         return checkable.checkParams(params);
     }
 
-    public String getNotationable() {
-        return notationable.getNotationable();
+    @Override
+    public String getNotation() {
+        return notationable.getNotation();
     }
 
     @Override
