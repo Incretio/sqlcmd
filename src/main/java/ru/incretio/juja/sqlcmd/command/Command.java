@@ -8,13 +8,13 @@ import java.util.List;
 
 public class Command implements Checkable, Performable, Notationable {
     private final Checkable checkable;
-    private final Performable perform;
-    private final Notationable notation;
+    private final Performable performable;
+    private final Notationable notationable;
 
-    public Command(Checkable checkable, Performable perform, Notationable notation) {
+    public Command(Checkable checkable, Performable performable, Notationable notationable) {
         this.checkable = checkable;
-        this.perform = perform;
-        this.notation = notation;
+        this.performable = performable;
+        this.notationable = notationable;
     }
 
     @Override
@@ -22,13 +22,12 @@ public class Command implements Checkable, Performable, Notationable {
         return checkable.checkParams(params);
     }
 
-    @Override
-    public String getNotation() {
-        return notation.getNotation();
+    public String getNotationable() {
+        return notationable.getNotationable();
     }
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
-        return perform.perform(connectionConfig, params);
+        return performable.perform(connectionConfig, params);
     }
 }

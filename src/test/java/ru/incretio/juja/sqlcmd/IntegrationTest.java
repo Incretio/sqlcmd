@@ -232,14 +232,18 @@ public class IntegrationTest {
                 "Список доступных комманд:\n" +
                 "\tconnect serverName dbName username password:\n" +
                 "\t\tподключиться к базе данных;\n" +
+                "\tclose:\n" +
+                "\t\tзакрыть соединение с базой данных;\n" +
                 "\ttables:\n" +
                 "\t\tпоказать список таблиц базы данных;\n" +
-                "\tclear tableName:\n" +
-                "\t\tочистить содержимое указанной таблицы;\n" +
-                "\tdrop tableName:\n" +
-                "\t\tудалить указанную таблицу;\n" +
+                "\tcolumns tableName:\n" +
+                "\t\tпоказать список столбцов указанной таблицы;\n" +
                 "\tcreate tableName column1 [column2] [columnN]:\n" +
                 "\t\tдобавить новую таблицу (имя столбца не может начинаться с цифры);\n" +
+                "\tdrop tableName:\n" +
+                "\t\tудалить указанную таблицу;\n" +
+                "\tclear tableName:\n" +
+                "\t\tочистить содержимое указанной таблицы;\n" +
                 "\tfind tableName:\n" +
                 "\t\tпоказать содержимое указанной таблицы;\n" +
                 "\tinsert tableName column1 value1 [column2 value2] [columnN valueN]:\n" +
@@ -248,24 +252,20 @@ public class IntegrationTest {
                 "\t\tобновить записи, удовлетворяющие условию в указанной таблице;\n" +
                 "\tdelete tableName whereColumn whereValue:\n" +
                 "\t\tудалить записи, удовлетворяющие условию;\n" +
-                "\texit:\n" +
-                "\t\tзакрыть соединение и выйти из программы;\n" +
-                "\tclose:\n" +
-                "\t\tзакрыть соединение с базой данных;\n" +
-                "\thelp:\n" +
-                "\t\tпоказать список команд и их описаниями;\n" +
-                "\texecute 'textQuery':\n" +
-                "\t\tвыполнить пользовательский запрос (должен быть указан в одинарных ковычках);\n" +
+                "\ttable_exist tableName:\n" +
+                "\t\tпроверить наличие указанной таблицы в базе данных;\n" +
+                "\tcolumn_exist tableName columnName:\n" +
+                "\t\tпроверить наличие указанной колонки в указанной таблице;\n" +
                 "\tdropdb dbName:\n" +
                 "\t\tудалить базу данных;\n" +
                 "\tcreatedb dbName:\n" +
                 "\t\tдобавить новую базу данных;\n" +
-                "\ttable_exist tableName:\n" +
-                "\t\tпроверить наличие указанной таблицы в базе данных;\n" +
-                "\tcolumns tableName:\n" +
-                "\t\tпоказать список столбцов указанной таблицы;\n" +
-                "\tcolumn_exist tableName columnName:\n" +
-                "\t\tпроверить наличие указанной колонки в указанной таблице;\n" +
+                "\texecute 'textQuery':\n" +
+                "\t\tвыполнить пользовательский запрос (должен быть указан в одинарных ковычках);\n" +
+                "\thelp:\n" +
+                "\t\tпоказать список команд и их описаниями;\n" +
+                "\texit:\n" +
+                "\t\tзакрыть соединение и выйти из программы;\n" +
                 "\n" +
                 "Закрытие программы...\n" +
                 "\n" +
@@ -342,14 +342,18 @@ public class IntegrationTest {
                 "Список доступных комманд:\n" +
                 "\tconnect serverName dbName username password:\n" +
                 "\t\tподключиться к базе данных;\n" +
+                "\tclose:\n" +
+                "\t\tзакрыть соединение с базой данных;\n" +
                 "\ttables:\n" +
                 "\t\tпоказать список таблиц базы данных;\n" +
-                "\tclear tableName:\n" +
-                "\t\tочистить содержимое указанной таблицы;\n" +
-                "\tdrop tableName:\n" +
-                "\t\tудалить указанную таблицу;\n" +
+                "\tcolumns tableName:\n" +
+                "\t\tпоказать список столбцов указанной таблицы;\n" +
                 "\tcreate tableName column1 [column2] [columnN]:\n" +
                 "\t\tдобавить новую таблицу (имя столбца не может начинаться с цифры);\n" +
+                "\tdrop tableName:\n" +
+                "\t\tудалить указанную таблицу;\n" +
+                "\tclear tableName:\n" +
+                "\t\tочистить содержимое указанной таблицы;\n" +
                 "\tfind tableName:\n" +
                 "\t\tпоказать содержимое указанной таблицы;\n" +
                 "\tinsert tableName column1 value1 [column2 value2] [columnN valueN]:\n" +
@@ -358,24 +362,20 @@ public class IntegrationTest {
                 "\t\tобновить записи, удовлетворяющие условию в указанной таблице;\n" +
                 "\tdelete tableName whereColumn whereValue:\n" +
                 "\t\tудалить записи, удовлетворяющие условию;\n" +
-                "\texit:\n" +
-                "\t\tзакрыть соединение и выйти из программы;\n" +
-                "\tclose:\n" +
-                "\t\tзакрыть соединение с базой данных;\n" +
-                "\thelp:\n" +
-                "\t\tпоказать список команд и их описаниями;\n" +
-                "\texecute 'textQuery':\n" +
-                "\t\tвыполнить пользовательский запрос (должен быть указан в одинарных ковычках);\n" +
+                "\ttable_exist tableName:\n" +
+                "\t\tпроверить наличие указанной таблицы в базе данных;\n" +
+                "\tcolumn_exist tableName columnName:\n" +
+                "\t\tпроверить наличие указанной колонки в указанной таблице;\n" +
                 "\tdropdb dbName:\n" +
                 "\t\tудалить базу данных;\n" +
                 "\tcreatedb dbName:\n" +
                 "\t\tдобавить новую базу данных;\n" +
-                "\ttable_exist tableName:\n" +
-                "\t\tпроверить наличие указанной таблицы в базе данных;\n" +
-                "\tcolumns tableName:\n" +
-                "\t\tпоказать список столбцов указанной таблицы;\n" +
-                "\tcolumn_exist tableName columnName:\n" +
-                "\t\tпроверить наличие указанной колонки в указанной таблице;\n" +
+                "\texecute 'textQuery':\n" +
+                "\t\tвыполнить пользовательский запрос (должен быть указан в одинарных ковычках);\n" +
+                "\thelp:\n" +
+                "\t\tпоказать список команд и их описаниями;\n" +
+                "\texit:\n" +
+                "\t\tзакрыть соединение и выйти из программы;\n" +
                 "\n" +
                 "Отключились от БД. Закрытие программы...\n" +
                 "\n" +

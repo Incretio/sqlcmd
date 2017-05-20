@@ -59,7 +59,7 @@ class Main {
         if (command.checkParams(parsedCommandLine.getParamsList())) {
             return command.perform(connectionConfig, parsedCommandLine.getParamsList());
         } else {
-            throw new CommandParamsCountNotMatchException(command.getNotation());
+            throw new CommandParamsCountNotMatchException(command.getNotationable());
         }
     }
 

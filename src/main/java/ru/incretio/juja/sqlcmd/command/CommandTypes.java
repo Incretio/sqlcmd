@@ -53,7 +53,7 @@ public enum CommandTypes {
 
     public static List<String> getNotationsList() {
         return Stream.of(CommandTypes.values())
-                .map(commandType -> commandType.command.getNotation())
+                .map(commandType -> commandType.command.getNotationable())
                 .collect(Collectors.toList());
     }
 
