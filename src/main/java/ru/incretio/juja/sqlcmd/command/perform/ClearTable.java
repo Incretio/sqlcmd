@@ -14,12 +14,11 @@ public class ClearTable implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
-        int tableNameInd = 0;
-
         new TableExists().perform(connectionConfig, params);
 
         String result;
         try (Statement statement = connectionConfig.getConnection().createStatement()) {
+            int tableNameInd = 0;
             String tableName = params.get(tableNameInd);
             statement.execute(connectionConfig.getQueryable().takeDeleteAllRecordsQuery(tableName));
             result = String.format(OUTPUT_TEXT, tableName);

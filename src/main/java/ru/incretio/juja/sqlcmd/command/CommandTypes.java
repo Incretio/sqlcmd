@@ -11,24 +11,29 @@ import static ru.incretio.juja.sqlcmd.command.CommandCheckFactory.*;
 import static ru.incretio.juja.sqlcmd.command.CommandNotationFactory.*;
 
 public enum CommandTypes {
+    // Connection command
     CONNECT("connect", new Command(getConnectCommandCheck(), new Connect(), getConnectCommandNotation())),
+    CLOSE("close", new Command(getCloseCommandCheck(), new CloseConnection(), getCloseCommandNotation())),
+    // Tables command
     TABLES("tables", new Command(getTablesCommandCheck(), new TablesList(), getTablesCommandNotation())),
-    CLEAR("clear", new Command(getClearCommandCheck(), new ClearTable(), getClearCommandNotation())),
-    DROP("drop", new Command(getDropCommandCheck(), new DropTable(), getDropCommandNotation())),
+    COLUMNS("columns", new Command(getColumnsCommandCheck(), new ColumnsList(), getColumnsCommandNotation())),
     CREATE("create", new Command(getCreateCommandCheck(), new CreateTable(), getCreateCommandNotation())),
+    DROP("drop", new Command(getDropCommandCheck(), new DropTable(), getDropCommandNotation())),
+    CLEAR("clear", new Command(getClearCommandCheck(), new ClearTable(), getClearCommandNotation())),
     FIND("find", new Command(getFindCommandCheck(), new SelectTable(), getFindCommandNotation())),
     INSERT("insert", new Command(getInsertCommandCheck(), new InsertRow(), getInsertCommandNotation())),
     UPDATE("update", new Command(getUpdateCommandCheck(), new UpdateRow(), getUpdateCommandNotation())),
     DELETE("delete", new Command(getDeleteCommandCheck(), new DeleteRow(), getDeleteCommandNotation())),
-    EXIT("exit", new Command(getExitCommandCheck(), new ExitApp(), getExitCommandNotation())),
-    CLOSE("close", new Command(getCloseCommandCheck(), new CloseConnection(), getCloseCommandNotation())),
-    HELP("help", new Command(getHelpCommandCheck(), new Help(), getHelpCommandNotation())),
-    EXECUTE("execute", new Command(getExecuteCommandCheck(), new ExecuteAnyQuery(), getExecuteCommandNotation())),
+    // Exist command
+    TABLE_EXIST("table_exist", new Command(getTableExistCommandCheck(), new TableExists(), getTableExistCommandNotation())),
+    COLUMN_EXIST("column_exist", new Command(getColumnExistCommandCheck(), new ColumnExists(), getColumnExistCommandNotation())),
+    // DB command
     DROPDB("dropdb", new Command(getDropDBCommandCheck(), new DropDB(), getDropDBCommandNotation())),
     CREATEDB("createdb", new Command(getCreateDBCommandCheck(), new CreateDB(), getCreateDBCommandNotation())),
-    TABLE_EXIST("table_exist", new Command(getTableExistCommandCheck(), new TableExists(), getTableExistCommandNotation())),
-    COLUMNS("columns", new Command(getColumnsCommandCheck(), new ColumnsList(), getColumnsCommandNotation())),
-    COLUMN_EXIST("column_exist", new Command(getColumnExistCommandCheck(), new ColumnExists(), getColumnExistCommandNotation()));
+    // System command
+    EXECUTE("execute", new Command(getExecuteCommandCheck(), new ExecuteAnyQuery(), getExecuteCommandNotation())),
+    HELP("help", new Command(getHelpCommandCheck(), new Help(), getHelpCommandNotation())),
+    EXIT("exit", new Command(getExitCommandCheck(), new ExitApp(), getExitCommandNotation()));
 
     private final String commandName;
     private final Command command;
