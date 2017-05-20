@@ -1,36 +1,37 @@
 package ru.incretio.juja.sqlcmd.command;
 
 import ru.incretio.juja.sqlcmd.command.interfaces.Checkable;
+import ru.incretio.juja.sqlcmd.command.utils.CheckParamsHelper;
 
-public class CommandCheckFactory {
-    private final CheckParamsHelper checkParamsHelper = new CheckParamsHelper();
+abstract class CommandCheckFactory {
+    private static final CheckParamsHelper checkParamsHelper = new CheckParamsHelper();
 
-    public Checkable getClearCommandCheck() {
-        return (params) -> checkParamsHelper.hasOneParams(params);
+    public static Checkable makeClearCommandCheck() {
+        return checkParamsHelper::hasOneParams;
     }
 
-    public Checkable getCloseCommandCheck() {
-        return (params) -> checkParamsHelper.hasZeroParams(params);
+    public static Checkable makeCloseCommandCheck() {
+        return checkParamsHelper::hasZeroParams;
     }
 
-    public Checkable getColumnExistCommandCheck() {
-        return (params) -> checkParamsHelper.hasTwoParams(params);
+    public static Checkable makeColumnExistCommandCheck() {
+        return checkParamsHelper::hasTwoParams;
     }
 
-    public Checkable getColumnsCommandCheck() {
-        return (params) -> checkParamsHelper.hasOneParams(params);
+    public static Checkable makeColumnsCommandCheck() {
+        return checkParamsHelper::hasOneParams;
     }
 
-    public Checkable getConnectCommandCheck() {
-        return (params) -> checkParamsHelper.hasFourParams(params);
+    public static Checkable makeConnectCheck() {
+        return checkParamsHelper::hasFourParams;
     }
 
-    public Checkable getCreateCommandCheck() {
-        int firstCharInd = 0;
+    public static Checkable makeCreateCommandCheck() {
         return params -> {
             if (checkParamsHelper.isNull(params)) {
                 return false;
             }
+            int firstCharInd = 0;
             boolean hasErrorInColumnName =
                     params.stream()
                             .anyMatch(s -> Character.isDigit(s.charAt(firstCharInd)));
@@ -38,52 +39,52 @@ public class CommandCheckFactory {
         };
     }
 
-    public Checkable getCreateDBCommandCheck() {
-        return (params) -> checkParamsHelper.hasOneParams(params);
+    public static Checkable makeCreateDBCommandCheck() {
+        return checkParamsHelper::hasOneParams;
     }
 
-    public Checkable getDeleteCommandCheck() {
-        return (params) -> checkParamsHelper.hasThreeParams(params);
+    public static Checkable makeDeleteCommandCheck() {
+        return checkParamsHelper::hasThreeParams;
     }
 
-    public Checkable getDropCommandCheck() {
-        return (params) -> checkParamsHelper.hasOneParams(params);
+    public static Checkable makeDropCommandCheck() {
+        return checkParamsHelper::hasOneParams;
     }
 
-    public Checkable getDropDBCommandCheck() {
-        return (params) -> checkParamsHelper.hasOneParams(params);
+    public static Checkable makeDropDBCommandCheck() {
+        return checkParamsHelper::hasOneParams;
     }
 
-    public Checkable getExecuteCommandCheck() {
-        return (params) -> checkParamsHelper.hasOneParams(params);
+    public static Checkable makeExecuteCommandCheck() {
+        return checkParamsHelper::hasOneParams;
     }
 
-    public Checkable getExitCommandCheck() {
-        return (params) -> checkParamsHelper.hasZeroParams(params);
+    public static Checkable makeExitCommandCheck() {
+        return checkParamsHelper::hasZeroParams;
     }
 
-    public Checkable getFindCommandCheck() {
-        return (params) -> checkParamsHelper.hasOneParams(params);
+    public static Checkable makeFindCommandCheck() {
+        return checkParamsHelper::hasOneParams;
     }
 
-    public Checkable getHelpCommandCheck() {
-        return (params) -> checkParamsHelper.hasZeroParams(params);
+    public static Checkable makeHelpCommandCheck() {
+        return checkParamsHelper::hasZeroParams;
     }
 
-    public Checkable getInsertCommandCheck() {
+    public static Checkable makeInsertCommandCheck() {
         return params -> checkParamsHelper.moreThanXParams(params, 2) && checkParamsHelper.hasOddParams(params);
     }
 
-    public Checkable getTableExistCommandCheck() {
-        return (params) -> checkParamsHelper.hasOneParams(params);
+    public static Checkable makeTableExistCommandCheck() {
+        return checkParamsHelper::hasOneParams;
     }
 
-    public Checkable getTablesCommandCheck() {
-        return (params) -> checkParamsHelper.hasZeroParams(params);
+    public static Checkable makeTablesCommandCheck() {
+        return checkParamsHelper::hasZeroParams;
     }
 
-    public Checkable getUpdateCommandCheck() {
-        return (params) -> checkParamsHelper.hasFiveParams(params);
+    public static Checkable makeUpdateCommandCheck() {
+        return checkParamsHelper::hasFiveParams;
     }
 
 }
