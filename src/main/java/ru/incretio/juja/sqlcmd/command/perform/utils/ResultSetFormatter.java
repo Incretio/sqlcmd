@@ -85,12 +85,11 @@ public class ResultSetFormatter {
     private String getFormattedTable(List<List<String>> data, List<String> columns, List<Integer> columnsWidth) throws SQLException {
         StringBuilder result = new StringBuilder();
 
-        result.append(getSeparatorLine(columns.size(), columnsWidth))
-                .append("+\n")
-                .append(getColumnsTitleLine(columns, columnsWidth).concat("\n"))
-                .append(getSeparatorLine(columns.size(), columnsWidth).concat("+\n"))
+        result.append(getSeparatorLine(columns.size(), columnsWidth)).append("\n")
+                .append(getColumnsTitleLine(columns, columnsWidth)).append("\n")
+                .append(getSeparatorLine(columns.size(), columnsWidth)).append("\n")
                 .append(getDataLines(data, columnsWidth))
-                .append(getSeparatorLine(columns.size(), columnsWidth).concat("+\n"));
+                .append(getSeparatorLine(columns.size(), columnsWidth)).append("\n");
 
         return result.toString();
     }
@@ -112,6 +111,7 @@ public class ResultSetFormatter {
             String pattern = String.format("+-%%%ds", columnsWidth.get(i)); // Example: "+-%1s"
             result.append(String.format(pattern, "").replace(" ", "-"));
         }
+        result.append("+");
         return result.toString();
     }
 
