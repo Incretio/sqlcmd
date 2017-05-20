@@ -136,11 +136,11 @@ public class CommandsTest {
         params = getListWithParams("table");
         actual = new SelectTable().perform(connectionConfig, params);
         assertEquals(
-                "+---------------------+---------------------+\n" +
-                        "+ id                  + name                +\n" +
-                        "+---------------------+---------------------+\n" +
-                        "+ 1                   + newvalue            +\n" +
-                        "+---------------------+---------------------+\n",
+                "+----+----------+\n" +
+                        "+ id + name     +\n" +
+                        "+----+----------+\n" +
+                        "+ 1  + newvalue +\n" +
+                        "+----+----------+\n",
                 actual);
     }
 
