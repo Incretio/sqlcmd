@@ -9,7 +9,7 @@ public abstract class View {
         write(HEADER_TEXT);
     }
 
-    public void writeFoot(){
+    public void writeFooter(){
         write(FOOTER_TEXT);
     }
 

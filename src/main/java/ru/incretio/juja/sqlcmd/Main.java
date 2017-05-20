@@ -39,7 +39,7 @@ class Main {
             }
         }
 
-        view.writeFoot();
+        view.writeFooter();
     }
 
     private void processingException(Exception exception) {
