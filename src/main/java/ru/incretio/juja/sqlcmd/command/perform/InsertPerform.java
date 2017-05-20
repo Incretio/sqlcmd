@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InsertCommandPerform implements Performable {
+public class InsertPerform implements Performable {
     private final static String OUTPUT_TEXT = "В таблицу %s добавлена запись.";
 
     @Override
@@ -33,7 +33,7 @@ public class InsertCommandPerform implements Performable {
     }
 
 
-    public static void fillColumnsAndValues(
+    private static void fillColumnsAndValues(
             List<String> params, List<String> columns, List<String> values){
         int secondElement = 1;
         // Берём значение через одно, так как они чередуются [column][value][column][value]

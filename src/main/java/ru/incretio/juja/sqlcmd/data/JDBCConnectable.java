@@ -5,7 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public abstract class JDBCConnectable implements Connectable {
+public class JDBCConnectable {
+    private final String jdbcUrl;
 
     private final static String CONNECTIVITY_TYPE = "jdbc";
     private final static String URL_TEMPLATE = "%s:%s://%s/%s";
@@ -15,14 +16,15 @@ public abstract class JDBCConnectable implements Connectable {
     private final String dbHost;
     private final String dbName;
 
-    JDBCConnectable(String dbHost, String dbName) {
+    public JDBCConnectable(JDBCConnectionType jdbcConnectionType, String dbHost, String dbName) throws ClassNotFoundException {
         this.dbHost = dbHost;
         this.dbName = dbName;
+        jdbcUrl = jdbcConnectionType.getJdbcUrl();
+        loadJDBCDriver(jdbcConnectionType.getJdbcDriverName());
     }
 
-    @Override
     public Connection getConnection(String userName, String password) throws SQLException {
-        String url = String.format(URL_TEMPLATE, CONNECTIVITY_TYPE, getJDBCUrl(), dbHost, dbName);
+        String url = String.format(URL_TEMPLATE, CONNECTIVITY_TYPE, jdbcUrl, dbHost, dbName);
         Properties props = getProperties(userName, password);
         return DriverManager.getConnection(url, props);
     }
@@ -34,8 +36,8 @@ public abstract class JDBCConnectable implements Connectable {
         return props;
     }
 
-    protected abstract String getJDBCUrl();
-
-    protected abstract void loadJDBCDriver(String jdbcDriverName) throws ClassNotFoundException;
+    private void loadJDBCDriver(String jdbcDriverName) throws ClassNotFoundException{
+        Class.forName(jdbcDriverName);
+    }
 
 }

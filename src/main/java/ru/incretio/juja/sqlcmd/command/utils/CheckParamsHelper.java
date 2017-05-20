@@ -1,49 +1,49 @@
-package ru.incretio.juja.sqlcmd.command;
+package ru.incretio.juja.sqlcmd.command.utils;
 
 import java.util.List;
 
 public class CheckParamsHelper {
-    protected boolean isNull(Object object) {
+    public boolean isNull(Object object) {
         return object == null;
     }
 
-    protected boolean isNotNull(Object object) {
+    private boolean isNotNull(Object object) {
         return object != null;
     }
 
-    protected boolean hasZeroParams(List params) {
+    public boolean hasZeroParams(List params) {
         return hasXCountParams(params, 0);
     }
 
-    protected boolean hasOneParams(List params) {
+    public boolean hasOneParams(List params) {
         return hasXCountParams(params, 1);
     }
 
-    protected boolean hasTwoParams(List params) {
+    public boolean hasTwoParams(List params) {
         return hasXCountParams(params, 2);
     }
 
-    protected boolean hasThreeParams(List params) {
+    public boolean hasThreeParams(List params) {
         return hasXCountParams(params, 3);
     }
 
-    protected boolean hasFourParams(List params) {
+    public boolean hasFourParams(List params) {
         return hasXCountParams(params, 4);
     }
 
-    protected boolean hasFiveParams(List params) {
+    public boolean hasFiveParams(List params) {
         return hasXCountParams(params, 5);
     }
 
-    protected boolean hasXCountParams(List params, int correctParamsCount) {
+    private boolean hasXCountParams(List params, int correctParamsCount) {
         return isNotNull(params) && (params.size() == correctParamsCount);
     }
 
-    protected boolean moreThanXParams(List params, int x) {
+    public boolean moreThanXParams(List params, int x) {
         return isNotNull(params) && params.size() > x;
     }
 
-    protected boolean hasOddParams(List params) {
+    public boolean hasOddParams(List params) {
         return isNotNull(params) && (params.size() % 2 == 1);
     }
 }

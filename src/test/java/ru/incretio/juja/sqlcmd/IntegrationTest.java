@@ -1,6 +1,8 @@
 package ru.incretio.juja.sqlcmd;
 
 import org.junit.*;
+import ru.incretio.juja.sqlcmd.data.JDBCConnectionType;
+import ru.incretio.juja.sqlcmd.exceptions.MissingJDBCConnectionTypeException;
 import ru.incretio.juja.sqlcmd.query.QueryFactory;
 
 import java.io.PrintStream;
@@ -12,13 +14,13 @@ public class IntegrationTest {
     private final static TestOutputStream out = new TestOutputStream();
 
     @Before
-    public void setupTest() {
+    public void setupTest() throws MissingJDBCConnectionTypeException {
         System.setIn(in);
         System.setOut(new PrintStream(out));
 
         in.add(TestConstants.MASTER_CONNECTION_STRING);
-        in.add("execute '" + QueryFactory.makePostgreSQLQuery().takeDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
-        in.add("execute '" + QueryFactory.makePostgreSQLQuery().takeCreateDBQuery(TestConstants.TEST_DB_NAME) + "'");
+        in.add("execute '" + QueryFactory.makeSQLQuery(JDBCConnectionType.PostgreSQL).takeDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
+        in.add("execute '" + QueryFactory.makeSQLQuery(JDBCConnectionType.PostgreSQL).takeCreateDBQuery(TestConstants.TEST_DB_NAME) + "'");
         in.add("exit");
         Run.main(new String[0]);
         in.reset();
@@ -26,9 +28,9 @@ public class IntegrationTest {
     }
 
     @AfterClass
-    public static void clearDataAfterTest() {
+    public static void clearDataAfterTest() throws MissingJDBCConnectionTypeException {
         in.add(TestConstants.MASTER_CONNECTION_STRING);
-        in.add("execute '" + QueryFactory.makePostgreSQLQuery().takeDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
+        in.add("execute '" + QueryFactory.makeSQLQuery(JDBCConnectionType.PostgreSQL).takeDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
         in.add("exit");
         Run.main(new String[0]);
     }

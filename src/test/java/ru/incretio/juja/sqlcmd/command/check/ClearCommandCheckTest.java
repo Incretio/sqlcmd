@@ -1,7 +1,6 @@
 package ru.incretio.juja.sqlcmd.command.check;
 
 import org.junit.Test;
-import ru.incretio.juja.sqlcmd.command.CommandCheckFactory;
 import ru.incretio.juja.sqlcmd.command.interfaces.Checkable;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testClearCommandCheck() {
-        Checkable check = new CommandCheckFactory().getClearCommandCheck();
+        Checkable check = makeClearCommandCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
@@ -27,7 +26,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testCloseCommandCheck() {
-        Checkable check = new CommandCheckFactory().getCloseCommandCheck();
+        Checkable check = makeCloseCommandCheck();
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
         assertTrue(check.checkParams(params));
@@ -37,7 +36,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testConnectCommandCheck() {
-        Checkable check = new CommandCheckFactory().getConnectCommandCheck();
+        Checkable check = makeConnectCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
@@ -56,7 +55,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testCreateCommandCheck() {
-        Checkable check = new CommandCheckFactory().getCreateCommandCheck();
+        Checkable check = makeCreateCommandCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
@@ -75,7 +74,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testCreateDBCommandCheck() {
-        Checkable check = new CommandCheckFactory().getCreateDBCommandCheck();
+        Checkable check = makeCreateDBCommandCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
@@ -88,7 +87,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testDeleteCommandCheck() {
-        Checkable check = new CommandCheckFactory().getDeleteCommandCheck();
+        Checkable check = makeDeleteCommandCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
@@ -107,7 +106,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testDropCommandCheck() {
-        Checkable check = new CommandCheckFactory().getDropCommandCheck();
+        Checkable check = makeDropCommandCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
@@ -120,7 +119,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testDropDBCommandCheck() {
-        Checkable check = new CommandCheckFactory().getDropDBCommandCheck();
+        Checkable check = makeDropDBCommandCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
@@ -133,7 +132,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testExecuteCommandCheck() {
-        Checkable check = new CommandCheckFactory().getExecuteCommandCheck();
+        Checkable check = makeExecuteCommandCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
@@ -146,7 +145,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testExitCommandCheck() {
-        Checkable check = new CommandCheckFactory().getExitCommandCheck();
+        Checkable check = makeExitCommandCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
@@ -159,7 +158,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testFindCommandCheck() {
-        Checkable check = new CommandCheckFactory().getFindCommandCheck();
+        Checkable check = makeFindCommandCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
@@ -172,7 +171,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testHelpCommandCheck() {
-        Checkable check = new CommandCheckFactory().getHelpCommandCheck();
+        Checkable check = makeHelpCommandCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
@@ -185,7 +184,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testInsertCommandCheck() {
-        Checkable check = new CommandCheckFactory().getInsertCommandCheck();
+        Checkable check = makeInsertCommandCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
@@ -212,7 +211,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testTablesCommandCheck() {
-        Checkable check = new CommandCheckFactory().getTablesCommandCheck();
+        Checkable check = makeTablesCommandCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
@@ -225,7 +224,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testUpdateCommandCheck() {
-        Checkable check = new CommandCheckFactory().getUpdateCommandCheck();
+        Checkable check = makeUpdateCommandCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();
@@ -246,7 +245,7 @@ public class ClearCommandCheckTest {
 
     @Test
     public void testColumnExistCommandCheck() {
-        Checkable check = new CommandCheckFactory().getColumnExistCommandCheck();
+        Checkable check = makeColumnExistCommandCheck();
         params = null;
         assertFalse(check.checkParams(params));
         params = new ArrayList<>();

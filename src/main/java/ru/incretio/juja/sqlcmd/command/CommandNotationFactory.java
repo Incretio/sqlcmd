@@ -2,7 +2,7 @@ package ru.incretio.juja.sqlcmd.command;
 
 import ru.incretio.juja.sqlcmd.command.interfaces.Notationable;
 
-import static ru.incretio.juja.sqlcmd.command.CommandTypes.*;
+import static ru.incretio.juja.sqlcmd.command.Command.*;
 
 abstract class CommandNotationFactory {
     private final static String PATTERN_NOTATION = "\t%s:\n\t\t%s;";
@@ -11,92 +11,92 @@ abstract class CommandNotationFactory {
         return String.format(PATTERN_NOTATION, commandFormat, commandDescription);
     }
 
-    public static Notationable getClearCommandNotation() {
+    public static Notationable makeClearCommandNotation() {
         return () -> getFormattedNotation(CLEAR.toString().concat(" tableName"),
                 "очистить содержимое указанной таблицы");
     }
 
-    public static Notationable getCloseCommandNotation() {
+    public static Notationable makeCloseCommandNotation() {
         return () -> getFormattedNotation(CLOSE.toString(),
                 "закрыть соединение с базой данных");
     }
 
-    public static Notationable getColumnExistCommandNotation() {
+    public static Notationable makeColumnExistCommandNotation() {
         return () -> getFormattedNotation(COLUMN_EXIST.toString().concat(" tableName columnName"),
                 "проверить наличие указанной колонки в указанной таблице");
     }
 
-    public static Notationable getColumnsCommandNotation() {
+    public static Notationable makeColumnsCommandNotation() {
         return () -> getFormattedNotation(COLUMNS.toString().concat(" tableName"),
                 "показать список столбцов указанной таблицы");
     }
 
-    public static Notationable getConnectCommandNotation() {
+    public static Notationable makeConnectNotation() {
         return () -> getFormattedNotation(CONNECT.toString().concat(" serverName dbName username password"),
                 "подключиться к базе данных");
     }
 
-    public static Notationable getCreateCommandNotation() {
+    public static Notationable makeCreateCommandNotation() {
         return () -> getFormattedNotation(CREATE.toString().concat(" tableName column1 [column2] [columnN]"),
                 "добавить новую таблицу (имя столбца не может начинаться с цифры)");
     }
 
-    public static Notationable getCreateDBCommandNotation() {
+    public static Notationable makeCreateDBCommandNotation() {
         return () -> getFormattedNotation(CREATEDB.toString().concat(" dbName"),
                 "добавить новую базу данных");
     }
 
-    public static Notationable getDeleteCommandNotation() {
+    public static Notationable makeDeleteCommandNotation() {
         return () -> getFormattedNotation(DELETE.toString().concat(" tableName whereColumn whereValue"),
                 "удалить записи, удовлетворяющие условию");
     }
 
-    public static Notationable getDropCommandNotation() {
+    public static Notationable makeDropCommandNotation() {
         return () -> getFormattedNotation(DROP.toString().concat(" tableName"),
                 "удалить указанную таблицу");
     }
 
-    public static Notationable getDropDBCommandNotation() {
+    public static Notationable makeDropDBCommandNotation() {
         return () -> getFormattedNotation(DROPDB.toString().concat(" dbName"),
                 "удалить базу данных");
     }
 
-    public static Notationable getExecuteCommandNotation() {
+    public static Notationable makeExecuteCommandNotation() {
         return () -> getFormattedNotation(EXECUTE.toString().concat(" 'textQuery'"),
                 "выполнить пользовательский запрос (должен быть указан в одинарных ковычках)");
     }
 
-    public static Notationable getExitCommandNotation() {
+    public static Notationable makeExitCommandNotation() {
         return () -> getFormattedNotation(EXIT.toString(),
                 "закрыть соединение и выйти из программы");
     }
 
-    public static Notationable getFindCommandNotation() {
+    public static Notationable makeFindCommandNotation() {
         return () -> getFormattedNotation(FIND.toString().concat(" tableName"),
                 "показать содержимое указанной таблицы");
     }
 
-    public static Notationable getHelpCommandNotation() {
+    public static Notationable makeHelpCommandNotation() {
         return () -> getFormattedNotation(HELP.toString(),
                 "показать список команд и их описаниями");
     }
 
-    public static Notationable getInsertCommandNotation() {
+    public static Notationable makeInsertCommandNotation() {
         return () -> getFormattedNotation(INSERT.toString().concat(" tableName column1 value1 [column2 value2] [columnN valueN]"),
                 "добавить запись в указанную таблицу");
     }
 
-    public static Notationable getTableExistCommandNotation() {
+    public static Notationable makeTableExistCommandNotation() {
         return () -> getFormattedNotation(TABLE_EXIST.toString().concat(" tableName"),
                 "проверить наличие указанной таблицы в базе данных");
     }
 
-    public static Notationable getTablesCommandNotation() {
+    public static Notationable makeTablesCommandNotation() {
         return () -> getFormattedNotation(TABLES.toString(),
                 "показать список таблиц базы данных");
     }
 
-    public static Notationable getUpdateCommandNotation() {
+    public static Notationable makeUpdateCommandNotation() {
         return () -> getFormattedNotation(UPDATE.toString().concat(" tableName whereColumn whereValue setColumn setValue"),
                 "обновить записи, удовлетворяющие условию в указанной таблице");
     }

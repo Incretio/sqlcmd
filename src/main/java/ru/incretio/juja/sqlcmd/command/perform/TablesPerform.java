@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class TablesCommandPerform implements Performable {
+public class TablesPerform implements Performable {
     private final static String EMPTY_DB = "В базе данных нет таблиц.";
 
     @Override

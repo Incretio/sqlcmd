@@ -1,7 +1,6 @@
 package ru.incretio.juja.sqlcmd;
 
 import ru.incretio.juja.sqlcmd.command.Command;
-import ru.incretio.juja.sqlcmd.command.CommandTypes;
 import ru.incretio.juja.sqlcmd.exceptions.*;
 import ru.incretio.juja.sqlcmd.logger.AppLogger;
 import ru.incretio.juja.sqlcmd.utils.ParsedCommandLine;
@@ -9,6 +8,7 @@ import ru.incretio.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
 
 class Main {
     private final static String SQL_ERROR_TEXT = "Ошибка при работе с СУБД: %s.";
@@ -29,9 +29,9 @@ class Main {
         while (!isExit) {
             try {
                 ParsedCommandLine parsedCommandLine = new ParsedCommandLine(view.read());
-
-                Command command = CommandTypes.getCommand(parsedCommandLine.getCommandName());
-                String output = performCommand(command, parsedCommandLine);
+                String output = performCommand(
+                        parsedCommandLine.getCommandName(),
+                        parsedCommandLine.getParamsList());
                 view.write(output);
             } catch (Exception e) {
                 isExit = (e instanceof NeedExitException);
@@ -40,6 +40,15 @@ class Main {
         }
 
         view.writeFooter();
+    }
+
+    private String performCommand(String commandName, List<String> params) throws Exception {
+        Command command = Command.takeByName(commandName);
+        if (command.checkParams(params)) {
+            return command.perform(connectionConfig, params);
+        } else {
+            throw new CommandParamsCountNotMatchException(command.getNotation());
+        }
     }
 
     private void processingException(Exception exception) {
@@ -52,14 +61,6 @@ class Main {
         } catch (Exception e) {
             view.write(BAD_APP_CONFIGURATION);
             AppLogger.warning(e.getMessage().concat(": ").concat(Arrays.toString(e.getStackTrace())));
-        }
-    }
-
-    private String performCommand(Command command, ParsedCommandLine parsedCommandLine) throws Exception {
-        if (command.checkParams(parsedCommandLine.getParamsList())) {
-            return command.perform(connectionConfig, parsedCommandLine.getParamsList());
-        } else {
-            throw new CommandParamsCountNotMatchException(command.getNotation());
         }
     }
 

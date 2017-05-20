@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class DropCommandPerform implements Performable {
+public class DropPerform implements Performable {
     private final static String OUTPUT_TEXT = "Таблица %s удалена.";
 
     @Override
@@ -17,7 +17,7 @@ public class DropCommandPerform implements Performable {
         int tableNameInd = 0;
         String tableName = params.get(tableNameInd);
 
-        new TableExistsCommandPerform().perform(connectionConfig, params);
+        new TableExistsPerform().perform(connectionConfig, params);
 
         String result;
         try (Statement statement = connectionConfig.getConnection().createStatement()) {

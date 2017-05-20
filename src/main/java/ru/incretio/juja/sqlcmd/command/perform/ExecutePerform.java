@@ -8,18 +8,20 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-public class CreateDBCommandPerform implements Performable {
-    private final static String OUTPUT_TEXT = "База данных %s добавлена.";
+public class ExecutePerform implements Performable {
+    private final static String OUTPUT_TEXT = "Пользовательский запрос выполнен.";
+    private final static String TEMP_DELIMITER = "_&_";
+    private final static String ORIGINAL_DELIMITER = " ";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
-        int dbNameInd = 0;
-        String dbName = params.get(dbNameInd);
+        int queryTextInd = 0;
+        String queryText = params.get(queryTextInd).replace(TEMP_DELIMITER, ORIGINAL_DELIMITER);
 
         String result;
         try (Statement statement = connectionConfig.getConnection().createStatement()) {
-            statement.execute(connectionConfig.getQueryable().takeCreateDBQuery(dbName));
-            result = String.format(OUTPUT_TEXT, dbName);
+            statement.execute(queryText);
+            result = OUTPUT_TEXT;
         }
 
         return result;

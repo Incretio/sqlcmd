@@ -4,17 +4,12 @@ import ru.incretio.juja.sqlcmd.data.JDBCConnectionType;
 import java.util.List;
 
 public class PostgreSQLQuery implements Queryable {
-    private final JDBCConnectionType jdbcConnectionType;
-
-    public PostgreSQLQuery(JDBCConnectionType jdbcConnectionType) {
-        this.jdbcConnectionType = jdbcConnectionType;
-    }
+    private final JDBCConnectionType jdbcConnectionType = JDBCConnectionType.PostgreSQL;
 
     @Override
     public String takeSelectQuery(String tableName) {
         return "SELECT * FROM public.\"" + tableName + "\"";
     }
-
 
     @Override
     public String takeInsertQuery(String tableName, List<String> columns, List<String> values) {

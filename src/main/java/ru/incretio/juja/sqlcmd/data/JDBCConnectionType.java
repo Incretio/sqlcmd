@@ -8,17 +8,17 @@ public enum JDBCConnectionType {
     private final String jdbcUrl;
     private final String jdbcDriverName;
 
+    JDBCConnectionType(String jdbcUrl, String jdbcDriverName) {
+        this.jdbcUrl = jdbcUrl;
+        this.jdbcDriverName = jdbcDriverName;
+    }
+
     public String getJdbcUrl() {
         return jdbcUrl;
     }
 
     public String getJdbcDriverName() {
         return jdbcDriverName;
-    }
-
-    JDBCConnectionType(String jdbcUrl, String jdbcDriverName) {
-        this.jdbcUrl = jdbcUrl;
-        this.jdbcDriverName = jdbcDriverName;
     }
 
 }

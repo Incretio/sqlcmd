@@ -3,7 +3,7 @@ package ru.incretio.juja.sqlcmd.command;
 import ru.incretio.juja.sqlcmd.command.interfaces.Checkable;
 import ru.incretio.juja.sqlcmd.command.utils.CheckParamsHelper;
 
-abstract class CommandCheckFactory {
+public abstract class CommandCheckFactory {
     private static final CheckParamsHelper checkParamsHelper = new CheckParamsHelper();
 
     public static Checkable makeClearCommandCheck() {

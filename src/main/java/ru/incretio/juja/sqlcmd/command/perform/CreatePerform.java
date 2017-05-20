@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 
-public class CreateCommandPerform implements Performable {
+public class CreatePerform implements Performable {
     private final static String TABLE_EXIST_TEXT = "Таблица %s уже существует.";
     private final static String TABLE_ADDED_TEXT = "Таблица %s добавлена.";
 
@@ -28,7 +28,7 @@ public class CreateCommandPerform implements Performable {
         String result;
         try {
             List<String> newParams = Collections.singletonList(tableName);
-            new TableExistsCommandPerform().perform(connectionConfig, newParams);
+            new TableExistsPerform().perform(connectionConfig, newParams);
             result = String.format(TABLE_EXIST_TEXT, tableName);
         } catch (MissingTableException e) {
             try (Statement statement = connectionConfig.getConnection().createStatement()) {
