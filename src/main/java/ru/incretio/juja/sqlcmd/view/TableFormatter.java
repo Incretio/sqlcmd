@@ -16,12 +16,14 @@ public class TableFormatter {
     }
 
     public String getFormattedTable() {
-        return
-                getSeparatorLine() + "\n" +
-                        getColumnsTitleLine() + "\n" +
-                        getSeparatorLine() + "\n" +
-                        getDataLines() +
-                        getSeparatorLine() + "\n";
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder
+                .append(getSeparatorLine()).append("\n")
+                .append(getColumnsTitleLine()).append("\n")
+                .append(getSeparatorLine()).append("\n")
+                .append(getDataLines())
+                .append(getSeparatorLine()).append("\n");
+        return stringBuilder.toString();
     }
 
     private String getColumnsTitleLine() {

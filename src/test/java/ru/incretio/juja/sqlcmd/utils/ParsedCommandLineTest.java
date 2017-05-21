@@ -54,18 +54,18 @@ public class ParsedCommandLineTest {
 
     @Test
     public void testQueryParsedCommandLine() throws Exception {
-        ParsedCommandLine parsedCommandLine = new ParsedCommandLine("   command   ' select * from table where  param1 = 0 and param2 = \"value\"'");
+        ParsedCommandLine parsedCommandLine = new ParsedCommandLine("   command   \" select * from table where  param1 = 0 and param2 = 'value'\"");
         assertEquals(parsedCommandLine.getCommandName(), "command");
         assertEquals(parsedCommandLine.getParamsList().size(), 1);
-        assertEquals(parsedCommandLine.getParamsList().get(0), "select * from table where param1 = 0 and param2 = \"value\"");
+        assertEquals(parsedCommandLine.getParamsList().get(0), " select * from table where  param1 = 0 and param2 = 'value'");
     }
 
     @Test
     public void testEleQueryParsedCommandLine() throws Exception {
-        ParsedCommandLine parsedCommandLine = new ParsedCommandLine("   command   ' select * from table where  param1 = 0 and param2 = \"value\"' param2");
+        ParsedCommandLine parsedCommandLine = new ParsedCommandLine("   command   \" select * from table where  param1 = 0 and param2 = 'value'\" param2");
         assertEquals(parsedCommandLine.getCommandName(), "command");
         assertEquals(parsedCommandLine.getParamsList().size(), 2);
-        assertEquals(parsedCommandLine.getParamsList().get(0), "select * from table where param1 = 0 and param2 = \"value\"");
+        assertEquals(parsedCommandLine.getParamsList().get(0), " select * from table where  param1 = 0 and param2 = 'value'");
         assertEquals(parsedCommandLine.getParamsList().get(1), "param2");
     }
 

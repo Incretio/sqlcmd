@@ -19,8 +19,8 @@ public class IntegrationTest {
         System.setOut(new PrintStream(out));
 
         in.add(TestConstants.MASTER_CONNECTION_STRING);
-        in.add("execute '" + QueryFactory.makeSQLQuery(JDBCConnectionType.PostgreSQL).takeDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
-        in.add("execute '" + QueryFactory.makeSQLQuery(JDBCConnectionType.PostgreSQL).takeCreateDBQuery(TestConstants.TEST_DB_NAME) + "'");
+        in.add("execute \"" + QueryFactory.makeSQLQuery(JDBCConnectionType.PostgreSQL).takeDropDBQuery(TestConstants.TEST_DB_NAME) + "\"");
+        in.add("execute \"" + QueryFactory.makeSQLQuery(JDBCConnectionType.PostgreSQL).takeCreateDBQuery(TestConstants.TEST_DB_NAME) + "\"");
         in.add("exit");
         Run.main(new String[0]);
         in.reset();
@@ -30,7 +30,7 @@ public class IntegrationTest {
     @AfterClass
     public static void clearDataAfterTest() throws MissingJDBCConnectionTypeException {
         in.add(TestConstants.MASTER_CONNECTION_STRING);
-        in.add("execute '" + QueryFactory.makeSQLQuery(JDBCConnectionType.PostgreSQL).takeDropDBQuery(TestConstants.TEST_DB_NAME) + "'");
+        in.add("execute \"" + QueryFactory.makeSQLQuery(JDBCConnectionType.PostgreSQL).takeDropDBQuery(TestConstants.TEST_DB_NAME) + "\"");
         in.add("exit");
         Run.main(new String[0]);
     }
@@ -262,8 +262,8 @@ public class IntegrationTest {
                 "\t\tудалить базу данных;\n" +
                 "\tcreatedb dbName:\n" +
                 "\t\tдобавить новую базу данных;\n" +
-                "\texecute 'textQuery':\n" +
-                "\t\tвыполнить пользовательский запрос (должен быть указан в одинарных ковычках);\n" +
+                "\texecute \"textQuery\":\n" +
+                "\t\tвыполнить пользовательский запрос (должен быть указан в двойных ковычках);\n" +
                 "\thelp:\n" +
                 "\t\tпоказать список команд и их описаниями;\n" +
                 "\texit:\n" +
@@ -372,8 +372,8 @@ public class IntegrationTest {
                 "\t\tудалить базу данных;\n" +
                 "\tcreatedb dbName:\n" +
                 "\t\tдобавить новую базу данных;\n" +
-                "\texecute 'textQuery':\n" +
-                "\t\tвыполнить пользовательский запрос (должен быть указан в одинарных ковычках);\n" +
+                "\texecute \"textQuery\":\n" +
+                "\t\tвыполнить пользовательский запрос (должен быть указан в двойных ковычках);\n" +
                 "\thelp:\n" +
                 "\t\tпоказать список команд и их описаниями;\n" +
                 "\texit:\n" +
@@ -396,7 +396,7 @@ public class IntegrationTest {
         in.add("find table");
         in.add("create table1 id name");
         in.add("update table1 idd 1 name newName");
-        in.add("execute 'bla'");
+        in.add("execute \"bla\"");
         in.add("create table1 id name");
         in.add("column exist idd");
         in.add("create table2 3id name");

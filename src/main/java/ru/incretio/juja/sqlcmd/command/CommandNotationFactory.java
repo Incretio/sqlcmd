@@ -62,8 +62,8 @@ abstract class CommandNotationFactory {
     }
 
     public static Notationable makeExecuteCommandNotation() {
-        return () -> getFormattedNotation(EXECUTE.toString().concat(" 'textQuery'"),
-                "выполнить пользовательский запрос (должен быть указан в одинарных ковычках)");
+        return () -> getFormattedNotation(EXECUTE.toString().concat(" \"textQuery\""),
+                "выполнить пользовательский запрос (должен быть указан в двойных ковычках)");
     }
 
     public static Notationable makeExitCommandNotation() {
