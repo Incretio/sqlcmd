@@ -8,8 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.*;
+
 public class CreateDBPerform implements Performable {
-    private final static String OUTPUT_TEXT = "База данных %s добавлена.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
@@ -19,7 +20,7 @@ public class CreateDBPerform implements Performable {
         String result;
         try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(connectionConfig.getQueryable().takeCreateDBQuery(dbName));
-            result = String.format(OUTPUT_TEXT, dbName);
+            result = String.format(takeCaption("dbCreatedPattern"), dbName);
         }
 
         return result;

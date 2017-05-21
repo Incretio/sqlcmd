@@ -6,8 +6,9 @@ import ru.incretio.juja.sqlcmd.command.perform.utils.CommandPerformHelper;
 import java.sql.Statement;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 public class UpdatePerform implements Performable {
-    private final static String OUTPUT_TEXT = "В таблице %s обновлена запись.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
@@ -29,7 +30,7 @@ public class UpdatePerform implements Performable {
         String result;
         try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(connectionConfig.getQueryable().takeUpdateQuery(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue));
-            result = String.format(OUTPUT_TEXT, tableName);
+            result = String.format(takeCaption("recordUpdated"), tableName);
         }
 
         return result;

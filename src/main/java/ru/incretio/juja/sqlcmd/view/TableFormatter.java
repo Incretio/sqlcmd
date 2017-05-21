@@ -18,11 +18,11 @@ public class TableFormatter {
     public String getFormattedTable() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder
-                .append(getSeparatorLine()).append("\n")
-                .append(getColumnsTitleLine()).append("\n")
-                .append(getSeparatorLine()).append("\n")
+                .append(getSeparatorLine()).append(System.lineSeparator())
+                .append(getColumnsTitleLine()).append(System.lineSeparator())
+                .append(getSeparatorLine()).append(System.lineSeparator())
                 .append(getDataLines())
-                .append(getSeparatorLine()).append("\n");
+                .append(getSeparatorLine()).append(System.lineSeparator());
         return stringBuilder.toString();
     }
 
@@ -57,7 +57,7 @@ public class TableFormatter {
                 String pattern = String.format("+ %%s%%%ds", (columnsWidth.get(i) - valueLength)); // Example: "+ %s%1s"
                 result.append(String.format(pattern, value, ""));
             }
-            result.append("+\n");
+            result.append("+".concat(System.lineSeparator()));
         }
         return result.toString();
     }

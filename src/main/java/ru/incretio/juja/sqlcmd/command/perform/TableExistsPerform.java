@@ -10,8 +10,9 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 public class TableExistsPerform implements Performable {
-    private final static String OUTPUT_TEXT = "Таблица %s имеется в наличии.";
 
     /**
      Кидает исключение MissingTableException, если таблица не найдена. Если найдена, то вернёт TRUE.toString();
@@ -28,6 +29,6 @@ public class TableExistsPerform implements Performable {
             throw new MissingTableException(tableName);
         }
 
-        return String.format(OUTPUT_TEXT, tableName);
+        return String.format(takeCaption("tableExistsPattern"), tableName);
     }
 }

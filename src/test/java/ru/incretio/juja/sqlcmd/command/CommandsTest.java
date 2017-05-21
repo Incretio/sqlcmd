@@ -138,24 +138,22 @@ public class CommandsTest {
         assertEquals("В таблице table обновлена запись.", actual);
         params = getListWithParams("table");
         actual = new FindPerform().perform(connectionConfig, params);
-        assertEquals(
+        String expected = "+----+----------+\n" +
+                "+ id + name     +\n" +
                 "+----+----------+\n" +
-                        "+ id + name     +\n" +
-                        "+----+----------+\n" +
-                        "+ 1  + newvalue +\n" +
-                        "+----+----------+\n",
-                actual);
+                "+ 1  + newvalue +\n" +
+                "+----+----------+\n";
+        assertEquals(expected.replace("\n", System.lineSeparator()), actual);
     }
 
     @Test
     public void testTablesPerform() throws MissingConnectionException, SQLException {
-        String actual;
         List<String> params = getListWithParams();
-        actual = new TablesPerform().perform(connectionConfig, params);
-        assertEquals(
-                "table\n" +
-                        "table0\n",
-                actual);
+        String actual = new TablesPerform().perform(connectionConfig, params);
+        String expected = "table\n" +
+                "table0\n";
+
+        assertEquals(expected.replace("\n", System.lineSeparator()), actual);
     }
 
     private static List<String> getListWithParams(String... params) {

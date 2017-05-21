@@ -8,10 +8,9 @@ import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class ConnectPerform implements Performable {
-    private final static String CONNECTION_SUCCESS_TEXT = "Вы успешно подключились к базе данных %s.";
-    private final static String DRIVER_LOADING_ERROR_TEXT = "Ошибка подключения драйвера.";
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
+public class ConnectPerform implements Performable {
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
@@ -34,9 +33,9 @@ public class ConnectPerform implements Performable {
                     new JDBCConnectable(
                             connectionConfig.getQueryable().getJdbcConnectionType(),
                             serverName, dbName).getConnection(userName, password));
-            result = String.format(CONNECTION_SUCCESS_TEXT, dbName);
+            result = String.format(takeCaption("connectionSuccessPattern"), dbName);
         } catch (ClassNotFoundException e) {
-            result = DRIVER_LOADING_ERROR_TEXT;
+            result = takeCaption("driverLoadingErrorText");
         }
 
         return result;

@@ -10,9 +10,9 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.*;
+
 public class CreatePerform implements Performable {
-    private final static String TABLE_EXIST_TEXT = "Таблица %s уже существует.";
-    private final static String TABLE_ADDED_TEXT = "Таблица %s добавлена.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
@@ -29,11 +29,11 @@ public class CreatePerform implements Performable {
         try {
             List<String> newParams = Collections.singletonList(tableName);
             new TableExistsPerform().perform(connectionConfig, newParams);
-            result = String.format(TABLE_EXIST_TEXT, tableName);
+            result = String.format(takeCaption("tableAlreadyExistsPattern"), tableName);
         } catch (MissingTableException e) {
             try (Statement statement = connectionConfig.getConnection().createStatement()) {
                 statement.execute(connectionConfig.getQueryable().takeCreateTableQuery(tableName, columns));
-                result = String.format(TABLE_ADDED_TEXT, tableName);
+                result = String.format(takeCaption("tableAddedPattern"), tableName);
             }
         }
 

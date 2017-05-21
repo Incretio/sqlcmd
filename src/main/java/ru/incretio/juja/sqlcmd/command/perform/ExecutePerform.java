@@ -8,22 +8,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 public class ExecutePerform implements Performable {
-    private final static String OUTPUT_TEXT = "Пользовательский запрос выполнен.";
     private final static String TEMP_DELIMITER = "_&_";
     private final static String ORIGINAL_DELIMITER = " ";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
         int queryTextInd = 0;
+        // ToDo: Для чего тут replace? он скорее всего лишний.
         String queryText = params.get(queryTextInd).replace(TEMP_DELIMITER, ORIGINAL_DELIMITER);
 
-        String result;
         try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(queryText);
-            result = OUTPUT_TEXT;
         }
 
-        return result;
+        return takeCaption("queryExecuted");
     }
 }

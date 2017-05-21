@@ -8,11 +8,12 @@ import ru.incretio.juja.sqlcmd.exceptions.MissingColumnException;
 import java.util.Collections;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 public class ColumnExistsPerform implements Performable {
-    private final static String OUTPUT_TEXT = "Колонка %s имеется в наличии у таблицы %s.";
 
     /**
-     * Кидает исключение MissingColumnException, если поле не найдено. Если найдено, то вернёт TRUE.toString();
+     * Кидает исключение MissingColumnException, если поле не найдено.;
      */
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
@@ -30,6 +31,6 @@ public class ColumnExistsPerform implements Performable {
             throw new MissingColumnException(columnName);
         }
 
-        return String.format(OUTPUT_TEXT, columnName, tableName);
+        return String.format(takeCaption("tableContainsColumnPattern"), columnName, tableName);
     }
 }

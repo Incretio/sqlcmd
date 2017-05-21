@@ -9,8 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 public class DropPerform implements Performable {
-    private final static String OUTPUT_TEXT = "Таблица %s удалена.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
@@ -22,7 +23,7 @@ public class DropPerform implements Performable {
         String result;
         try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(connectionConfig.getQueryable().takeDropTableQuery(tableName));
-            result = String.format(OUTPUT_TEXT, tableName);
+            result = String.format(takeCaption("tableDeletedPattern"), tableName);
         }
 
         return result;

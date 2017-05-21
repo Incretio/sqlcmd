@@ -6,8 +6,9 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import java.sql.Statement;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.*;
+
 public class ClearPerform implements Performable {
-    private final static String OUTPUT_TEXT = "Таблица %s очищена.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
@@ -18,7 +19,7 @@ public class ClearPerform implements Performable {
             int tableNameInd = 0;
             String tableName = params.get(tableNameInd);
             statement.execute(connectionConfig.getQueryable().takeDeleteAllRecordsQuery(tableName));
-            result = String.format(OUTPUT_TEXT, tableName);
+            result = String.format(takeCaption("tableCleared"), tableName);
         }
 
         return result;

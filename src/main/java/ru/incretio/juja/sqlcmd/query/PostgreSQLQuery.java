@@ -14,24 +14,24 @@ public class PostgreSQLQuery implements Queryable {
     private final static String DELETE_QUERY_PATTERN = "DELETE FROM \"%s\" WHERE %s='%s'";
     private final static String DELETE_ALL_QUERY_PATTERN = "DELETE FROM public.\"%s\"";
     private final static String SELECT_TABLES_QUERY_PATTERN =
-            "SELECT table_name\n" +
-                    "FROM information_schema.tables\n" +
-                    "WHERE table_schema = 'public'\n" +
+            "SELECT table_name " +
+                    "FROM information_schema.tables " +
+                    "WHERE table_schema = 'public' " +
                     "ORDER BY table_name";
     private final static String TABLE_COLUMNS_QUERY_PATTERN =
-            "SELECT column_name\n" +
-                    "FROM information_schema.columns\n" +
+            "SELECT column_name " +
+                    "FROM information_schema.columns " +
                     "WHERE table_schema='public' AND table_name='%s'";
     private final static String CREATE_TABLE_QUERY_PATTERN = "CREATE TABLE \"%s\" ( %s);";
     private final static String DROP_TABLE_PATTERN = "DROP TABLE \"%s\"";
     private final static String DROP_DB_PATTERN = "DROP DATABASE IF EXISTS %s";
     private final static String CREATE_DB_PATTERN =
             "CREATE DATABASE %s\n" +
-                    "  WITH OWNER = postgres\n" +
-                    "       ENCODING = 'UTF8'\n" +
-                    "       TABLESPACE = pg_default\n" +
-                    "       LC_COLLATE = 'Russian_Russia.1251'\n" +
-                    "       LC_CTYPE = 'Russian_Russia.1251'\n" +
+                    "  WITH OWNER = postgres " +
+                    "       ENCODING = 'UTF8' " +
+                    "       TABLESPACE = pg_default " +
+                    "       LC_COLLATE = 'Russian_Russia.1251' " +
+                    "       LC_CTYPE = 'Russian_Russia.1251' " +
                     "       CONNECTION LIMIT = -1;";
 
 

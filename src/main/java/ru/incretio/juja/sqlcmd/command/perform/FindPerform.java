@@ -9,8 +9,9 @@ import ru.incretio.juja.sqlcmd.exceptions.MissingTableException;
 import java.sql.*;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 public class FindPerform implements Performable {
-    private final static String EMPTY_DATA = "В таблице %s отсутствуют данные.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException, MissingTableException {
@@ -26,12 +27,9 @@ public class FindPerform implements Performable {
             result = new ResultSetTableFormatter(resultSet).getFormattedTable();
 
             if (result.trim().isEmpty()) {
-                result = String.format(EMPTY_DATA, tableName);
+                result = String.format(takeCaption("tableEmptyPattern"), tableName);
             }
         }
-
         return result;
     }
-
-
 }

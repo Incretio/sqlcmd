@@ -36,7 +36,7 @@ public class CommandPerformHelper {
     }
 
     public static boolean contains(String source, String value){
-        return Arrays.asList(source.split("\n"))
+        return Arrays.asList(source.split(System.lineSeparator()))
                 .contains(value);
     }
 }

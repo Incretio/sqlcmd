@@ -8,8 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 public class DropDBPerform implements Performable {
-    private final static String OUTPUT_TEXT = "База данных %s удалена.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
@@ -19,7 +20,7 @@ public class DropDBPerform implements Performable {
         String result;
         try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(connectionConfig.getQueryable().takeDropDBQuery(dbName));
-            result = String.format(OUTPUT_TEXT, dbName);
+            result = String.format(takeCaption("dbDeletedPattern"), dbName);
         }
 
         return result;

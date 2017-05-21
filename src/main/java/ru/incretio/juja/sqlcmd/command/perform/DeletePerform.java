@@ -6,8 +6,9 @@ import ru.incretio.juja.sqlcmd.command.perform.utils.CommandPerformHelper;
 import java.sql.Statement;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 public class DeletePerform implements Performable {
-    private final static String OUTPUT_TEXT = "Из таблицы %s удалена запись.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
@@ -25,7 +26,7 @@ public class DeletePerform implements Performable {
         String result;
         try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(connectionConfig.getQueryable().takeDeleteQuery(tableName, whereColumnName, whereColumnValue));
-            result = String.format(OUTPUT_TEXT, tableName);
+            result = String.format(takeCaption("recordDeletedPattern"), tableName);
         }
 
         return result;

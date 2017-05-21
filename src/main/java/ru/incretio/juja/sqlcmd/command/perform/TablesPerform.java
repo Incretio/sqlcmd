@@ -9,8 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 public class TablesPerform implements Performable {
-    private final static String EMPTY_DB = "В базе данных нет таблиц.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException, MissingConnectionException {
@@ -21,7 +22,7 @@ public class TablesPerform implements Performable {
         }
 
         if (result.trim().isEmpty()) {
-            result = EMPTY_DB;
+            result = takeCaption("dbEmpty");
         }
         return result;
     }
@@ -29,7 +30,7 @@ public class TablesPerform implements Performable {
     private String takeTableList(ResultSet resultSet) throws SQLException {
         String result = "";
         while (resultSet.next()) {
-            result += resultSet.getString(1).concat("\n");
+            result += resultSet.getString(1).concat(System.lineSeparator());
         }
         return result;
     }

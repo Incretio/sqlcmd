@@ -105,7 +105,7 @@ public class IntegrationTest {
                 "\n" +
                 "Спасибо за использование нашей программы! Мы старались ;)\n";
 
-        assertEquals(expected, out.getData());
+        assertEquals(expected.replace("\n", System.lineSeparator()), out.getData());
     }
 
     @Test
@@ -189,7 +189,7 @@ public class IntegrationTest {
                 "\n" +
                 "Спасибо за использование нашей программы! Мы старались ;)\n";
 
-        assertEquals(expected, out.getData());
+        assertEquals(expected.replace("\n", System.lineSeparator()), out.getData());
     }
 
 
@@ -203,7 +203,7 @@ public class IntegrationTest {
                 "Закрытие программы...\n" +
                 "\n" +
                 "Спасибо за использование нашей программы! Мы старались ;)\n";
-        assertEquals(expected, out.getData());
+        assertEquals(expected.replace("\n", System.lineSeparator()), out.getData());
     }
 
     @Test
@@ -220,7 +220,8 @@ public class IntegrationTest {
                 "Закрытие программы...\n" +
                 "\n" +
                 "Спасибо за использование нашей программы! Мы старались ;)\n";
-        assertEquals(expected, out.getData());
+
+        assertEquals(expected.replace("\n", System.lineSeparator()), out.getData());
     }
 
     @Test
@@ -273,7 +274,7 @@ public class IntegrationTest {
                 "\n" +
                 "Спасибо за использование нашей программы! Мы старались ;)\n";
 
-        assertEquals(expected, out.getData());
+        assertEquals(expected.replace("\n", System.lineSeparator()), out.getData());
     }
 
     // TODO добавить все неиспользуемые команды
@@ -302,7 +303,7 @@ public class IntegrationTest {
         String expected = "Добро пожаловать в учебный проект Incretio \"sqlcmd\"!\n" +
                 "Тут вы можете работать с базой данных. Для того, чтобы получить список возможных комманд, используйте комманду help.\n" +
                 "\n" +
-                "Вы успешно подключились к базе данных " + TestConstants.TEST_DB_NAME + ".\n" +
+                "Вы успешно подключились к базе данных testdb_a5d8e6.\n" +
                 "Таблица table1 добавлена.\n" +
                 "table1\n" +
                 "\n" +
@@ -383,7 +384,7 @@ public class IntegrationTest {
                 "\n" +
                 "Спасибо за использование нашей программы! Мы старались ;)\n";
 
-        assertEquals(expected, out.getData());
+        assertEquals(expected.replace("\n", System.lineSeparator()), out.getData());
     }
 
     @Test
@@ -433,7 +434,7 @@ public class IntegrationTest {
                         "\n" +
                         "Спасибо за использование нашей программы! Мы старались ;)\n";
 
-        assertEquals(expected, out.getData());
+        assertEquals(expected.replace("\n", System.lineSeparator()), out.getData());
     }
 
     @Test
@@ -456,7 +457,7 @@ public class IntegrationTest {
                         "\n" +
                         "Спасибо за использование нашей программы! Мы старались ;)\n";
 
-        assertEquals(expected, out.getData());
+        assertEquals(expected.replace("\n", System.lineSeparator()), out.getData());
     }
 
 }

@@ -6,14 +6,15 @@ import ru.incretio.juja.sqlcmd.command.interfaces.Performable;
 import java.sql.SQLException;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 public class HelpPerform implements Performable {
-    private final static String COMMANDS_LIST_TEXT = "Список доступных комманд:\n";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws SQLException {
-        String result = COMMANDS_LIST_TEXT;
+        String result = takeCaption("commandList").concat(System.lineSeparator());
         for (String notation : Command.getNotationsList()) {
-            result += notation.concat("\n");
+            result += notation.concat(System.lineSeparator());
         }
 
         return result;

@@ -7,8 +7,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 public class InsertPerform implements Performable {
-    private final static String OUTPUT_TEXT = "В таблицу %s добавлена запись.";
 
     @Override
     public String perform(ConnectionConfig connectionConfig, List<String> params) throws Exception {
@@ -26,7 +27,7 @@ public class InsertPerform implements Performable {
         String result;
         try (Statement statement = connectionConfig.getConnection().createStatement()) {
             statement.execute(connectionConfig.getQueryable().takeInsertQuery(tableName, columns, values));
-            result = String.format(OUTPUT_TEXT, tableName);
+            result = String.format(takeCaption("recordInsertedPattern"), tableName);
         }
 
         return result;

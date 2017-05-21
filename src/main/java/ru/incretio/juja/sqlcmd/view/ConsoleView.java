@@ -17,7 +17,7 @@ public class ConsoleView extends View {
     @Override
     public void write(String text) {
         try {
-            writer.write(text.concat("\n"));
+            writer.write(text.concat(System.lineSeparator()));
             writer.flush();
         } catch (IOException e) {
             AppLogger.warning(Arrays.toString(e.getStackTrace()));

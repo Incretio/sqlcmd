@@ -10,9 +10,9 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 class Main {
-    private final static String SQL_ERROR_TEXT = "Ошибка при работе с СУБД: %s.";
-    private final static String BAD_APP_CONFIGURATION = "Программа некорректно настроена.";
 
     private final View view;
     private final ConnectionConfig connectionConfig;
@@ -57,9 +57,10 @@ class Main {
         } catch (CommandException | MissingAnyDataException | NeedExitException e) {
             view.write(e.getMessage());
         } catch (SQLException e) {
-            view.write(String.format(SQL_ERROR_TEXT, e.getMessage()));
+            view.write(String.format(takeCaption("sqlErrorPattern"),
+                    e.getMessage().replace("\n", System.lineSeparator())));
         } catch (Exception e) {
-            view.write(BAD_APP_CONFIGURATION);
+            view.write(takeCaption("badAppConfiguration"));
             AppLogger.warning(e.getMessage().concat(": ").concat(Arrays.toString(e.getStackTrace())));
         }
     }

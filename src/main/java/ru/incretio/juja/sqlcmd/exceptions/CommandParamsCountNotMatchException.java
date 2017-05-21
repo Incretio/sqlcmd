@@ -1,7 +1,11 @@
 package ru.incretio.juja.sqlcmd.exceptions;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 public class CommandParamsCountNotMatchException extends CommandException {
     public CommandParamsCountNotMatchException(String currentCommandFormat) {
-        super("Параметры команды указаны не корректно. \nФормат команды: \n".concat(currentCommandFormat));
+        super(String.format(
+                takeCaption("commandParamsCountNotMatchPattern"),
+                currentCommandFormat));
     }
 }

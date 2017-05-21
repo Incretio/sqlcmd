@@ -1,16 +1,15 @@
 package ru.incretio.juja.sqlcmd.view;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 public abstract class View {
-    private final static String HEADER_TEXT = "Добро пожаловать в учебный проект Incretio \"sqlcmd\"!\n" +
-            "Тут вы можете работать с базой данных. Для того, чтобы получить список возможных комманд, используйте комманду help.\n";
-    private final static String FOOTER_TEXT = "\nСпасибо за использование нашей программы! Мы старались ;)";
 
     public void writeHeader() {
-        write(HEADER_TEXT);
+        write(String.format(takeCaption("headerPattern")));
     }
 
     public void writeFooter(){
-        write(FOOTER_TEXT);
+        write(String.format(takeCaption("footerPattern")));
     }
 
     public abstract void write(String text);
