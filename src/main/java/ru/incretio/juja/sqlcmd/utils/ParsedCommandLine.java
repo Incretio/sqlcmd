@@ -18,7 +18,7 @@ public class ParsedCommandLine {
         this.list = parse(line.trim());
     }
 
-    private List<String> parse(String line) throws EmptyCommandException {
+    private List<String> parse(String line) {
         List<String> result = new ArrayList<>();
 
         // line = execute "SELECT * FROM 'table'"
