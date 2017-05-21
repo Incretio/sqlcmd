@@ -277,7 +277,6 @@ public class IntegrationTest {
         assertEquals(expected.replace("\n", System.lineSeparator()), out.getData());
     }
 
-    // TODO добавить все неиспользуемые команды
     @Test
     public void testAllCommands() {
         in.add(TestConstants.TEST_CONNECTION_STRING);
