@@ -1,6 +1,6 @@
 package ru.incretio.juja.sqlcmd.view;
 
-import ru.incretio.juja.sqlcmd.logger.AppLogger;
+import ru.incretio.juja.sqlcmd.utils.logger.AppLogger;
 
 import java.io.*;
 import java.util.Arrays;
