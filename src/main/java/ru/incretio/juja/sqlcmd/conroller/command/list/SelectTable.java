@@ -45,8 +45,7 @@ public class SelectTable extends Base {
 
         TableFormatter tableFormatter = new TableFormatter(
                 resultSetTableFormatter.getData(),
-                resultSetTableFormatter.getColumnsNames(),
-                resultSetTableFormatter.getColumnsWidth());
+                resultSetTableFormatter.getColumnsNames());
 
         String result = tableFormatter.getFormattedTable();
 

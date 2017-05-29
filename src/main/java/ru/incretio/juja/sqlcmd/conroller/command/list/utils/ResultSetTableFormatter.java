@@ -16,19 +16,12 @@ public class ResultSetTableFormatter {
     private int lastColumnInd;
     private ResultSetMetaData metaData;
     private List<List<String>> data;
-
     private List<String> columnsNames;
 
-    private List<Integer> columnsWidth;
     public ResultSetTableFormatter() {
     }
 
     public void setResultSet(ResultSet resultSet) throws SQLException {
-        this.resultSet = resultSet;
-        initAll();
-    }
-
-    public ResultSetTableFormatter(ResultSet resultSet) throws SQLException {
         this.resultSet = resultSet;
         initAll();
     }
@@ -38,7 +31,6 @@ public class ResultSetTableFormatter {
         initLastColumnInd();
         fillData();
         fillColumnsNames();
-        fillColumnsWidth(data, columnsNames);
     }
 
 
@@ -78,25 +70,6 @@ public class ResultSetTableFormatter {
         this.columnsNames = columnsNames;
     }
 
-
-    private void fillColumnsWidth(List<List<String>> data, List<String> columns) {
-        Integer[] maxLengthColumnArr = new Integer[columns.size()];
-        for (int i = 0; i < columns.size(); i++) {
-            maxLengthColumnArr[i] = columns.get(i).length();
-        }
-        for (List<String> line : data) {
-            for (int j = 0; j < line.size(); j++) {
-                int curLength = line.get(j).length();
-                if (curLength > maxLengthColumnArr[j]) {
-                    maxLengthColumnArr[j] = curLength;
-                }
-            }
-        }
-        List<Integer> columnsWidth = Arrays.asList(maxLengthColumnArr);
-        columnsWidth = columnsWidth.stream().map(value -> value + 1).collect(Collectors.toList());
-        this.columnsWidth = columnsWidth;
-    }
-
     public List<List<String>> getData() {
         return data;
     }
@@ -105,7 +78,4 @@ public class ResultSetTableFormatter {
         return columnsNames;
     }
 
-    public List<Integer> getColumnsWidth() {
-        return columnsWidth;
-    }
 }

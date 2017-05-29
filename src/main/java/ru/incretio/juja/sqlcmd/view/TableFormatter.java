@@ -1,18 +1,40 @@
 package ru.incretio.juja.sqlcmd.view;
 
+import ru.incretio.juja.sqlcmd.exceptions.IncorrectDataTableFormatterException;
+import ru.incretio.juja.sqlcmd.exceptions.EmptyColumnsNamesTableFormatterException;
+import ru.incretio.juja.sqlcmd.exceptions.EmptyDataTableFormatterException;
+
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TableFormatter {
     private final List<List<String>> data;
     private final List<String> columnsNames;
-    private final List<Integer> columnsWidth;
+    private List<Integer> columnsWidth;
     private final int columnsCount;
 
-    public TableFormatter(List<List<String>> data, List<String> columnsNames, List<Integer> columnsWidth) {
+    public TableFormatter(List<List<String>> data, List<String> columnsNames)
+            throws EmptyDataTableFormatterException, EmptyColumnsNamesTableFormatterException, IncorrectDataTableFormatterException {
+        throwExceptionIfDataEmptyOrIncorrect(data, columnsNames);
         this.data = data;
         this.columnsNames = columnsNames;
-        this.columnsWidth = columnsWidth;
         this.columnsCount = columnsNames.size();
+        fillColumnsWidth(data, columnsNames);
+    }
+
+    private void throwExceptionIfDataEmptyOrIncorrect(List<List<String>> data, List<String> columnsNames) throws EmptyDataTableFormatterException, EmptyColumnsNamesTableFormatterException, IncorrectDataTableFormatterException {
+        if (data == null) {
+            throw new EmptyDataTableFormatterException();
+        }
+        if (columnsNames == null || columnsNames.size() == 0) {
+            throw new EmptyColumnsNamesTableFormatterException();
+        }
+        int firstColumnInd = 0;
+        if (data.size() > 0 &&
+                (data.get(firstColumnInd).size() != columnsNames.size())) {
+            throw new IncorrectDataTableFormatterException();
+        }
     }
 
     public String getFormattedTable() {
@@ -60,5 +82,23 @@ public class TableFormatter {
             result.append("+".concat(System.lineSeparator()));
         }
         return result.toString();
+    }
+
+    private void fillColumnsWidth(List<List<String>> data, List<String> columns) {
+        Integer[] maxLengthColumnArr = new Integer[columns.size()];
+        for (int i = 0; i < columns.size(); i++) {
+            maxLengthColumnArr[i] = columns.get(i).length();
+        }
+        for (List<String> line : data) {
+            for (int j = 0; j < line.size(); j++) {
+                int curLength = line.get(j).length();
+                if (curLength > maxLengthColumnArr[j]) {
+                    maxLengthColumnArr[j] = curLength;
+                }
+            }
+        }
+        List<Integer> columnsWidth = Arrays.asList(maxLengthColumnArr);
+        columnsWidth = columnsWidth.stream().map(value -> value + 1).collect(Collectors.toList());
+        this.columnsWidth = columnsWidth;
     }
 }
