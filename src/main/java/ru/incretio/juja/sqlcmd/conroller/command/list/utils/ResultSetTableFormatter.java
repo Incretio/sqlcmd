@@ -4,11 +4,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import ru.incretio.juja.sqlcmd.view.TableFormatter;
 
 public class ResultSetTableFormatter {
     private ResultSet resultSet;
@@ -17,9 +13,6 @@ public class ResultSetTableFormatter {
     private ResultSetMetaData metaData;
     private List<List<String>> data;
     private List<String> columnsNames;
-
-    public ResultSetTableFormatter() {
-    }
 
     public void setResultSet(ResultSet resultSet) throws SQLException {
         this.resultSet = resultSet;
@@ -39,7 +32,6 @@ public class ResultSetTableFormatter {
     }
 
     private void initLastColumnInd() throws SQLException {
-        ResultSetMetaData metaData = resultSet.getMetaData();
         lastColumnInd = metaData.getColumnCount();
     }
 

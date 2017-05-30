@@ -9,6 +9,7 @@ import java.io.PrintStream;
 
 import static junit.framework.TestCase.assertEquals;
 
+@Ignore
 public class IntegrationTest {
     private final static TestInputStream in = new TestInputStream();
     private final static TestOutputStream out = new TestOutputStream();
