@@ -9,9 +9,9 @@ public class QueryFactory {
             case PostgreSQL:
                 return new PostgreSQLQuery();
             case MySQL:
-                return new MySQLQuery();
+                // ToDo: return new MySQLQuery();
             case MSSQL:
-                return new MSSQLQuery();
+                // ToDo: return new MSSQLQuery();
             default:
                 throw new MissingJDBCConnectionTypeException(jdbcConnectionType.toString());
         }

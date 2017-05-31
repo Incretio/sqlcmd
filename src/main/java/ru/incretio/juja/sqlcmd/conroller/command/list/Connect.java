@@ -19,7 +19,7 @@ public class Connect extends Base {
     }
 
     @Override
-    public void perform(Model model, View view, List<String> params) throws SQLException, MissingConnectionException {
+    public void perform(Model model, View view, List<String> params) throws SQLException, MissingConnectionException, ClassNotFoundException {
         int serverNameInd = 0;
         int dbNameInd = 1;
         int userNameInd = 2;
@@ -34,7 +34,8 @@ public class Connect extends Base {
             model.connect(serverName, dbName, userName, password);
             result = String.format(takeCaption("connectionSuccessPattern"), dbName);
         } catch (ClassNotFoundException e) {
-            result = takeCaption("driverLoadingErrorText");
+            throw new ClassNotFoundException(takeCaption("driverLoadingErrorText"));
+            //result = takeCaption("driverLoadingErrorText");
         }
 
         view.write(result);

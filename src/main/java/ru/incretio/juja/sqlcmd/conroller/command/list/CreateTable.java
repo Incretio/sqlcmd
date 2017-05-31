@@ -21,11 +21,9 @@ public class CreateTable extends Base {
     public void perform(Model model, View view, List<String> params) throws Exception {
         int tableNameInd = 0;
         String tableName = params.get(tableNameInd);
-        List<String> columns;
+        List<String> columns = Collections.emptyList();
         if (params.size() > 1) {
             columns = params.subList(1, params.size());
-        } else {
-            columns = Collections.emptyList();
         }
 
         boolean isTableExist =

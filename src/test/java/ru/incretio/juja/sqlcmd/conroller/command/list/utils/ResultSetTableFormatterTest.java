@@ -47,21 +47,18 @@ public class ResultSetTableFormatterTest {
         ResultSetMetaData resultSetMetaDataMock = Mockito.mock(ResultSetMetaData.class);
         Mockito.when(resultSetMetaDataMock.getColumnCount()).thenReturn(3);
         Mockito.when(resultSetMetaDataMock.getColumnLabel(Mockito.anyInt()))
-                .thenReturn("id").thenReturn("name").thenReturn("value");
+                .thenReturn("id", "name", "value");
         return resultSetMetaDataMock;
     }
 
     private ResultSet takeResultSet(ResultSetMetaData resultSetMetaData) throws SQLException {
         ResultSet resultSetMock = Mockito.mock(ResultSet.class);
         Mockito.when(resultSetMock.next())
-                .thenReturn(true)
-                .thenReturn(true)
-                .thenReturn(true)
-                .thenReturn(false);
+                .thenReturn(true, true, true, false);
         Mockito.when(resultSetMock.getString(Mockito.anyInt()))
-                .thenReturn("1").thenReturn("name1").thenReturn("value1")
-                .thenReturn("2").thenReturn("").thenReturn("value2")
-                .thenReturn("3").thenReturn("name3").thenReturn("value3");
+                .thenReturn("1", "name1", "value1")
+                .thenReturn("2", "", "value2")
+                .thenReturn("3", "name3", "value3");
         Mockito.when(resultSetMock.getMetaData()).thenReturn(resultSetMetaData);
         return resultSetMock;
     }

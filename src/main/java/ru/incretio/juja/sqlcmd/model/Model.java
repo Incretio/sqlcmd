@@ -118,9 +118,9 @@ public class Model {
         }
     }
 
-    public void updateRecords(String tableName,
-                              String whereColumnName, String whereColumnValue,
-                              String setColumnName, String setColumnValue) throws SQLException, MissingConnectionException {
+    public void executeUpdateRecords(String tableName,
+                                     String whereColumnName, String whereColumnValue,
+                                     String setColumnName, String setColumnValue) throws SQLException, MissingConnectionException {
         execute(queryable.takeUpdateQuery(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue));
     }
 

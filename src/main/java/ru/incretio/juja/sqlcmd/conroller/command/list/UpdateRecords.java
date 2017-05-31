@@ -35,7 +35,7 @@ public class UpdateRecords extends Base {
         new MissingColumnHelper(model, view)
                 .throwExceptionIfColumnNotExist(tableName, whereColumnName, setColumnName);
 
-        model.updateRecords(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue);
+        model.executeUpdateRecords(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue);
 
         view.write(String.format(takeCaption("recordUpdated"), tableName));
     }
