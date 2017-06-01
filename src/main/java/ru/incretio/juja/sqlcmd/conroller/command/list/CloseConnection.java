@@ -11,6 +11,8 @@ import ru.incretio.juja.sqlcmd.view.View;
 import java.sql.SQLException;
 import java.util.List;
 
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
 public class CloseConnection extends Base {
 
     public CloseConnection(Checkable checkable, Notationable notationable) {
@@ -21,6 +23,6 @@ public class CloseConnection extends Base {
     public void perform(Model model, View view, List<String> params) throws SQLException, MissingConnectionException {
         model.closeConnection();
 
-        view.write(ResourcesLoader.takeCaption("connectionClosed"));
+        view.write(takeCaption("connectionClosed"));
     }
 }

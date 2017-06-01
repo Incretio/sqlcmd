@@ -35,7 +35,6 @@ public class Connect extends Base {
             result = String.format(takeCaption("connectionSuccessPattern"), dbName);
         } catch (ClassNotFoundException e) {
             throw new ClassNotFoundException(takeCaption("driverLoadingErrorText"));
-            //result = takeCaption("driverLoadingErrorText");
         }
 
         view.write(result);

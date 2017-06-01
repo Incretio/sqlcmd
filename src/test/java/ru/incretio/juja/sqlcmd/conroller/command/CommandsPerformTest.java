@@ -1,26 +1,20 @@
 package ru.incretio.juja.sqlcmd.conroller.command;
 
 import org.junit.*;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import ru.incretio.juja.sqlcmd.conroller.command.interfaces.Checkable;
 import ru.incretio.juja.sqlcmd.conroller.command.interfaces.Notationable;
 import ru.incretio.juja.sqlcmd.conroller.command.list.*;
 import ru.incretio.juja.sqlcmd.exceptions.*;
 import ru.incretio.juja.sqlcmd.model.Model;
-import ru.incretio.juja.sqlcmd.model.data.JDBCConnectionType;
-import ru.incretio.juja.sqlcmd.model.query.QueryFactory;
 import ru.incretio.juja.sqlcmd.view.View;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static ru.incretio.juja.sqlcmd.TestConstants.*;
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.*;
 
 public class CommandsPerformTest {
     private Model model;
@@ -28,6 +22,18 @@ public class CommandsPerformTest {
     private static final Checkable CHECKABLE_MOCK = mock(Checkable.class);
     private static final Notationable NOTATIONABLE_MOCK = mock(Notationable.class);
     private List<String> params;
+
+    private final static String TABLE_NAME = "testTableName";
+    private final static String COLUMN_ONE_NAME = "testColumnOne";
+    private final static String COLUMN_TWO_NAME = "testColumnTwo";
+    private final static String COLUMN_THREE_NAME = "testColumnThree";
+    private final static List<String> COLUMNS_LIST = Arrays.asList(COLUMN_ONE_NAME, COLUMN_TWO_NAME, COLUMN_THREE_NAME);
+    private final static List<String> TABLE_AND_COLUMNS_LIST =
+            Arrays.asList(TABLE_NAME, COLUMN_ONE_NAME, COLUMN_TWO_NAME, COLUMN_THREE_NAME);
+    private final static String SERVER_NAME = "serverName";
+    private final static String DB_NAME = "dbName";
+    private final static String USERNAME = "userName";
+    private final static String PASSWORD = "password";
 
     @Before
     public void setup() {
@@ -37,128 +43,145 @@ public class CommandsPerformTest {
     }
 
 
-    // ToDo: добавить в каждый тест проверку значения View
-
     @Test
     public void clearTablePerform_correct_test() throws Exception {
-        when(model.takeTables()).thenReturn(Arrays.asList("tableName"));
-
+        when(model.takeTables()).thenReturn(Arrays.asList(TABLE_NAME));
         ClearTable clearTable = new ClearTable(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Collections.singletonList("tableName");
-        clearTable.perform(model, view, params);
+        params = Collections.singletonList(TABLE_NAME);
 
+        clearTable.perform(model, view, params);
+        
         verify(model).takeTables();
-        verify(model).executeClearTable("tableName");
+        verify(model).executeClearTable(TABLE_NAME);
+        verify(view).write(String.format(takeCaption("tableCleared"), TABLE_NAME));
     }
+
 
     @Test
     public void closePerform_correct_test() throws Exception {
         CloseConnection closeConnection = new CloseConnection(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
         params = Collections.emptyList();
+        
         closeConnection.perform(model, view, params);
 
         verify(model).closeConnection();
+        verify(view).write(takeCaption("connectionClosed"));
     }
 
     @Test
     public void columnExists_correct_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList("tableNameTest"));
-        when(model.takeTableColumns("tableNameTest"))
-                .thenReturn(Collections.singletonList("columnNameTest"));
-
+        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
+        when(model.takeTableColumns(TABLE_NAME))
+                .thenReturn(Collections.singletonList(COLUMN_ONE_NAME));
         ColumnExists columnExists = new ColumnExists(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("tableNameTest", "columnNameTest");
+        params = Arrays.asList(TABLE_NAME, COLUMN_ONE_NAME);
+
         columnExists.perform(model, view, params);
 
         verify(model).takeTables();
-        verify(model).takeTableColumns("tableNameTest");
+        verify(model).takeTableColumns(TABLE_NAME);
     }
 
     @Test(expected = MissingColumnException.class)
     public void columnExists_missingColumn_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList("tableNameTest"));
-        when(model.takeTableColumns("tableNameTest"))
+        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
+        when(model.takeTableColumns(TABLE_NAME))
                 .thenReturn(Collections.singletonList("column1"));
-
         ColumnExists columnExists = new ColumnExists(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("tableNameTest", "columnNameTest");
+        params = Arrays.asList(TABLE_NAME, COLUMN_ONE_NAME);
+
         try {
             columnExists.perform(model, view, params);
-        }catch (MissingColumnException e){
+        } catch (Exception e) {
             verify(model).takeTables();
-            verify(model).takeTableColumns("tableNameTest");
+            verify(model).takeTableColumns(TABLE_NAME);
             throw e;
         }
     }
 
     @Test
     public void columnsList_correct_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList("tableNameTest"));
-
+        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
+        when(model.takeTableColumns(TABLE_NAME)).thenReturn(COLUMNS_LIST);
         ColumnsList columnsList = new ColumnsList(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("tableNameTest");
+        params = Arrays.asList(TABLE_NAME);
+
         columnsList.perform(model, view, params);
 
-        verify(model).takeTableColumns("tableNameTest");
+        verify(model).takeTables();
+        verify(model).takeTableColumns(TABLE_NAME);
+        verify(view).write(COLUMNS_LIST);
     }
 
     @Test
     public void connect_correct_test() throws MissingConnectionException, SQLException, ClassNotFoundException {
         Connect connect = new Connect(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("serverName", "dbName", "userName", "password");
+        params = Arrays.asList(SERVER_NAME, DB_NAME, USERNAME, PASSWORD);
+
         connect.perform(model, view, params);
 
-        verify(model).connect("serverName", "dbName", "userName", "password");
+        verify(model).connect(SERVER_NAME, DB_NAME, USERNAME, PASSWORD);
+        verify(view).write(String.format(takeCaption("connectionSuccessPattern"), DB_NAME));
     }
 
     @Test(expected = ClassNotFoundException.class)
     public void connect_driverLoadingError_test() throws MissingConnectionException, SQLException, ClassNotFoundException {
         Connect connect = new Connect(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
         doThrow(ClassNotFoundException.class).when(model).connect(anyString(), anyString(), anyString(), anyString());
-        params = Arrays.asList("serverName", "dbName", "userName", "password");
-        connect.perform(model, view, params);
+        params = Arrays.asList(SERVER_NAME, DB_NAME, USERNAME, PASSWORD);
+
+        try {
+            connect.perform(model, view, params);
+        } catch (Exception e){
+            verify(model).connect(SERVER_NAME, DB_NAME, USERNAME, PASSWORD);
+            throw e;
+        }
     }
 
     @Test
     public void createDB_correct_test() throws MissingConnectionException, SQLException, ClassNotFoundException {
         CreateDB createDB = new CreateDB(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Collections.singletonList("dbNameTest");
+        params = Collections.singletonList(DB_NAME);
+
         createDB.perform(model, view, params);
 
-        verify(model).executeCreateDB("dbNameTest");
+        verify(model).executeCreateDB(DB_NAME);
+        verify(view).write(String.format(takeCaption("dbCreatedPattern"), DB_NAME));
     }
 
     @Test
     public void createTable_correct_test() throws Exception {
         CreateTable createTable = new CreateTable(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("tableNameTest", "column1", "column2", "column3");
-        createTable.perform(model, view, params);
 
-        List<String> columns = Arrays.asList("column1", "column2", "column3");
-        verify(model).executeCreateTable("tableNameTest", columns);
+        createTable.perform(model, view, TABLE_AND_COLUMNS_LIST);
+
+        verify(model).takeTables();
+        verify(model).executeCreateTable(TABLE_NAME, COLUMNS_LIST);
+        verify(view).write(String.format(takeCaption("tableAddedPattern"), TABLE_NAME));
     }
 
     @Test
     public void createTable_alreadyExists_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList("tableNameTest"));
-
+        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
         CreateTable createTable = new CreateTable(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("tableNameTest", "column1", "column2", "column3");
-        createTable.perform(model, view, params);
 
-        List<String> columns = Arrays.asList("column1", "column2", "column3");
+        createTable.perform(model, view, TABLE_AND_COLUMNS_LIST);
+
+        verify(model).takeTables();
         verify(model, never()).executeCreateTable(anyString(), anyList());
+        verify(view).write(String.format(takeCaption("tableAlreadyExistsPattern"), TABLE_NAME));
     }
 
+    // ToDo: Продолжить от сюда. Добавляем проверку вызова view.write();
     @Test
     public void deleteRecords_correct_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList("tableNameTest"));
-        when(model.takeTableColumns("tableNameTest")).thenReturn(Collections.singletonList("whereColumnName"));
+        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
+        when(model.takeTableColumns(TABLE_NAME)).thenReturn(Collections.singletonList("whereColumnName"));
         DeleteRecords deleteRecords = new DeleteRecords(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("tableNameTest", "whereColumnName", "whereColumnValue");
+        params = Arrays.asList(TABLE_NAME, "whereColumnName", "whereColumnValue");
         deleteRecords.perform(model, view, params);
 
-        verify(model).executeDeleteRecords("tableNameTest", "whereColumnName", "whereColumnValue");
+        verify(model).executeDeleteRecords(TABLE_NAME, "whereColumnName", "whereColumnValue");
     }
 
     @Test
@@ -172,12 +195,12 @@ public class CommandsPerformTest {
 
     @Test
     public void dropTable_correct_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList("tableNameTest"));
+        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
         DropTable dropTable = new DropTable(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("tableNameTest");
+        params = Arrays.asList(TABLE_NAME);
         dropTable.perform(model, view, params);
 
-        verify(model).executeDropTable("tableNameTest");
+        verify(model).executeDropTable(TABLE_NAME);
     }
 
     @Test
@@ -231,36 +254,36 @@ public class CommandsPerformTest {
 
     @Test
     public void insertRecords_correct_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList("tableNameTest"));
-        when(model.takeTableColumns("tableNameTest")).thenReturn(Arrays.asList("column1", "column2"));
+        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
+        when(model.takeTableColumns(TABLE_NAME)).thenReturn(Arrays.asList("column1", "column2"));
         InsertRecord insertRecord = new InsertRecord(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("tableNameTest", "column1", "value1", "column2", "value2");
+        params = Arrays.asList(TABLE_NAME, "column1", "value1", "column2", "value2");
         insertRecord.perform(model, view, params);
 
         List<String> columns = Arrays.asList("column1", "column2");
         List<String> values = Arrays.asList("value1", "value2");
-        verify(model).executeInsertRecord("tableNameTest", columns, values);
+        verify(model).executeInsertRecord(TABLE_NAME, columns, values);
     }
 
     // ToDo: Как тестить этот метод?
     @Test(expected = EmptyDataTableFormatterException.class)
     public void selectTable_correct_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList("tableNameTest"));
+        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
 
         SelectTable selectTable = new SelectTable(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("tableNameTest");
+        params = Arrays.asList(TABLE_NAME);
         selectTable.perform(model, view, params);
 
         verify(model).takeTables();
-        verify(model).find(any(), "tableNameTest");
+        verify(model).find(any(), TABLE_NAME);
     }
 
     @Test
     public void tableExists_correct_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList("tableNameTest"));
+        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
 
         TableExists tableExists = new TableExists(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("tableNameTest");
+        params = Arrays.asList(TABLE_NAME);
         tableExists.perform(model, view, params);
 
         verify(model).takeTables();
@@ -271,7 +294,7 @@ public class CommandsPerformTest {
         when(model.takeTables()).thenReturn(Collections.singletonList("table1"));
 
         TableExists tableExists = new TableExists(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("tableNameTest");
+        params = Arrays.asList(TABLE_NAME);
         try {
             tableExists.perform(model, view, params);
         } catch (MissingTableException e) {
@@ -284,7 +307,7 @@ public class CommandsPerformTest {
     public void tablesList_correct_test() throws Exception {
         when(model.takeTables()).thenReturn(Arrays.asList("table1", "table2"));
         TablesList tablesList = new TablesList(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("tableNameTest");
+        params = Arrays.asList(TABLE_NAME);
         tablesList.perform(model, view, params);
 
         verify(model).takeTables();
@@ -293,7 +316,7 @@ public class CommandsPerformTest {
     @Test
     public void tablesList_dbEmpty_test() throws Exception {
         TablesList tablesList = new TablesList(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("tableNameTest");
+        params = Arrays.asList(TABLE_NAME);
         tablesList.perform(model, view, params);
 
         verify(model).takeTables();
@@ -301,13 +324,13 @@ public class CommandsPerformTest {
 
     @Test
     public void updateRecords_correct_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList("tableNameTest"));
-        when(model.takeTableColumns("tableNameTest")).thenReturn(Arrays.asList("column1", "column2"));
+        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
+        when(model.takeTableColumns(TABLE_NAME)).thenReturn(Arrays.asList("column1", "column2"));
         UpdateRecords updateRecords = new UpdateRecords(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
-        params = Arrays.asList("tableNameTest", "column1", "value1", "column2", "value2");
+        params = Arrays.asList(TABLE_NAME, "column1", "value1", "column2", "value2");
         updateRecords.perform(model, view, params);
 
-        verify(model).executeUpdateRecords("tableNameTest", "column1", "value1", "column2", "value2");
+        verify(model).executeUpdateRecords(TABLE_NAME, "column1", "value1", "column2", "value2");
     }
 
 
