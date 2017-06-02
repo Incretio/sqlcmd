@@ -24,6 +24,8 @@ public abstract class View {
         }
         write(stringBuilder.toString());
     }
+    public abstract void writeSelectTable(List<List<String>> data, List<String> columnsNames)
+            throws Exception;
 
     public abstract String read();
 }
