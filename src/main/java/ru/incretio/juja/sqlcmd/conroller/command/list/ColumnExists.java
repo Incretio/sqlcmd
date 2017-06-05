@@ -9,8 +9,6 @@ import ru.incretio.juja.sqlcmd.view.View;
 
 import java.util.List;
 
-import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
-
 public class ColumnExists extends Base {
 
     public ColumnExists(Checkable checkable, Notationable notationable) {
@@ -18,7 +16,7 @@ public class ColumnExists extends Base {
     }
 
     /**
-     * Кидает исключение MissingColumnException, если поле не найдено.;
+     * Кидает исключение MissingColumnException, если поле не найдено.
      */
     @Override
     public void perform(Model model, View view, List<String> params) throws Exception {

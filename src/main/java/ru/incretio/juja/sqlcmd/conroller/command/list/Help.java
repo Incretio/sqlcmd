@@ -3,7 +3,6 @@ package ru.incretio.juja.sqlcmd.conroller.command.list;
 import ru.incretio.juja.sqlcmd.conroller.command.Command;
 import ru.incretio.juja.sqlcmd.conroller.command.interfaces.Checkable;
 import ru.incretio.juja.sqlcmd.conroller.command.interfaces.Notationable;
-import ru.incretio.juja.sqlcmd.conroller.command.interfaces.Performable;
 import ru.incretio.juja.sqlcmd.model.Model;
 import ru.incretio.juja.sqlcmd.view.View;
 
@@ -20,11 +19,11 @@ public class Help extends Base {
 
     @Override
     public void perform(Model model, View view, List<String> params) throws SQLException {
-        String result = takeCaption("commandList").concat(System.lineSeparator());
+        StringBuilder result = new StringBuilder(takeCaption("commandList").concat(System.lineSeparator()));
         for (String notation : Command.getNotationsList()) {
-            result += notation.concat(System.lineSeparator());
+            result.append(notation.concat(System.lineSeparator()));
         }
 
-        view.write(result);
+        view.write(result.toString());
     }
 }

@@ -6,23 +6,16 @@ import ru.incretio.juja.sqlcmd.conroller.command.list.utils.MissingTableHelper;
 import ru.incretio.juja.sqlcmd.conroller.command.list.utils.ResultSetTableFormatter;
 import ru.incretio.juja.sqlcmd.model.Model;
 import ru.incretio.juja.sqlcmd.utils.logger.AppLogger;
-import ru.incretio.juja.sqlcmd.view.TableFormatter;
 import ru.incretio.juja.sqlcmd.view.View;
 
-import javax.annotation.Resource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
 public class SelectTable extends Base {
-
-    public SelectTable(Checkable checkable, Notationable notationable, ResultSetTableFormatter resultSetTableFormatter) {
-        this(checkable, notationable);
-    }
 
     public SelectTable(Checkable checkable, Notationable notationable) {
         super(checkable, notationable);
@@ -47,13 +40,8 @@ public class SelectTable extends Base {
 
         model.find(resultSetConsumer, tableName);
 
-        if ((resultSetTableFormatter != null) &&
-                (resultSetTableFormatter.getColumnsNames() != null) &&
-                (!resultSetTableFormatter.getColumnsNames().
-
-                        isEmpty()))
-
-        {
+        if (resultSetTableFormatter.getColumnsNames() != null &&
+                !resultSetTableFormatter.getColumnsNames().isEmpty()) {
             List<List<String>> data = resultSetTableFormatter.getData();
             List<String> columnsNames = resultSetTableFormatter.getColumnsNames();
             view.writeSelectTable(data, columnsNames);

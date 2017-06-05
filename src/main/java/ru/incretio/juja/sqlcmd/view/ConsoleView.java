@@ -1,8 +1,5 @@
 package ru.incretio.juja.sqlcmd.view;
 
-import ru.incretio.juja.sqlcmd.exceptions.EmptyColumnsNamesTableFormatterException;
-import ru.incretio.juja.sqlcmd.exceptions.EmptyDataTableFormatterException;
-import ru.incretio.juja.sqlcmd.exceptions.IncorrectDataTableFormatterException;
 import ru.incretio.juja.sqlcmd.utils.logger.AppLogger;
 
 import java.io.*;

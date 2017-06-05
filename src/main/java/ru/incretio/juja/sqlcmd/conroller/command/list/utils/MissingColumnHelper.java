@@ -1,7 +1,6 @@
 package ru.incretio.juja.sqlcmd.conroller.command.list.utils;
 
 import ru.incretio.juja.sqlcmd.conroller.command.Command;
-import ru.incretio.juja.sqlcmd.conroller.command.list.ColumnExists;
 import ru.incretio.juja.sqlcmd.model.Model;
 import ru.incretio.juja.sqlcmd.view.View;
 

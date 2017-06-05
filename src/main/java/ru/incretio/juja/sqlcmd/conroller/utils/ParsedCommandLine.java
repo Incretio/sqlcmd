@@ -3,7 +3,6 @@ package ru.incretio.juja.sqlcmd.conroller.utils;
 import ru.incretio.juja.sqlcmd.exceptions.EmptyCommandException;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ParsedCommandLine {
     private final static String ESCAPE_STRING = "_&_";
@@ -34,22 +33,22 @@ public class ParsedCommandLine {
 
     private String replaceSpacesInQuotes(String sourceText, String escapeString) {
         Boolean inQuotes = false;
-        String result = "";
+        StringBuilder result = new StringBuilder();
 
         for (int i = 0; i < sourceText.length(); i++) {
             if (sourceText.charAt(i) == DELIMITER_QUOTE) {
                 inQuotes = !inQuotes;
             } else if (sourceText.charAt(i) == ' ' && inQuotes) {
-                result += escapeString;
+                result.append(escapeString);
             } else {
-                result += sourceText.charAt(i);
+                result.append(sourceText.charAt(i));
             }
         }
-        return result;
+        return result.toString();
     }
 
     private List<String> replaceString(List<String> list, String s, String s1) {
-        List<String> result = list.stream().collect(Collectors.toList());
+        List<String> result = new ArrayList<>(list);
 
         for (int i = 0; i < result.size(); i++) {
             result.set(i, result.get(i).replace(s, s1));

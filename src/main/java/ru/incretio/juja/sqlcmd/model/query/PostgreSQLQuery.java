@@ -45,15 +45,15 @@ public class PostgreSQLQuery implements Queryable {
 
     @Override
     public String takeInsertQuery(String tableName, List<String> columns, List<String> values) {
-        String columnsString = "";
-        String valuesString = "";
+        StringBuilder columnsString = new StringBuilder();
+        StringBuilder valuesString = new StringBuilder();
         for (int i = 0; i < columns.size(); i++) {
-            columnsString += columns.get(i) + ", ";
-            valuesString += "'" + values.get(i) + "'" + ", ";
+            columnsString.append(columns.get(i)).append(", ");
+            valuesString.append("'").append(values.get(i)).append("'").append(", ");
         }
-        columnsString = columnsString.substring(0, columnsString.length() - 2);
-        valuesString = valuesString.substring(0, valuesString.length() - 2);
-        return format(INSERT_QUERY_PATTERN, tableName, columnsString, valuesString);
+        columnsString = new StringBuilder(columnsString.substring(0, columnsString.length() - 2));
+        valuesString = new StringBuilder(valuesString.substring(0, valuesString.length() - 2));
+        return format(INSERT_QUERY_PATTERN, tableName, columnsString.toString(), valuesString.toString());
     }
 
     @Override
@@ -85,12 +85,12 @@ public class PostgreSQLQuery implements Queryable {
 
     @Override
     public String takeCreateTableQuery(String tableName, List<String> columns) {
-        String columnsString = "";
+        StringBuilder columnsString = new StringBuilder();
         for (String column : columns) {
-            columnsString += column + " varchar(20),";
+            columnsString.append(column).append(" varchar(20),");
         }
-        columnsString = columnsString.substring(0, columnsString.length() - 1);
-        return format(CREATE_TABLE_QUERY_PATTERN, tableName, columnsString);
+        columnsString = new StringBuilder(columnsString.substring(0, columnsString.length() - 1));
+        return format(CREATE_TABLE_QUERY_PATTERN, tableName, columnsString.toString());
     }
 
     @Override

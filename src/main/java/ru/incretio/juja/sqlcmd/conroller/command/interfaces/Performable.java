@@ -6,7 +6,7 @@ import ru.incretio.juja.sqlcmd.view.View;
 import java.util.List;
 
 /**
- * Объект, который можно выполнить с конфигом и параметрами
+ * Объект, который можно выполнить
  */
 @FunctionalInterface
 public interface Performable {
