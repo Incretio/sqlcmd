@@ -13,9 +13,4 @@ public class PerformHelper {
         this.model = model;
         this.view = view;
     }
-
-    private static boolean contains(String source, String value) {
-        return Arrays.asList(source.split(System.lineSeparator()))
-                .contains(value);
-    }
 }

@@ -1,5 +1,6 @@
 package ru.incretio.juja.sqlcmd.conroller.command.list;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.incretio.juja.sqlcmd.conroller.command.list.utils.ResultSetTableFormatter;
 
@@ -17,6 +18,7 @@ import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
 public class SelectTableTest extends CommandTestBase {
 
+    @Ignore
     @Test
     public void selectTable_correct_test() throws Exception {
         ResultSetTableFormatter resultSetTableFormatter = mock(ResultSetTableFormatter.class);

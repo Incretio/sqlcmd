@@ -26,16 +26,6 @@ abstract class CommandNotationFactory {
                 takeCaption("closeCommandHelp"));
     }
 
-    public static Notationable makeColumnExistCommandNotation() {
-        return () -> getFormattedNotation(COLUMN_EXIST.toString().concat(" tableName columnName"),
-                takeCaption("columnExistCommandHelp"));
-    }
-
-    public static Notationable makeColumnsCommandNotation() {
-        return () -> getFormattedNotation(COLUMNS.toString().concat(" tableName"),
-                takeCaption("columnsCommandHelp"));
-    }
-
     public static Notationable makeConnectNotation() {
         return () -> getFormattedNotation(CONNECT.toString().concat(" serverName dbName username password"),
                 takeCaption("connectCommandHelp"));
@@ -46,11 +36,6 @@ abstract class CommandNotationFactory {
                 takeCaption("createCommandHelp"));
     }
 
-    public static Notationable makeCreateDBCommandNotation() {
-        return () -> getFormattedNotation(CREATEDB.toString().concat(" dbName"),
-                takeCaption("createDBCommandHelp"));
-    }
-
     public static Notationable makeDeleteCommandNotation() {
         return () -> getFormattedNotation(DELETE.toString().concat(" tableName whereColumn whereValue"),
                 takeCaption("deleteCommandHelp"));
@@ -59,11 +44,6 @@ abstract class CommandNotationFactory {
     public static Notationable makeDropCommandNotation() {
         return () -> getFormattedNotation(DROP.toString().concat(" tableName"),
                 takeCaption("dropCommandHelp"));
-    }
-
-    public static Notationable makeDropDBCommandNotation() {
-        return () -> getFormattedNotation(DROPDB.toString().concat(" dbName"),
-                takeCaption("dropDBCommandHelp"));
     }
 
     public static Notationable makeExecuteCommandNotation() {
@@ -89,11 +69,6 @@ abstract class CommandNotationFactory {
     public static Notationable makeInsertCommandNotation() {
         return () -> getFormattedNotation(INSERT.toString().concat(" tableName column1 value1 [column2 value2] [columnN valueN]"),
                 takeCaption("insertCommandHelp"));
-    }
-
-    public static Notationable makeTableExistCommandNotation() {
-        return () -> getFormattedNotation(TABLE_EXIST.toString().concat(" tableName"),
-                takeCaption("tableExistCommandHelp"));
     }
 
     public static Notationable makeTablesCommandNotation() {

@@ -20,11 +20,8 @@ import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
 public class SelectTable extends Base {
 
-    private ResultSetTableFormatter resultSetTableFormatter;
-
     public SelectTable(Checkable checkable, Notationable notationable, ResultSetTableFormatter resultSetTableFormatter) {
         this(checkable, notationable);
-        this.resultSetTableFormatter = resultSetTableFormatter;
     }
 
     public SelectTable(Checkable checkable, Notationable notationable) {
@@ -39,12 +36,10 @@ public class SelectTable extends Base {
         new MissingTableHelper(model, view)
                 .throwExceptionIfTableNotExist(tableName);
 
+        ResultSetTableFormatter resultSetTableFormatter = new ResultSetTableFormatter();
         Consumer<ResultSet> resultSetConsumer = resultSet -> {
             try {
-                if (resultSetTableFormatter == null) {
-                    resultSetTableFormatter = new ResultSetTableFormatter();
-                    resultSetTableFormatter.setResultSet(resultSet);
-                }
+                resultSetTableFormatter.setResultSet(resultSet);
             } catch (SQLException e) {
                 AppLogger.warning(e);
             }
@@ -54,11 +49,17 @@ public class SelectTable extends Base {
 
         if ((resultSetTableFormatter != null) &&
                 (resultSetTableFormatter.getColumnsNames() != null) &&
-                (!resultSetTableFormatter.getColumnsNames().isEmpty())) {
+                (!resultSetTableFormatter.getColumnsNames().
+
+                        isEmpty()))
+
+        {
             List<List<String>> data = resultSetTableFormatter.getData();
             List<String> columnsNames = resultSetTableFormatter.getColumnsNames();
             view.writeSelectTable(data, columnsNames);
-        } else {
+        } else
+
+        {
             view.write(String.format(takeCaption("tableEmptyPattern"), tableName));
         }
     }

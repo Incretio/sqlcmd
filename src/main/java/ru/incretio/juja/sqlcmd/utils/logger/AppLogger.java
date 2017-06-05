@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class AppLogger {
-    private final static String LOG_FILE_NAME = "AppLog.log";
+    public final static String LOG_FILE_NAME = "AppLog.log";
     private final static Logger LOGGER = Logger.getLogger("AppLog");
 
     static {
@@ -32,7 +32,4 @@ public class AppLogger {
                         .concat(Arrays.toString(throwable.getStackTrace())));
     }
 
-    public static void info(String msg){
-        LOGGER.info(msg);
-    }
 }
