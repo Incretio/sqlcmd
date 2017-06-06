@@ -21,7 +21,7 @@ class TestInputStream extends InputStream {
     }
 
     public void add(String text) {
-        input += text + "\n";
+        input += text + System.lineSeparator();
     }
 
     @Override

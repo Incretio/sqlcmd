@@ -44,4 +44,10 @@ public class ConsoleView implements View {
         return result;
     }
 
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        reader.close();
+        writer.close();
+    }
 }
