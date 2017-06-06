@@ -10,7 +10,7 @@ import ru.incretio.juja.sqlcmd.view.View;
 class Main {
     public static void main(String[] args) {
         View view = new ConsoleView();
-        Queryable queryable = QueryFactory.makePostgresQLQuery();
+        Queryable queryable = QueryFactory.makePostgreSQLQuery();
         Model model = new Model(queryable);
 
         Controller main = new Controller(view, model);

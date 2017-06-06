@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class ConsoleView extends View {
+public class ConsoleView implements View {
     private final BufferedReader reader;
     private final BufferedWriter writer;
 

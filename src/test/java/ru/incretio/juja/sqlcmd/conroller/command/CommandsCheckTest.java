@@ -32,7 +32,7 @@ public class CommandsCheckTest {
             Arrays.asList(PARAM_VALUE, PARAM_VALUE, PARAM_VALUE, PARAM_VALUE, PARAM_VALUE, PARAM_VALUE, PARAM_VALUE, PARAM_VALUE, PARAM_VALUE);
 
     @Test
-    public void clearCommandCheck_test() {
+    public void clearCommandCheck_allVariants_test() {
         Checkable check = makeClearCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(false, check.checkParams(EMPTY_PARAM));
@@ -41,7 +41,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void closeCommandCheck_test() {
+    public void closeCommandCheck_allVariants_test() {
         Checkable check = makeCloseCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(true, check.checkParams(EMPTY_PARAM));
@@ -49,7 +49,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void connectCommandCheck_test() {
+    public void connectCommandCheck_allVariants_test() {
         Checkable check = makeConnectCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(false, check.checkParams(EMPTY_PARAM));
@@ -61,7 +61,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void createCommandCheck_test() {
+    public void createCommandCheck_allVariants_test() {
         Checkable check = makeCreateCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(false, check.checkParams(EMPTY_PARAM));
@@ -73,7 +73,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void createDBCommandCheck_test() {
+    public void createDBCommandCheck_allVariants_test() {
         Checkable check = makeCreateDBCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(false, check.checkParams(EMPTY_PARAM));
@@ -82,7 +82,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void deleteCommandCheck_test() {
+    public void deleteCommandCheck_allVariants_test() {
         Checkable check = makeDeleteCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(false, check.checkParams(EMPTY_PARAM));
@@ -94,7 +94,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void dropCommandCheck_test() {
+    public void dropCommandCheck_allVariants_test() {
         Checkable check = makeDropCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(false, check.checkParams(EMPTY_PARAM));
@@ -103,7 +103,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void dropDBCommandCheck_test() {
+    public void dropDBCommandCheck_allVariants_test() {
         Checkable check = makeDropDBCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(false, check.checkParams(EMPTY_PARAM));
@@ -112,7 +112,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void executeCommandCheck_test() {
+    public void executeCommandCheck_allVariants_test() {
         Checkable check = makeExecuteCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(false, check.checkParams(EMPTY_PARAM));
@@ -121,7 +121,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void exitCommandCheck_test() {
+    public void exitCommandCheck_allVariants_test() {
         Checkable check = makeExitCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(true, check.checkParams(EMPTY_PARAM));
@@ -130,7 +130,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void findCommandCheck_test() {
+    public void findCommandCheck_allVariants_test() {
         Checkable check = makeFindCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(false, check.checkParams(EMPTY_PARAM));
@@ -139,7 +139,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void helpCommandCheck_test() {
+    public void helpCommandCheck_allVariants_test() {
         Checkable check = makeHelpCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(true, check.checkParams(EMPTY_PARAM));
@@ -148,7 +148,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void insertCommandCheck_test() {
+    public void insertCommandCheck_allVariants_test() {
         Checkable check = makeInsertCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(false, check.checkParams(EMPTY_PARAM));
@@ -164,7 +164,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void tablesCommandCheck_test() {
+    public void tablesCommandCheck_allVariants_test() {
         Checkable check = makeTablesCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(true, check.checkParams(EMPTY_PARAM));
@@ -173,7 +173,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void updateCommandCheck_test() {
+    public void updateCommandCheck_allVariants_test() {
         Checkable check = makeUpdateCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(false, check.checkParams(EMPTY_PARAM));
@@ -186,7 +186,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void columnExistCommandCheck_test() {
+    public void columnExistCommandCheck_allVariants_test() {
         Checkable check = makeColumnExistCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(false, check.checkParams(EMPTY_PARAM));
@@ -196,7 +196,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void tableExistCommandCheck_test() {
+    public void tableExistCommandCheck_allVariants_test() {
         Checkable check = makeTableExistCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(false, check.checkParams(EMPTY_PARAM));
@@ -205,7 +205,7 @@ public class CommandsCheckTest {
     }
 
     @Test
-    public void columnsListCommandCheck_test() {
+    public void columnsListCommandCheck_allVariants_test() {
         Checkable check = makeColumnsCommandCheck();
         assertEquals(false, check.checkParams(NULL_PARAM));
         assertEquals(false, check.checkParams(EMPTY_PARAM));

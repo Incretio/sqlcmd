@@ -28,7 +28,7 @@ public class TableFormatterTest {
                     Arrays.asList(new String[]{"3"}));
 
     @Test
-    public void correctDataManyColumnsForTable_test() throws Exception {
+    public void tableFormatter_correctDataAndManyColumns_test() throws Exception {
         List<List<String>> data = dataTest;
         List<String> columnsNames = columnsNamesTest;
         TableFormatter tableFormatter = new TableFormatter(data, columnsNames);
@@ -44,7 +44,7 @@ public class TableFormatterTest {
     }
 
     @Test
-    public void correctDataOneColumnForTable_test() throws Exception {
+    public void tableFormatter_correctDataAndOneColumn_test() throws Exception {
         List<List<String>> data = dataOneColumnTest;
         List<String> columnsNames = columnsNamesOneColumnTest;
         TableFormatter tableFormatter = new TableFormatter(data, columnsNames);
@@ -60,7 +60,7 @@ public class TableFormatterTest {
     }
 
     @Test(expected = IncorrectDataTableFormatterException.class)
-    public void differentNumberOfColumnsAndData_test() throws Exception {
+    public void tableFormatter_differentNumberOfColumnsAndData_test() throws Exception {
         List<List<String>> data = dataTest;
         List<String> columnsNames = columnsNamesOneColumnTest;
         TableFormatter tableFormatter = new TableFormatter(data, columnsNames);
@@ -68,7 +68,7 @@ public class TableFormatterTest {
     }
 
     @Test
-    public void emptyData_test() throws Exception {
+    public void formatterTable_emptyData_test() throws Exception {
         List<List<String>> data = new ArrayList<>();
         List<String> columnsNames = columnsNamesTest;
         TableFormatter tableFormatter = new TableFormatter(data, columnsNames);
@@ -76,7 +76,7 @@ public class TableFormatterTest {
     }
 
     @Test(expected = EmptyColumnsNamesTableFormatterException.class)
-    public void emptyColumnsNames_test() throws Exception {
+    public void formatterTable_emptyColumnsNames_test() throws Exception {
         List<List<String>> data = dataTest;
         List<String> columnsNames = new ArrayList<>();
         TableFormatter tableFormatter = new TableFormatter(data, columnsNames);
@@ -84,21 +84,21 @@ public class TableFormatterTest {
     }
 
     @Test(expected = EmptyDataTableFormatterException.class)
-    public void nullData_test() throws Exception {
+    public void formatterTable_nullData_test() throws Exception {
         List<String> columnsNames = new ArrayList<>();
         TableFormatter tableFormatter = new TableFormatter(null, columnsNames);
         System.out.println(tableFormatter.getFormattedTable());
     }
 
     @Test(expected = EmptyColumnsNamesTableFormatterException.class)
-    public void nullColumnsNames_test() throws Exception {
+    public void formatterTable_nullColumnsNames_test() throws Exception {
         List<List<String>> data = new ArrayList<>();
         TableFormatter tableFormatter = new TableFormatter(data, null);
         System.out.println(tableFormatter.getFormattedTable());
     }
 
     @Test(expected = EmptyDataTableFormatterException.class)
-    public void nullDataAndColumnsNames_test() throws Exception {
+    public void formatterTable_nullDataAndColumnsNames_test() throws Exception {
         TableFormatter tableFormatter = new TableFormatter(null, null);
         tableFormatter.getFormattedTable();
     }

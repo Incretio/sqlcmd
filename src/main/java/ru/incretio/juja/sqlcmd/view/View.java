@@ -4,19 +4,19 @@ import java.util.List;
 
 import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
-public abstract class View {
+public interface View {
 
-    public void writeHeader() {
+    default void writeHeader() {
         write(String.format(takeCaption("headerPattern")));
     }
 
-    public void writeFooter() {
+    default void writeFooter() {
         write(String.format(takeCaption("footerPattern")));
     }
 
-    public abstract void write(String text);
+    void write(String text);
 
-    public void write(List<String> stringList) {
+    default void write(List<String> stringList) {
         StringBuilder stringBuilder = new StringBuilder();
         for (String value : stringList) {
             stringBuilder.append(value)
@@ -24,8 +24,8 @@ public abstract class View {
         }
         write(stringBuilder.toString());
     }
-    public abstract void writeSelectTable(List<List<String>> data, List<String> columnsNames)
-            throws Exception;
 
-    public abstract String read();
+    void writeSelectTable(List<List<String>> data, List<String> columnsNames) throws Exception;
+
+    String read();
 }

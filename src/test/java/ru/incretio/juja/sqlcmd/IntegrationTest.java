@@ -34,7 +34,7 @@ public class IntegrationTest {
     }
 
     @Test
-    public void testAllCommands() {
+    public void allCommands_correct_test() {
         in.add(TestConstants.TEST_CONNECTION_STRING);
         in.add("create table1 id field1 field2 field3");
         in.add("tables");
@@ -133,11 +133,11 @@ public class IntegrationTest {
                 "\n" +
                 "Спасибо за использование нашей программы! Мы старались ;)\n";
 
-        assertEquals(expected.replace("\n", System.lineSeparator()), out.getData());
+        assertEqualsWithLineSeparatorReplace(expected, out.getData());
     }
 
     @Test
-    public void testErrorData() {
+    public void differentCommands_incorrectData_test() {
         in.add("tables");
         in.add(TestConstants.TEST_CONNECTION_STRING);
         in.add(TestConstants.TEST_CONNECTION_STRING);
@@ -183,7 +183,11 @@ public class IntegrationTest {
                         "\n" +
                         "Спасибо за использование нашей программы! Мы старались ;)\n";
 
-        assertEquals(expected.replace("\n", System.lineSeparator()), out.getData());
+        assertEqualsWithLineSeparatorReplace(expected, out.getData());
+    }
+
+    private void assertEqualsWithLineSeparatorReplace(String expected, String actual){
+        assertEquals(expected.replace("\n", System.lineSeparator()), actual);
     }
 
 }

@@ -11,23 +11,23 @@ public class ParsedCommandLineTest {
     public final ExpectedException exception = ExpectedException.none();
 
     @Test (expected = EmptyCommandException.class)
-    public void testNullStringParsedCommandLine() throws Exception {
+    public void parsedCommandLine_nullString_test() throws Exception {
         new ParsedCommandLine(null);
     }
 
     @Test (expected = EmptyCommandException.class)
-    public void testEmptyStringParsedCommandLine() throws Exception {
+    public void parsedCommandLine_emptyString_test() throws Exception {
         new ParsedCommandLine("");
     }
 
 
     @Test (expected = EmptyCommandException.class)
-    public void testSpacesStringParsedCommandLine() throws Exception {
+    public void parsedCommandLine_spacesString_test() throws Exception {
         new ParsedCommandLine("    ");
     }
 
     @Test
-    public void testNoParamsParsedCommandLine() throws Exception {
+    public void parsedCommandLine_noParams_test() throws Exception {
         ParsedCommandLine parsedCommandLine = new ParsedCommandLine("command");
         assertEquals(parsedCommandLine.getCommandName(), "command");
         assertEquals(parsedCommandLine.getParamsList().size(), 0);
@@ -35,7 +35,7 @@ public class ParsedCommandLineTest {
 
 
     @Test
-    public void testOneParamParsedCommandLine() throws Exception {
+    public void parsedCommandLine_oneParam_test() throws Exception {
         ParsedCommandLine parsedCommandLine = new ParsedCommandLine("   command    param1   ");
         assertEquals(parsedCommandLine.getCommandName(), "command");
         assertEquals(parsedCommandLine.getParamsList().size(), 1);
@@ -43,7 +43,7 @@ public class ParsedCommandLineTest {
     }
 
     @Test
-    public void testThreeParamsParsedCommandLine() throws Exception {
+    public void parsedCommandLine_threeParams_test() throws Exception {
         ParsedCommandLine parsedCommandLine = new ParsedCommandLine("   command    param1   param2 param3");
         assertEquals(parsedCommandLine.getCommandName(), "command");
         assertEquals(parsedCommandLine.getParamsList().size(), 3);
@@ -53,7 +53,7 @@ public class ParsedCommandLineTest {
     }
 
     @Test
-    public void testQueryParsedCommandLine() throws Exception {
+    public void parsedCommandLine_withQuery_test() throws Exception {
         ParsedCommandLine parsedCommandLine = new ParsedCommandLine("   command   \" select * from table where  param1 = 0 and param2 = 'value'\"");
         assertEquals(parsedCommandLine.getCommandName(), "command");
         assertEquals(parsedCommandLine.getParamsList().size(), 1);
@@ -61,7 +61,7 @@ public class ParsedCommandLineTest {
     }
 
     @Test
-    public void testEleQueryParsedCommandLine() throws Exception {
+    public void parsedCommandLine_withQueryAndParam_test() throws Exception {
         ParsedCommandLine parsedCommandLine = new ParsedCommandLine("   command   \" select * from table where  param1 = 0 and param2 = 'value'\" param2");
         assertEquals(parsedCommandLine.getCommandName(), "command");
         assertEquals(parsedCommandLine.getParamsList().size(), 2);
