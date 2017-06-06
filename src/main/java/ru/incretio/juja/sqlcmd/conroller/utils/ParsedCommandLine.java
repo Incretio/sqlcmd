@@ -58,7 +58,8 @@ public class ParsedCommandLine {
     }
 
     public String getCommandName() {
-        return list.get(0);
+        int commandNameIndex = 0;
+        return list.get(commandNameIndex);
     }
 
     public List<String> getParamsList() {
