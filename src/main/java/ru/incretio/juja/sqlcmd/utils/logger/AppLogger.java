@@ -8,24 +8,35 @@ import java.util.logging.SimpleFormatter;
 
 public class AppLogger {
     public final static String LOG_FILE_NAME = "AppLog.log";
-    private final static Logger LOGGER = Logger.getLogger("AppLog");
+    private final Logger logger = Logger.getLogger("AppLog");
+    private FileHandler fileHandler;
 
-    static {
+    public AppLogger() {
         try {
             FileHandler fileHandler = new FileHandler(LOG_FILE_NAME);
-            LOGGER.setUseParentHandlers(false);
-            LOGGER.addHandler(fileHandler);
-            fileHandler.setFormatter(new SimpleFormatter());
+            try {
+                logger.setUseParentHandlers(false);
+                logger.addHandler(fileHandler);
+                fileHandler.setFormatter(new SimpleFormatter());
+                this.fileHandler = fileHandler;
+            } catch (Exception e){
+                fileHandler.close();
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            // do nothing
         }
     }
 
     public static void warning(String msg) {
-        LOGGER.warning(msg);
+        AppLogger appLogger = new AppLogger();
+        try {
+            appLogger.logger.warning(msg);
+        } finally {
+            appLogger.fileHandler.close();
+        }
     }
 
-    public static void warning(Throwable throwable){
+    public static void warning(Throwable throwable) {
         warning(
                 throwable.getMessage()
                         .concat(": ")
