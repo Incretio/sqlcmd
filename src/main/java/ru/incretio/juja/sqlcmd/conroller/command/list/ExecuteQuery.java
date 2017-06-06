@@ -19,8 +19,8 @@ public class ExecuteQuery extends Base {
 
     @Override
     public void perform(Model model, View view, List<String> params) throws SQLException, MissingConnectionException {
-        int queryTextInd = 0;
-        String queryText = params.get(queryTextInd);
+        int queryTextIndex = 0;
+        String queryText = params.get(queryTextIndex);
 
         model.execute(queryText);
 

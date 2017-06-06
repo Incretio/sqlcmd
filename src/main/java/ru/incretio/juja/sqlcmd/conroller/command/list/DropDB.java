@@ -19,8 +19,8 @@ public class DropDB extends Base {
 
     @Override
     public void perform(Model model, View view, List<String> params) throws SQLException, MissingConnectionException {
-        int dbNameInd = 0;
-        String dbName = params.get(dbNameInd);
+        int dbNameIndex = 0;
+        String dbName = params.get(dbNameIndex);
 
         model.executeDropDB(dbName);
 

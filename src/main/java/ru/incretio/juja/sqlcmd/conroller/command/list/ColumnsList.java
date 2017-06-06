@@ -16,8 +16,8 @@ public class ColumnsList extends Base {
 
     @Override
     public void perform(Model model, View view, List<String> params) throws Exception {
-        int tableNameInd = 0;
-        String tableName = params.get(tableNameInd);
+        int tableNameIndex = 0;
+        String tableName = params.get(tableNameIndex);
 
         new MissingTableHelper(model, view)
                 .throwExceptionIfTableNotExist(tableName);

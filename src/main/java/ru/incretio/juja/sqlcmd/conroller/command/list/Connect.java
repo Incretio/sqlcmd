@@ -19,14 +19,14 @@ public class Connect extends Base {
 
     @Override
     public void perform(Model model, View view, List<String> params) throws SQLException, MissingConnectionException, ClassNotFoundException {
-        int serverNameInd = 0;
-        int dbNameInd = 1;
-        int userNameInd = 2;
-        int passwordInd = 3;
-        String serverName = params.get(serverNameInd);
-        String dbName = params.get(dbNameInd);
-        String userName = params.get(userNameInd);
-        String password = params.get(passwordInd);
+        int serverNameIndex = 0;
+        int dbNameIndex = 1;
+        int userNameIndex = 2;
+        int passwordIndex = 3;
+        String serverName = params.get(serverNameIndex);
+        String dbName = params.get(dbNameIndex);
+        String userName = params.get(userNameIndex);
+        String password = params.get(passwordIndex);
 
         String result;
         try {

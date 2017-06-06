@@ -20,10 +20,10 @@ public class ColumnExists extends Base {
      */
     @Override
     public void perform(Model model, View view, List<String> params) throws Exception {
-        int tableNameInd = 0;
-        int columnNameInd = 1;
-        String tableName = params.get(tableNameInd);
-        String columnName = params.get(columnNameInd);
+        int tableNameIndex = 0;
+        int columnNameIndex = 1;
+        String tableName = params.get(tableNameIndex);
+        String columnName = params.get(columnNameIndex);
 
         new MissingTableHelper(model, view)
                 .throwExceptionIfTableNotExist(tableName);

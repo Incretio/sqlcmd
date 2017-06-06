@@ -8,8 +8,8 @@ import java.util.List;
 
 public class ResultSetTableFormatter {
     private ResultSet resultSet;
-    private final int firstColumnInd = 1;
-    private int lastColumnInd;
+    private final int firstColumnIndex = 1;
+    private int lastColumnIndex;
     private ResultSetMetaData metaData;
     private List<List<String>> data;
     private List<String> columnsNames;
@@ -21,7 +21,7 @@ public class ResultSetTableFormatter {
 
     private void initAll() throws SQLException {
         initMetaData();
-        initLastColumnInd();
+        initLastColumnIndex();
         fillData();
         fillColumnsNames();
     }
@@ -31,8 +31,8 @@ public class ResultSetTableFormatter {
         metaData = resultSet.getMetaData();
     }
 
-    private void initLastColumnInd() throws SQLException {
-        lastColumnInd = metaData.getColumnCount();
+    private void initLastColumnIndex() throws SQLException {
+        lastColumnIndex = metaData.getColumnCount();
     }
 
     private void fillData() throws SQLException {
@@ -41,7 +41,7 @@ public class ResultSetTableFormatter {
         while (resultSet.next()) {
             List<String> line = new ArrayList<>();
 
-            for (int i = firstColumnInd; i <= lastColumnInd; i++) {
+            for (int i = firstColumnIndex; i <= lastColumnIndex; i++) {
                 String value = resultSet.getString(i);
                 value = (value == null) ? "" : value;
 
@@ -55,7 +55,7 @@ public class ResultSetTableFormatter {
 
     private void fillColumnsNames() throws SQLException {
         List<String> columnsNames = new ArrayList<>();
-        for (int i = firstColumnInd; i <= lastColumnInd; i++) {
+        for (int i = firstColumnIndex; i <= lastColumnIndex; i++) {
             columnsNames.add(metaData.getColumnLabel(i));
         }
 

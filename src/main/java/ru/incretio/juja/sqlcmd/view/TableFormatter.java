@@ -30,9 +30,9 @@ public class TableFormatter {
         if (columnsNames == null || columnsNames.size() == 0) {
             throw new EmptyColumnsNamesTableFormatterException();
         }
-        int firstColumnInd = 0;
+        int firstColumnIndex = 0;
         if (data.size() > 0 &&
-                (data.get(firstColumnInd).size() != columnsNames.size())) {
+                (data.get(firstColumnIndex).size() != columnsNames.size())) {
             throw new IncorrectDataTableFormatterException();
         }
     }

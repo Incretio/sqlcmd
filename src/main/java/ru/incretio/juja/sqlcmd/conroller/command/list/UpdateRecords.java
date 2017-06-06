@@ -19,16 +19,16 @@ public class UpdateRecords extends Base {
 
     @Override
     public void perform(Model model, View view, List<String> params) throws Exception {
-        int tableNameInd = 0;
-        int whereColumnNameInd = 1;
-        int whereColumnValueInd = 2;
-        int setColumnNameInd = 3;
-        int setColumnValueInd = 4;
-        String tableName = params.get(tableNameInd);
-        String whereColumnName = params.get(whereColumnNameInd);
-        String whereColumnValue = params.get(whereColumnValueInd);
-        String setColumnName = params.get(setColumnNameInd);
-        String setColumnValue = params.get(setColumnValueInd);
+        int tableNameIndex = 0;
+        int whereColumnNameIndex = 1;
+        int whereColumnValueIndex = 2;
+        int setColumnNameIndex = 3;
+        int setColumnValueIndex = 4;
+        String tableName = params.get(tableNameIndex);
+        String whereColumnName = params.get(whereColumnNameIndex);
+        String whereColumnValue = params.get(whereColumnValueIndex);
+        String setColumnName = params.get(setColumnNameIndex);
+        String setColumnValue = params.get(setColumnValueIndex);
 
         new MissingTableHelper(model, view)
                 .throwExceptionIfTableNotExist(tableName);

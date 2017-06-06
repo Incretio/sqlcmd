@@ -20,8 +20,8 @@ public class InsertRecord extends Base {
 
     @Override
     public void perform(Model model, View view, List<String> params) throws Exception {
-        int tableNameInd = 0;
-        String tableName = params.get(tableNameInd);
+        int tableNameIndex = 0;
+        String tableName = params.get(tableNameIndex);
 
         List<String> columns = new ArrayList<>();
         List<String> values = new ArrayList<>();
@@ -44,8 +44,8 @@ public class InsertRecord extends Base {
         // Берём значение через одно, так как они чередуются [column][value][column][value]
         for (int i = secondElement; i < params.size(); i += 2) {
             columns.add(params.get(i));
-            int nextValueInd = i + 1;
-            values.add(params.get(nextValueInd));
+            int nextValueIndex = i + 1;
+            values.add(params.get(nextValueIndex));
         }
     }
 }

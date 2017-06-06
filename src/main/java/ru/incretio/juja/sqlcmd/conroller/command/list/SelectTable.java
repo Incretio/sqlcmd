@@ -23,9 +23,9 @@ public class SelectTable extends Base {
 
     @Override
     public void perform(Model model, View view, List<String> params) throws Exception {
-        int tableNameInd = 0;
+        int tableNameIndex = 0;
 
-        String tableName = params.get(tableNameInd);
+        String tableName = params.get(tableNameIndex);
         new MissingTableHelper(model, view)
                 .throwExceptionIfTableNotExist(tableName);
 

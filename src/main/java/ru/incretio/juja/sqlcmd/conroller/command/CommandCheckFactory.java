@@ -31,10 +31,10 @@ public abstract class CommandCheckFactory {
             if (checkParamsHelper.isNull(params)) {
                 return false;
             }
-            int firstCharInd = 0;
+            int firstCharIndex = 0;
             boolean hasErrorInColumnName =
                     params.stream()
-                            .anyMatch(s -> Character.isDigit(s.charAt(firstCharInd)));
+                            .anyMatch(s -> Character.isDigit(s.charAt(firstCharIndex)));
             return checkParamsHelper.moreThanXParams(params, 1) && !hasErrorInColumnName;
         };
     }

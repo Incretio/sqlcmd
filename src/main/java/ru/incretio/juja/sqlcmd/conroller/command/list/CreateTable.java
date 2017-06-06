@@ -19,8 +19,8 @@ public class CreateTable extends Base {
 
     @Override
     public void perform(Model model, View view, List<String> params) throws Exception {
-        int tableNameInd = 0;
-        String tableName = params.get(tableNameInd);
+        int tableNameIndex = 0;
+        String tableName = params.get(tableNameIndex);
         List<String> columns = Collections.emptyList();
         if (params.size() > 1) {
             columns = params.subList(1, params.size());

@@ -19,12 +19,12 @@ public class DeleteRecords extends Base {
 
     @Override
     public void perform(Model model, View view, List<String> params) throws Exception {
-        int tableNameInd = 0;
-        int whereColumnNameInd = 1;
-        int whereColumnValueInd = 2;
-        String tableName = params.get(tableNameInd);
-        String whereColumnName = params.get(whereColumnNameInd);
-        String whereColumnValue = params.get(whereColumnValueInd);
+        int tableNameIndex = 0;
+        int whereColumnNameIndex = 1;
+        int whereColumnValueIndex = 2;
+        String tableName = params.get(tableNameIndex);
+        String whereColumnName = params.get(whereColumnNameIndex);
+        String whereColumnValue = params.get(whereColumnValueIndex);
 
         new MissingTableHelper(model, view)
                 .throwExceptionIfTableNotExist(tableName);
