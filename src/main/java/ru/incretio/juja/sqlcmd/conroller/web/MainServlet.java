@@ -1,34 +1,90 @@
 package ru.incretio.juja.sqlcmd.conroller.web;
 
+import ru.incretio.juja.sqlcmd.exceptions.CommandException;
+import ru.incretio.juja.sqlcmd.exceptions.MissingAnyDataException;
+import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
+import ru.incretio.juja.sqlcmd.exceptions.NeedExitException;
 import ru.incretio.juja.sqlcmd.service.Service;
 import ru.incretio.juja.sqlcmd.service.ServiceImpl;
+import ru.incretio.juja.sqlcmd.utils.logger.AppLogger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Arrays;
 
-public class MainServlet extends HttpServlet{
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
+public class MainServlet extends HttpServlet {
+    private Service service;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+
+        service = new ServiceImpl();
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Service service = new ServiceImpl();
+        String action = getActionName(req);
 
-        String requestURI = req.getRequestURI();
-        String action = requestURI.substring(req.getContextPath().length(), requestURI.length());
-
-        if (action.startsWith("/menu")){
+        if (action.startsWith("/menu")) {
             req.setAttribute("items", service.commandsList());
             req.getRequestDispatcher("menu.jsp").forward(req, resp);
-        } else if (action.startsWith("/help")){
+        } else if (action.startsWith("/help")) {
             req.getRequestDispatcher("help.jsp").forward(req, resp);
+        } else if (action.startsWith("/connect")) {
+            req.getRequestDispatcher("connect.jsp").forward(req, resp);
+        } else if (action.startsWith("/errorPage")) {
+            req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
         } else {
             req.getRequestDispatcher("missingPage.jsp").forward(req, resp);
         }
     }
 
-//    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        super.doPost(req, resp);
-//    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = getActionName(req);
+
+        if (action.startsWith("/connect")) {
+            String serverName = req.getParameter("serverName");
+            String dbName = req.getParameter("dbName");
+            String userName = req.getParameter("userName");
+            String password = req.getParameter("password");
+            try {
+                service.connect(serverName, dbName, userName, password);
+                resp.sendRedirect(resp.encodeRedirectURL("menu"));
+            } catch (Exception e) {
+                String exceptionDescription = getExceptionDescription(e);
+                req.setAttribute("message", exceptionDescription);
+                req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
+            }
+        }
+    }
+
+    private String getExceptionDescription(Exception exception) {
+        String result;
+        try {
+            throw exception;
+        } catch (CommandException | MissingAnyDataException | NeedExitException e) {
+            result = e.getMessage();
+        } catch (SQLException e) {
+            result = String.format(takeCaption("sqlErrorPattern"),
+                    e.getMessage().replace("\n", System.lineSeparator()));
+        } catch (Exception e) {
+            result = takeCaption("badAppConfiguration");
+            AppLogger.warning(e.getMessage().concat(": ").concat(Arrays.toString(e.getStackTrace())));
+        }
+        return result;
+    }
+
+    private String getActionName(HttpServletRequest req) {
+        String requestURI = req.getRequestURI();
+        return requestURI.substring(req.getContextPath().length(), requestURI.length());
+    }
 }
