@@ -15,7 +15,5 @@
         <a href="insert">Insert</a><br>
         <a href="find">Find</a><br>
         <a href="tables">Tables</a><br>
-        <a href="exit">Exit</a><br>
-        <a href="demo">Demo</a><br>
     </body>
 </html>

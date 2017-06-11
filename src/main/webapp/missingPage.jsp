@@ -5,6 +5,6 @@
     </head>
     <body>
        Error! JSP not found!<br>
-       Go to <a href="menu">Main menu</a>.
+       Go to <a href="menu">Menu</a>.
     </body>
 </html>
