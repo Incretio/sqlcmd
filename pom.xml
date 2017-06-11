@@ -4,18 +4,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>ru.incretio.juja.sqlcmd</groupId>
+    <artifactId>sqlcmd</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
     <packaging>war</packaging>
-    <name>juja-sqlcmd</name>
-    <description>juja-sqlcmd</description>
+    <name>sqlcmd</name>
+    <description>sqlcmd</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <groupId>ru.incretio.juja.sqlcmd</groupId>
-    <artifactId>sqlcmd</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <build>
+        <finalName>${artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -23,6 +25,15 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <port>9090</port>
+                    <path>/sqlcmd</path>
                 </configuration>
             </plugin>
         </plugins>
@@ -40,12 +51,14 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.4.1212</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>2.8.9</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
