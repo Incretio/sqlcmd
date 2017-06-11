@@ -6,14 +6,8 @@
         <title>SQLCmd</title>
     </head>
     <body>
-        <a href="help">Help</a><br>
-        <a href="connect">Connect</a><br>
-        <a href="create">Create</a><br>
-        <a href="delete">Delete</a><br>
-        <a href="drop">Drop</a><br>
-        <a href="clear">Clear</a><br>
-        <a href="insert">Insert</a><br>
-        <a href="find">Find</a><br>
-        <a href="tables">Tables</a><br>
+        <c:forEach var="command" items="${items}">
+            <a href="${command}">${command}</a><br>
+        </c:forEach>
     </body>
 </html>
