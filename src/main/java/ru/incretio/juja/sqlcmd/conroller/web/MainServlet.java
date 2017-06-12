@@ -2,7 +2,6 @@ package ru.incretio.juja.sqlcmd.conroller.web;
 
 import ru.incretio.juja.sqlcmd.exceptions.CommandException;
 import ru.incretio.juja.sqlcmd.exceptions.MissingAnyDataException;
-import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.exceptions.NeedExitException;
 import ru.incretio.juja.sqlcmd.service.Service;
 import ru.incretio.juja.sqlcmd.service.ServiceImpl;
@@ -19,19 +18,12 @@ import java.util.Arrays;
 import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
 public class MainServlet extends HttpServlet {
-    private Service service;
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-
-        service = new ServiceImpl();
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = getActionName(req);
 
+        Service service = (Service) req.getSession().getAttribute("service");
         if (action.startsWith("/menu")) {
             req.setAttribute("items", service.commandsList());
             req.getRequestDispatcher("menu.jsp").forward(req, resp);
@@ -57,6 +49,8 @@ public class MainServlet extends HttpServlet {
             String userName = req.getParameter("userName");
             String password = req.getParameter("password");
             try {
+                Service service = new ServiceImpl();
+                req.getSession().setAttribute("service", service);
                 service.connect(serverName, dbName, userName, password);
                 resp.sendRedirect(resp.encodeRedirectURL("menu"));
             } catch (Exception e) {
