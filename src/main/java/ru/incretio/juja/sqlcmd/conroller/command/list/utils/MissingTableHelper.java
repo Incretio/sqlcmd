@@ -13,6 +13,10 @@ public class MissingTableHelper extends PerformHelper {
         super(model, view);
     }
 
+    public MissingTableHelper(Model model) {
+        super(model, null);
+    }
+
     public void throwExceptionIfTableNotExist(String tableName) throws Exception {
         checkTableExist(tableName);
     }

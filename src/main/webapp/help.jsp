@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
     <head>
@@ -34,6 +35,6 @@
             execute \"textQuery\":<br>
                 выполнить пользовательский запрос (должен быть указан в двойных ковычках);<br>
         <br>
-        Go to <a href="menu">Menu</a>.
+        <%@include file="footer.jsp" %>
     </body>
 </html>

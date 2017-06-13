@@ -8,6 +8,7 @@
     <body>
        Что-то пошло не так!<br>
        ${message}<br>
-       Go to <a href="menu">Menu</a>.
+       <br>
+       <%@include file="footer.jsp" %>
     </body>
 </html>

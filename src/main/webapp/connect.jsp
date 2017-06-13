@@ -31,6 +31,7 @@
             </table>
         </form>
 
-        Go to <a href="menu">Menu</a>.
+        <br>
+        <%@include file="footer.jsp" %>
     </body>
 </html>

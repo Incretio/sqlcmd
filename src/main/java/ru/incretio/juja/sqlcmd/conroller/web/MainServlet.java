@@ -18,12 +18,17 @@ import java.util.Arrays;
 import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
 public class MainServlet extends HttpServlet {
+    Service service;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = getActionName(req);
 
-        Service service = (Service) req.getSession().getAttribute("service");
+        service = (Service) req.getSession().getAttribute("service");
+        if (service == null){
+            service = new ServiceImpl();
+        }
+
         if (action.startsWith("/menu")) {
             req.setAttribute("items", service.commandsList());
             req.getRequestDispatcher("menu.jsp").forward(req, resp);
@@ -31,6 +36,14 @@ public class MainServlet extends HttpServlet {
             req.getRequestDispatcher("help.jsp").forward(req, resp);
         } else if (action.startsWith("/connect")) {
             req.getRequestDispatcher("connect.jsp").forward(req, resp);
+        } else if (action.startsWith("/find")){
+            String tableName = req.getParameter("tableName");
+            try {
+                req.setAttribute("table", service.find(tableName));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            req.getRequestDispatcher("find.jsp").forward(req, resp);
         } else if (action.startsWith("/errorPage")) {
             req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
         } else {
@@ -49,7 +62,6 @@ public class MainServlet extends HttpServlet {
             String userName = req.getParameter("userName");
             String password = req.getParameter("password");
             try {
-                Service service = new ServiceImpl();
                 req.getSession().setAttribute("service", service);
                 service.connect(serverName, dbName, userName, password);
                 resp.sendRedirect(resp.encodeRedirectURL("menu"));

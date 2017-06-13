@@ -7,6 +7,7 @@
     </head>
     <body>
        Error! JSP not found!<br>
-       Go to <a href="menu">Menu</a>.
+       <br>
+       <%@include file="footer.jsp" %>
     </body>
 </html>

@@ -9,4 +9,6 @@ public interface Service {
     List<String> commandsList();
 
     void connect(String serverName, String dbName, String userName, String password) throws SQLException, MissingConnectionException, ClassNotFoundException;
+
+    List<List<String>> find(String tableName) throws Exception;
 }
