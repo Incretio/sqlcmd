@@ -15,7 +15,7 @@ public class InsertRecordTest extends CommandTestBase {
 
     @Test
     public void insertRecords_correct_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
+        when(model.takeTablesList()).thenReturn(Collections.singletonList(TABLE_NAME));
         when(model.takeTableColumns(TABLE_NAME)).thenReturn(Arrays.asList("column1", "column2"));
         InsertRecord insertRecord = new InsertRecord(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
         params = Arrays.asList(TABLE_NAME, "column1", "value1", "column2", "value2");
@@ -23,7 +23,7 @@ public class InsertRecordTest extends CommandTestBase {
         insertRecord.perform(model, view, params);
 
         // Для каждой колонки по разу + проверка перед выполнением
-        verify(model, times(3)).takeTables();
+        verify(model, times(3)).takeTablesList();
         verify(model, times(2)).takeTableColumns(TABLE_NAME);
         List<String> columns = Arrays.asList("column1", "column2");
         List<String> values = Arrays.asList("value1", "value2");

@@ -12,13 +12,13 @@ public class TablesListTest extends CommandTestBase {
 
     @Test
     public void tablesList_correct_test() throws Exception {
-        when(model.takeTables()).thenReturn(Arrays.asList("table1", "table2"));
+        when(model.takeTablesList()).thenReturn(Arrays.asList("table1", "table2"));
         TablesList tablesList = new TablesList(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
         params = Arrays.asList(TABLE_NAME);
 
         tablesList.perform(model, view, params);
 
-        verify(model).takeTables();
+        verify(model).takeTablesList();
         verify(view).write(Arrays.asList("table1", "table2"));
     }
 
@@ -29,7 +29,7 @@ public class TablesListTest extends CommandTestBase {
 
         tablesList.perform(model, view, params);
 
-        verify(model).takeTables();
+        verify(model).takeTablesList();
         verify(view).write(takeCaption("dbEmpty"));
     }
 }

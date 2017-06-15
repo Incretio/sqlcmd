@@ -36,14 +36,14 @@ public class MainServlet extends HttpServlet {
             req.getRequestDispatcher("help.jsp").forward(req, resp);
         } else if (action.startsWith("/connect")) {
             req.getRequestDispatcher("connect.jsp").forward(req, resp);
-        } else if (action.startsWith("/find")){
+        } else if (action.startsWith("/select")){
             String tableName = req.getParameter("tableName");
             try {
-                req.setAttribute("table", service.find(tableName));
+                req.setAttribute("table", service.select(tableName));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            req.getRequestDispatcher("find.jsp").forward(req, resp);
+            req.getRequestDispatcher("select.jsp").forward(req, resp);
         } else if (action.startsWith("/errorPage")) {
             req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
         } else {

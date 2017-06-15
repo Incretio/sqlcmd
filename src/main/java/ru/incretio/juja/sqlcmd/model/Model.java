@@ -90,7 +90,7 @@ public class Model {
         execute(queryable.takeInsertQuery(tableName, columns, values));
     }
 
-    public List<String> takeTables() throws SQLException, MissingConnectionException {
+    public List<String> takeTablesList() throws SQLException, MissingConnectionException {
         return takeDataFromFirstColumn(queryable.takeSelectTablesQuery());
     }
 

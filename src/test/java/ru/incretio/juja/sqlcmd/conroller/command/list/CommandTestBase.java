@@ -43,7 +43,7 @@ public class CommandTestBase {
             "\t\tдобавить запись в указанную таблицу;\n" +
             "\tupdate tableName whereColumn whereValue setColumn setValue:\n" +
             "\t\tобновить записи, удовлетворяющие условию в указанной таблице;\n" +
-            "\tfind tableName:\n" +
+            "\tselect tableName:\n" +
             "\t\tпоказать содержимое указанной таблицы;\n" +
             "\tdelete tableName whereColumn whereValue:\n" +
             "\t\tудалить записи, удовлетворяющие условию;\n" +

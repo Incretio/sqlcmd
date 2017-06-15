@@ -19,7 +19,7 @@ public class TablesList extends Base {
 
     @Override
     public void perform(Model model, View view, List<String> params) throws SQLException, MissingConnectionException {
-        List<String> tables = model.takeTables();
+        List<String> tables = model.takeTablesList();
 
         if (tables.isEmpty()) {
             view.write(takeCaption("dbEmpty"));

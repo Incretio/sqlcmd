@@ -18,19 +18,19 @@ public class CreateTableTest extends CommandTestBase {
 
         createTable.perform(model, view, TABLE_AND_COLUMNS_LIST);
 
-        verify(model).takeTables();
+        verify(model).takeTablesList();
         verify(model).executeCreateTable(TABLE_NAME, COLUMNS_LIST);
         verify(view).write(String.format(takeCaption("tableAddedPattern"), TABLE_NAME));
     }
 
     @Test
     public void createTable_alreadyExists_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
+        when(model.takeTablesList()).thenReturn(Collections.singletonList(TABLE_NAME));
         CreateTable createTable = new CreateTable(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
 
         createTable.perform(model, view, TABLE_AND_COLUMNS_LIST);
 
-        verify(model).takeTables();
+        verify(model).takeTablesList();
         verify(model, never()).executeCreateTable(anyString(), anyList());
         verify(view).write(String.format(takeCaption("tableAlreadyExistsPattern"), TABLE_NAME));
     }

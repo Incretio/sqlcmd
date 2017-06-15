@@ -22,7 +22,7 @@ public class TableExists extends Base {
         int tableNameIndex = 0;
         String tableName = params.get(tableNameIndex);
 
-        boolean tableFound = model.takeTables().contains(tableName);
+        boolean tableFound = model.takeTablesList().contains(tableName);
 
         if (!tableFound) {
             throw new MissingTableException(tableName);

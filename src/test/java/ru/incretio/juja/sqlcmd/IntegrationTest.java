@@ -41,13 +41,13 @@ public class IntegrationTest {
         in.add("insert table1 id 1 field1 field11Value field2 field21Value field3 field31Value");
         in.add("insert table1 id 2 field1 field12Value field2 field22Value field3 field32Value");
         in.add("insert table1 id 3 field1 field13Value field2 field23Value field3 field33Value");
-        in.add("find table1");
+        in.add("select table1");
         in.add("delete table1 id 2");
-        in.add("find table1");
+        in.add("select table1");
         in.add("update table1 id 1 field1 field11ValueNew");
-        in.add("find table1");
+        in.add("select table1");
         in.add("clear table1");
-        in.add("find table1");
+        in.add("select table1");
         in.add("drop table1");
         in.add("tables");
         in.add("help");
@@ -112,7 +112,7 @@ public class IntegrationTest {
                 "\t\tдобавить запись в указанную таблицу;\n" +
                 "\tupdate tableName whereColumn whereValue setColumn setValue:\n" +
                 "\t\tобновить записи, удовлетворяющие условию в указанной таблице;\n" +
-                "\tfind tableName:\n" +
+                "\tselect tableName:\n" +
                 "\t\tпоказать содержимое указанной таблицы;\n" +
                 "\tdelete tableName whereColumn whereValue:\n" +
                 "\t\tудалить записи, удовлетворяющие условию;\n" +
@@ -143,7 +143,7 @@ public class IntegrationTest {
         in.add(TestConstants.TEST_CONNECTION_STRING);
         in.add("unsupported_command");
         in.add("");
-        in.add("find table");
+        in.add("select table");
         in.add("create table1 id name");
         in.add("update table1 idd 1 name newName");
         in.add("execute \"bla\"");

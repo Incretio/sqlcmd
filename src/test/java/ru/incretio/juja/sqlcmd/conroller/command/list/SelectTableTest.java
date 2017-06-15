@@ -15,13 +15,13 @@ public class SelectTableTest extends CommandTestBase {
 
     @Test
     public void selectTable_emptyData_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
+        when(model.takeTablesList()).thenReturn(Collections.singletonList(TABLE_NAME));
         SelectTable selectTable = new SelectTable(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
         params = Arrays.asList(TABLE_NAME);
 
         selectTable.perform(model, view, params);
 
-        verify(model).takeTables();
+        verify(model).takeTablesList();
         verify(model).find(any(), eq(TABLE_NAME));
         verify(view).write(String.format(takeCaption("tableEmptyPattern"), TABLE_NAME));
     }

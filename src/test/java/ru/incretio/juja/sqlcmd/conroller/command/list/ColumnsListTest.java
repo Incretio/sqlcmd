@@ -15,14 +15,14 @@ public class ColumnsListTest extends CommandTestBase {
 
     @Test
     public void columnsList_correct_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
+        when(model.takeTablesList()).thenReturn(Collections.singletonList(TABLE_NAME));
         when(model.takeTableColumns(TABLE_NAME)).thenReturn(COLUMNS_LIST);
         ColumnsList columnsList = new ColumnsList(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
         params = Arrays.asList(TABLE_NAME);
 
         columnsList.perform(model, view, params);
 
-        verify(model).takeTables();
+        verify(model).takeTablesList();
         verify(model).takeTableColumns(TABLE_NAME);
         verify(view).write(COLUMNS_LIST);
     }

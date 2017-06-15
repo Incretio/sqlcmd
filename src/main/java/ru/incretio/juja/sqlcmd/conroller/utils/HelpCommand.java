@@ -1,0 +1,26 @@
+package ru.incretio.juja.sqlcmd.conroller.utils;
+
+import ru.incretio.juja.sqlcmd.conroller.command.Command;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
+
+public class HelpCommand {
+    private String header = takeCaption("commandList");
+
+    public String getHeader() {
+        return header;
+    }
+
+    public List<String> getCommandsDescriptions() {
+        List<String> result = new ArrayList<>();
+
+        for (String notation : Command.getNotationsList()) {
+            result.add(notation);
+        }
+
+        return result;
+    }
+}

@@ -14,14 +14,14 @@ public class DeleteRecordsTest extends CommandTestBase {
 
     @Test
     public void deleteRecords_correct_test() throws Exception {
-        when(model.takeTables()).thenReturn(Collections.singletonList(TABLE_NAME));
+        when(model.takeTablesList()).thenReturn(Collections.singletonList(TABLE_NAME));
         when(model.takeTableColumns(TABLE_NAME)).thenReturn(Collections.singletonList("whereColumnName"));
         DeleteRecords deleteRecords = new DeleteRecords(CHECKABLE_MOCK, NOTATIONABLE_MOCK);
         params = Arrays.asList(TABLE_NAME, "whereColumnName", "whereColumnValue");
 
         deleteRecords.perform(model, view, params);
 
-        verify(model, times(2)).takeTables();
+        verify(model, times(2)).takeTablesList();
         verify(model).takeTableColumns(TABLE_NAME);
         verify(model).executeDeleteRecords(TABLE_NAME, "whereColumnName", "whereColumnValue");
         verify(view).write(String.format(takeCaption("recordDeletedPattern"), TABLE_NAME));
