@@ -7,6 +7,8 @@
         <title>SQLCmd</title>
     </head>
     <body>
+        <%@include file="includes/commandList.jsp" %>
+
         Список доступных комманд:<br>
             connect serverName dbName username password:<br>
                 подключиться к базе данных;<br>
@@ -34,7 +36,7 @@
                 показать список команд и их описаниями;<br>
             execute \"textQuery\":<br>
                 выполнить пользовательский запрос (должен быть указан в двойных ковычках);<br>
-        <br>
-        <%@include file="footer.jsp" %>
+
+        <%@include file="includes/footer.jsp" %>
     </body>
 </html>

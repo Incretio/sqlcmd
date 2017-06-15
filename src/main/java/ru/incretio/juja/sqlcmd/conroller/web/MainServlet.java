@@ -2,6 +2,7 @@ package ru.incretio.juja.sqlcmd.conroller.web;
 
 import ru.incretio.juja.sqlcmd.exceptions.CommandException;
 import ru.incretio.juja.sqlcmd.exceptions.MissingAnyDataException;
+import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.exceptions.NeedExitException;
 import ru.incretio.juja.sqlcmd.service.Service;
 import ru.incretio.juja.sqlcmd.service.ServiceImpl;
@@ -25,18 +26,26 @@ public class MainServlet extends HttpServlet {
         String action = getActionName(req);
 
         service = (Service) req.getSession().getAttribute("service");
-        if (service == null){
+        if (service == null) {
             service = new ServiceImpl();
         }
+        req.setAttribute("items", service.commandsList());
 
         if (action.startsWith("/menu")) {
             req.setAttribute("items", service.commandsList());
             req.getRequestDispatcher("menu.jsp").forward(req, resp);
+        } else if (action.startsWith("/closeConnection")) {
+            try {
+                service.closeConnection();
+            } catch (MissingConnectionException | SQLException e) {
+                e.printStackTrace();
+            }
+            resp.sendRedirect(resp.encodeRedirectURL("menu"));
         } else if (action.startsWith("/help")) {
             req.getRequestDispatcher("help.jsp").forward(req, resp);
         } else if (action.startsWith("/connect")) {
             req.getRequestDispatcher("connect.jsp").forward(req, resp);
-        } else if (action.startsWith("/select")){
+        } else if (action.startsWith("/select")) {
             String tableName = req.getParameter("tableName");
             try {
                 req.setAttribute("table", service.select(tableName));

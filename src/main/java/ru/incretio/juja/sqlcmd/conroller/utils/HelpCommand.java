@@ -8,19 +8,13 @@ import java.util.List;
 import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
 public class HelpCommand {
-    private String header = takeCaption("commandList");
+    private final String header = takeCaption("commandList");
 
     public String getHeader() {
         return header;
     }
 
     public List<String> getCommandsDescriptions() {
-        List<String> result = new ArrayList<>();
-
-        for (String notation : Command.getNotationsList()) {
-            result.add(notation);
-        }
-
-        return result;
+        return Command.getNotationsList();
     }
 }

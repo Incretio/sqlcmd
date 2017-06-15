@@ -6,8 +6,10 @@
         <title>SQLCmd</title>
     </head>
     <body>
-       Error! JSP not found!<br>
-       <br>
-       <%@include file="footer.jsp" %>
+        <%@include file="includes/commandList.jsp" %><br>
+
+        Error! JSP not found!
+
+        <%@include file="includes/footer.jsp" %>
     </body>
 </html>

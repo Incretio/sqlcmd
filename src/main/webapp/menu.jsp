@@ -6,8 +6,7 @@
         <title>SQLCmd</title>
     </head>
     <body>
-        <c:forEach var="command" items="${items}">
-            <a href="${command}">${command}</a><br>
-        </c:forEach>
+        <%@include file="includes/commandList.jsp" %><br>
+        <%@include file="includes/footer.jsp" %><br>
     </body>
 </html>

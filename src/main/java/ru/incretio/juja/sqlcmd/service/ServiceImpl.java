@@ -1,6 +1,5 @@
 package ru.incretio.juja.sqlcmd.service;
 
-import ru.incretio.juja.sqlcmd.conroller.command.list.Help;
 import ru.incretio.juja.sqlcmd.conroller.command.list.utils.MissingTableHelper;
 import ru.incretio.juja.sqlcmd.conroller.command.list.utils.ResultSetTableFormatter;
 import ru.incretio.juja.sqlcmd.conroller.utils.HelpCommand;
@@ -18,7 +17,7 @@ import java.util.function.Consumer;
 
 public class ServiceImpl implements Service {
 
-    private Model model;
+    private final Model model;
 
     public ServiceImpl() {
         model = new Model(QueryFactory.makePostgreSQLQuery());

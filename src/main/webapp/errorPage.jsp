@@ -6,9 +6,11 @@
         <title>SQLCmd</title>
     </head>
     <body>
-       Что-то пошло не так!<br>
-       ${message}<br>
-       <br>
-       <%@include file="footer.jsp" %>
+        <%@include file="includes/commandList.jsp" %>
+
+        Что-то пошло не так!<br>
+        ${message}<br>
+
+        <%@include file="includes/footer.jsp" %>
     </body>
 </html>

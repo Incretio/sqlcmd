@@ -6,6 +6,8 @@
         <title>SQLCmd</title>
     </head>
     <body>
+        <%@include file="includes/commandList.jsp" %>
+
         <table border=1>
         <c:forEach var="row" items="${table}">
             <tr>
@@ -18,7 +20,7 @@
         </c:forEach>
         </table>
 
-        <br>
-        <%@include file="footer.jsp" %>
+
+        <%@include file="includes/footer.jsp" %>
     </body>
 </html>

@@ -6,6 +6,8 @@
         <title>SQLCmd</title>
     </head>
     <body>
+        <%@include file="includes/commandList.jsp" %>
+
         <form action="connect" method="post">
             <table>
                 <tr>
@@ -31,7 +33,6 @@
             </table>
         </form>
 
-        <br>
-        <%@include file="footer.jsp" %>
+        <%@include file="includes/footer.jsp" %>
     </body>
 </html>
