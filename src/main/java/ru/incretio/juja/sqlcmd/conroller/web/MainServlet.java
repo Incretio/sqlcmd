@@ -57,6 +57,13 @@ public class MainServlet extends HttpServlet {
                 e.printStackTrace();
             }
             req.getRequestDispatcher("select.jsp").forward(req, resp);
+        } else if (action.startsWith("/takeTablesList")) {
+            try {
+                req.setAttribute("tablesList", service.takeTablesList());
+            } catch (MissingConnectionException | SQLException e) {
+                e.printStackTrace();
+            }
+            req.getRequestDispatcher("takeTablesList.jsp").forward(req, resp);
         } else if (action.startsWith("/errorPage")) {
             req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
         } else {

@@ -6,7 +6,7 @@ import static ru.incretio.juja.sqlcmd.conroller.command.Command.*;
 import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
 abstract class CommandNotationFactory {
-    private final static String NOTATION_PATTERN = "\t%s:%n\t\t%s;";
+    private final static String NOTATION_PATTERN = "%s:%n\t%s;";
 
     private static String getFormattedNotation(String commandFormat, String commandDescription) {
         return String.format(NOTATION_PATTERN, commandFormat, commandDescription);
