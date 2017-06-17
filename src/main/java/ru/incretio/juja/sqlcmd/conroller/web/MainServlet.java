@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
@@ -64,6 +66,8 @@ public class MainServlet extends HttpServlet {
                 e.printStackTrace();
             }
             req.getRequestDispatcher("takeTablesList.jsp").forward(req, resp);
+        } else if (action.startsWith("/createTable")){
+            req.getRequestDispatcher("createTable.jsp").forward(req, resp);
         } else if (action.startsWith("/errorPage")) {
             req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
         } else {
@@ -86,6 +90,22 @@ public class MainServlet extends HttpServlet {
                 service.connect(serverName, dbName, userName, password);
                 resp.sendRedirect(resp.encodeRedirectURL("menu"));
             } catch (Exception e) {
+                String exceptionDescription = getExceptionDescription(e);
+                req.setAttribute("message", exceptionDescription);
+                req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
+            }
+        } else if (action.startsWith("/createTable")){
+            String tableName = req.getParameter("tableName");
+            List<String> columns = new ArrayList<>();
+            for (String column : req.getParameterValues("columns")) {
+                if (column != null && !column.isEmpty()) {
+                    columns.add(column);
+                }
+            }
+            try {
+                service.createTable(tableName, columns);
+                resp.sendRedirect(resp.encodeRedirectURL("menu"));
+            } catch (MissingConnectionException | SQLException e) {
                 String exceptionDescription = getExceptionDescription(e);
                 req.setAttribute("message", exceptionDescription);
                 req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
