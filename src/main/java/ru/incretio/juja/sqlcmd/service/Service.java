@@ -35,5 +35,5 @@ public interface Service {
 
     void dropTable(String tableName) throws MissingConnectionException, SQLException;
 
-    HelpCommand help();
+    HelpCommand getHelp();
 }

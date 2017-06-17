@@ -27,7 +27,6 @@ public class ServiceImpl implements Service {
     public List<String> commandsList() {
         return Arrays.asList(
                 "connect", "closeConnection",
-                "createDB", "dropDB",
                 "takeTablesList", "createTable", "insert", "update", "delete", "select", "clear", "dropTable",
                 "help");
     }
@@ -118,7 +117,7 @@ public class ServiceImpl implements Service {
     }
 
     @Override
-    public HelpCommand help(){
+    public HelpCommand getHelp(){
         return new HelpCommand();
     }
 

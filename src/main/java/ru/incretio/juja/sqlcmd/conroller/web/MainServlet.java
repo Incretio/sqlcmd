@@ -1,5 +1,6 @@
 package ru.incretio.juja.sqlcmd.conroller.web;
 
+import ru.incretio.juja.sqlcmd.conroller.utils.HelpCommand;
 import ru.incretio.juja.sqlcmd.exceptions.CommandException;
 import ru.incretio.juja.sqlcmd.exceptions.MissingAnyDataException;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
@@ -42,6 +43,9 @@ public class MainServlet extends HttpServlet {
             }
             resp.sendRedirect(resp.encodeRedirectURL("menu"));
         } else if (action.startsWith("/help")) {
+            HelpCommand helpCommand = service.getHelp();
+            req.setAttribute("helpHeader", helpCommand.getHeader());
+            req.setAttribute("commandsDescriptions", helpCommand.getCommandsDescriptions());
             req.getRequestDispatcher("help.jsp").forward(req, resp);
         } else if (action.startsWith("/connect")) {
             req.getRequestDispatcher("connect.jsp").forward(req, resp);

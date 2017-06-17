@@ -17,23 +17,23 @@ import static ru.incretio.juja.sqlcmd.conroller.command.CommandNotationFactory.*
 
 public enum Command implements Notationable, Checkable, Performable {
     CONNECT(new Connect(makeConnectCheck(), makeConnectNotation())),
+    CLOSE(new CloseConnection(makeCloseCommandCheck(), makeCloseCommandNotation())),
     TABLES(new TablesList(makeTablesCommandCheck(), makeTablesCommandNotation())),
     CREATE(new CreateTable(makeCreateCommandCheck(), makeCreateCommandNotation())),
-    DROP(new DropTable(makeDropCommandCheck(), makeDropCommandNotation())),
     INSERT(new InsertRecord(makeInsertCommandCheck(), makeInsertCommandNotation())),
     UPDATE(new UpdateRecords(makeUpdateCommandCheck(), makeUpdateCommandNotation())),
-    FIND(new SelectTable(makeFindCommandCheck(), makeFindCommandNotation())),
     DELETE(new DeleteRecords(makeDeleteCommandCheck(), makeDeleteCommandNotation())),
+    FIND(new SelectTable(makeFindCommandCheck(), makeFindCommandNotation())),
     CLEAR(new ClearTable(makeClearCommandCheck(), makeClearCommandNotation())),
-    CLOSE(new CloseConnection(makeCloseCommandCheck(), makeCloseCommandNotation())),
-    EXIT(new ExitApplication(makeExitCommandCheck(), makeExitCommandNotation())),
+    DROP(new DropTable(makeDropCommandCheck(), makeDropCommandNotation())),
     HELP(new Help(makeHelpCommandCheck(), makeHelpCommandNotation())),
     CREATEDB(new CreateDB(makeCreateDBCommandCheck(), makeEmptyNotation())),
     DROPDB(new DropDB(makeDropDBCommandCheck(), makeEmptyNotation())),
+    EXIT(new ExitApplication(makeExitCommandCheck(), makeEmptyNotation())),
     TABLE_EXIST(new TableExists(makeTableExistCommandCheck(), makeEmptyNotation())),
     COLUMN_EXIST(new ColumnExists(makeColumnExistCommandCheck(), makeEmptyNotation())),
     COLUMNS(new ColumnsList(makeColumnsCommandCheck(), makeEmptyNotation())),
-    EXECUTE(new ExecuteQuery(makeExecuteCommandCheck(), makeExecuteCommandNotation()));
+    EXECUTE(new ExecuteQuery(makeExecuteCommandCheck(), makeEmptyNotation()));
 
     private final Base base;
 
