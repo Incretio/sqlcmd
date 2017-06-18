@@ -71,6 +71,8 @@ public class MainServlet extends HttpServlet {
             req.getRequestDispatcher("createTable.jsp").forward(req, resp);
         } else if (action.startsWith("/insert")) {
             req.getRequestDispatcher("insert.jsp").forward(req, resp);
+        } else if (action.startsWith("/update")) {
+            req.getRequestDispatcher("update.jsp").forward(req, resp);
         } else if (action.startsWith("/errorPage")) {
             req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
         } else {
@@ -116,6 +118,19 @@ public class MainServlet extends HttpServlet {
                 openErrorPage(req, resp, e);
             }
 
+        } else if (action.startsWith("/update")) {
+            String tableName = req.getParameter("tableName");
+            String whereColumnName = req.getParameter("whereColumnName");
+            String whereColumnValue = req.getParameter("whereColumnValue");
+            String setColumnName = req.getParameter("setColumnName");
+            String setColumnValue = req.getParameter("setColumnValue");
+            try {
+                service.update(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue);
+                resp.sendRedirect(resp.encodeRedirectURL("menu"));
+            } catch (MissingConnectionException | SQLException e) {
+                openErrorPage(req, resp, e);
+            }
+
         }
     }
 
@@ -125,7 +140,7 @@ public class MainServlet extends HttpServlet {
         req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
     }
 
-    private List<String> removeNullAndEmptyValues(String[] array){
+    private List<String> removeNullAndEmptyValues(String[] array) {
         List<String> result = new ArrayList<>();
         for (String value : array) {
             if (value != null && !value.isEmpty()) {

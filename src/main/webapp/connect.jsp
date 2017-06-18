@@ -12,19 +12,19 @@
             <table>
                 <tr>
                     <td>Имя сервера</td>
-                    <td><input type="text" name='serverName'/></td>
+                    <td><input type="text" name='serverName' value="localhost"/></td>
                 </tr>
                 <tr>
                     <td>Имя базы данных</td>
-                    <td><input type="text" name="dbName"/></td>
+                    <td><input type="text" name="dbName" value="sqlcmd"/></td>
                 </tr>
                 <tr>
                     <td>Имя пользователя</td>
-                    <td><input type="text" name="userName"/></td>
+                    <td><input type="text" name="userName" value="postgres"/></td>
                 </tr>
                 <tr>
                     <td>Пароль</td>
-                    <td><input type="password" name="password"/></td>
+                    <td><input type="password" name="password" value="123"/></td>
                 </tr>
                 <tr>
                     <td></td>
