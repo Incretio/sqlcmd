@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
@@ -66,8 +67,10 @@ public class MainServlet extends HttpServlet {
                 e.printStackTrace();
             }
             req.getRequestDispatcher("takeTablesList.jsp").forward(req, resp);
-        } else if (action.startsWith("/createTable")){
+        } else if (action.startsWith("/createTable")) {
             req.getRequestDispatcher("createTable.jsp").forward(req, resp);
+        } else if (action.startsWith("/insert")) {
+            req.getRequestDispatcher("insert.jsp").forward(req, resp);
         } else if (action.startsWith("/errorPage")) {
             req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
         } else {
@@ -90,27 +93,46 @@ public class MainServlet extends HttpServlet {
                 service.connect(serverName, dbName, userName, password);
                 resp.sendRedirect(resp.encodeRedirectURL("menu"));
             } catch (Exception e) {
-                String exceptionDescription = getExceptionDescription(e);
-                req.setAttribute("message", exceptionDescription);
-                req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
+                openErrorPage(req, resp, e);
             }
-        } else if (action.startsWith("/createTable")){
+        } else if (action.startsWith("/createTable")) {
             String tableName = req.getParameter("tableName");
-            List<String> columns = new ArrayList<>();
-            for (String column : req.getParameterValues("columns")) {
-                if (column != null && !column.isEmpty()) {
-                    columns.add(column);
-                }
-            }
+            List<String> columns = removeNullAndEmptyValues(req.getParameterValues("columns"));
+            columns.removeAll(Collections.singleton(null));
             try {
                 service.createTable(tableName, columns);
                 resp.sendRedirect(resp.encodeRedirectURL("menu"));
             } catch (MissingConnectionException | SQLException e) {
-                String exceptionDescription = getExceptionDescription(e);
-                req.setAttribute("message", exceptionDescription);
-                req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
+                openErrorPage(req, resp, e);
+            }
+        } else if (action.startsWith("/insert")) {
+            String tableName = req.getParameter("tableName");
+            List<String> columns = removeNullAndEmptyValues(req.getParameterValues("columns"));
+            List<String> values = removeNullAndEmptyValues(req.getParameterValues("values"));
+            try {
+                service.insert(tableName, columns, values);
+                resp.sendRedirect(resp.encodeRedirectURL("menu"));
+            } catch (MissingConnectionException | SQLException e) {
+                openErrorPage(req, resp, e);
+            }
+
+        }
+    }
+
+    private void openErrorPage(HttpServletRequest req, HttpServletResponse resp, Exception e) throws ServletException, IOException {
+        String exceptionDescription = getExceptionDescription(e);
+        req.setAttribute("message", exceptionDescription);
+        req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
+    }
+
+    private List<String> removeNullAndEmptyValues(String[] array){
+        List<String> result = new ArrayList<>();
+        for (String value : array) {
+            if (value != null && !value.isEmpty()) {
+                result.add(value);
             }
         }
+        return result;
     }
 
     private String getExceptionDescription(Exception exception) {
