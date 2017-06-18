@@ -73,6 +73,8 @@ public class MainServlet extends HttpServlet {
             req.getRequestDispatcher("insert.jsp").forward(req, resp);
         } else if (action.startsWith("/update")) {
             req.getRequestDispatcher("update.jsp").forward(req, resp);
+        } else if (action.startsWith("/delete")) {
+            req.getRequestDispatcher("delete.jsp").forward(req, resp);
         } else if (action.startsWith("/errorPage")) {
             req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
         } else {
@@ -126,6 +128,17 @@ public class MainServlet extends HttpServlet {
             String setColumnValue = req.getParameter("setColumnValue");
             try {
                 service.update(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue);
+                resp.sendRedirect(resp.encodeRedirectURL("menu"));
+            } catch (MissingConnectionException | SQLException e) {
+                openErrorPage(req, resp, e);
+            }
+
+        } else if (action.startsWith("/delete")) {
+            String tableName = req.getParameter("tableName");
+            String whereColumnName = req.getParameter("whereColumnName");
+            String whereColumnValue = req.getParameter("whereColumnValue");
+            try {
+                service.delete(tableName, whereColumnName, whereColumnValue);
                 resp.sendRedirect(resp.encodeRedirectURL("menu"));
             } catch (MissingConnectionException | SQLException e) {
                 openErrorPage(req, resp, e);
