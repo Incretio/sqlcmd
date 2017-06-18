@@ -69,6 +69,8 @@ public class MainServlet extends HttpServlet {
             req.getRequestDispatcher("takeTablesList.jsp").forward(req, resp);
         } else if (action.startsWith("/createTable")) {
             req.getRequestDispatcher("createTable.jsp").forward(req, resp);
+        } else if (action.startsWith("/dropTable")) {
+            req.getRequestDispatcher("dropTable.jsp").forward(req, resp);
         } else if (action.startsWith("/insert")) {
             req.getRequestDispatcher("insert.jsp").forward(req, resp);
         } else if (action.startsWith("/update")) {
@@ -150,6 +152,15 @@ public class MainServlet extends HttpServlet {
             String tableName = req.getParameter("tableName");
             try {
                 service.clear(tableName);
+                resp.sendRedirect(resp.encodeRedirectURL("menu"));
+            } catch (MissingConnectionException | SQLException e) {
+                openErrorPage(req, resp, e);
+            }
+
+        } else if (action.startsWith("/dropTable")) {
+            String tableName = req.getParameter("tableName");
+            try {
+                service.dropTable(tableName);
                 resp.sendRedirect(resp.encodeRedirectURL("menu"));
             } catch (MissingConnectionException | SQLException e) {
                 openErrorPage(req, resp, e);

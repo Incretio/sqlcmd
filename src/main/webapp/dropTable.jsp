@@ -9,7 +9,7 @@
         <%@include file="includes/commandList.jsp" %>
 
         <h3>Очистить таблицу</h3>
-        <form action="clear" method="post">
+        <form action="dropTable" method="post">
             <table>
                 <tr>
                     <td>Имя таблицы</td>
@@ -17,7 +17,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit" name="clear"/></td>
+                    <td><input type="submit" name="dropTable"/></td>
                 </tr>
             </table>
         </form>
