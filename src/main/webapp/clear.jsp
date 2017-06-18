@@ -8,18 +8,12 @@
     <body>
         <%@include file="includes/commandList.jsp" %>
 
-        <h3>Удалить запись</h3>
-        <form action="delete" method="post">
+        <h3>Очистить таблицу</h3>
+        <form action="clear" method="post">
             <table>
                 <tr>
                     <td>Имя таблицы</td>
                     <td><input type="text" name='tableName'/></td>
-                </tr>
-                <tr>
-                    <td>Ключевое поле</td>
-                    <td><input type="text" name="whereColumnName"/></td>
-                    <td>Значение</td>
-                    <td><input type="text" name="whereColumnValue"/></td>
                 </tr>
                 <tr>
                     <td></td>

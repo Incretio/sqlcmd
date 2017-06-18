@@ -8,7 +8,7 @@
     <body>
         <%@include file="includes/commandList.jsp" %>
 
-        <h3>Добавление таблицы</h3>
+        <h3>Обновить запись</h3>
         <form action="update" method="post">
             <table>
                 <tr>

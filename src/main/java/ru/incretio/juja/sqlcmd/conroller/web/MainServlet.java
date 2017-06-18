@@ -75,6 +75,8 @@ public class MainServlet extends HttpServlet {
             req.getRequestDispatcher("update.jsp").forward(req, resp);
         } else if (action.startsWith("/delete")) {
             req.getRequestDispatcher("delete.jsp").forward(req, resp);
+        } else if (action.startsWith("/clear")) {
+            req.getRequestDispatcher("clear.jsp").forward(req, resp);
         } else if (action.startsWith("/errorPage")) {
             req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
         } else {
@@ -139,6 +141,15 @@ public class MainServlet extends HttpServlet {
             String whereColumnValue = req.getParameter("whereColumnValue");
             try {
                 service.delete(tableName, whereColumnName, whereColumnValue);
+                resp.sendRedirect(resp.encodeRedirectURL("menu"));
+            } catch (MissingConnectionException | SQLException e) {
+                openErrorPage(req, resp, e);
+            }
+
+        } else if (action.startsWith("/clear")) {
+            String tableName = req.getParameter("tableName");
+            try {
+                service.clear(tableName);
                 resp.sendRedirect(resp.encodeRedirectURL("menu"));
             } catch (MissingConnectionException | SQLException e) {
                 openErrorPage(req, resp, e);
