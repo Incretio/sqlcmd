@@ -14,11 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-@Component
 public class Model {
     private Connection connection;
-    @Autowired
+
     private Queryable queryable;
+
+    public void setQueryable(Queryable queryable) {
+        this.queryable = queryable;
+    }
 
     public boolean isConnected() {
         try {
@@ -124,7 +127,7 @@ public class Model {
     }
 
     private void throwExceptionIfConnectionClose() throws MissingConnectionException {
-        if (!isConnected()){
+        if (!isConnected()) {
             throw new MissingConnectionException();
         }
     }

@@ -18,11 +18,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
-@Component
 public class ServiceImpl implements Service {
 
-    @Autowired
     private Model model;
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
 
     @Override
     public List<String> commandsList() {
@@ -118,7 +120,7 @@ public class ServiceImpl implements Service {
     }
 
     @Override
-    public HelpCommand getHelp(){
+    public HelpCommand getHelp() {
         return new HelpCommand();
     }
 

@@ -10,4 +10,18 @@
     <context:annotation-config/>
     <context:component-scan base-package="ru.incretio.juja.sqlcmd"/>
 
+    <bean id="mainServlet" class="ru.incretio.juja.sqlcmd.conroller.web.MainServlet">
+        <property name="service" ref="serviceImpl"/>
+    </bean>
+
+    <bean id="serviceImpl" class="ru.incretio.juja.sqlcmd.service.ServiceImpl">
+        <property name="model" ref="model"/>
+    </bean>
+
+    <bean id="model" class="ru.incretio.juja.sqlcmd.model.Model">
+        <property name="queryable" ref="postgreSQLQuery"/>
+    </bean>
+
+    <bean id="postgreSQLQuery" class="ru.incretio.juja.sqlcmd.model.query.PostgreSQLQuery"/>
+
 </beans>

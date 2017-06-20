@@ -25,8 +25,13 @@ import java.util.List;
 import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
 public class MainServlet extends HttpServlet {
+
     @Autowired
     private Service service;
+
+    public void setService(Service service) {
+        this.service = service;
+    }
 
     @Override
     public void init(ServletConfig config) throws ServletException {
