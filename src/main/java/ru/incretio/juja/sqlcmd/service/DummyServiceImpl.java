@@ -17,11 +17,11 @@ import java.util.List;
 import java.util.function.Consumer;
 
 @Component
-public class ServiceImpl implements Service {
+public class DummyServiceImpl implements Service {
 
     private final Model model;
 
-    public ServiceImpl() {
+    public DummyServiceImpl() {
         model = new Model(QueryFactory.makePostgreSQLQuery());
     }
 

@@ -1,14 +1,19 @@
 package ru.incretio.juja.sqlcmd.conroller.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ru.incretio.juja.sqlcmd.conroller.utils.HelpCommand;
 import ru.incretio.juja.sqlcmd.exceptions.CommandException;
 import ru.incretio.juja.sqlcmd.exceptions.MissingAnyDataException;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.exceptions.NeedExitException;
 import ru.incretio.juja.sqlcmd.service.Service;
+import ru.incretio.juja.sqlcmd.service.ServiceFactory;
 import ru.incretio.juja.sqlcmd.service.ServiceImpl;
 import ru.incretio.juja.sqlcmd.utils.logger.AppLogger;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,16 +28,33 @@ import java.util.List;
 import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
 public class MainServlet extends HttpServlet {
-    Service service;
+
+    public void setService(Service service) {
+        this.service = service;
+    }
+
+    @Autowired
+    private ServiceFactory serviceFactory;
+    private Service service;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                config.getServletContext());
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = getActionName(req);
 
-        service = (Service) req.getSession().getAttribute("service");
-        if (service == null) {
-            service = new ServiceImpl();
+        Service sessionService = (Service) req.getSession().getAttribute("service");
+        if (sessionService != null) {
+            service = sessionService;
+        } else {
+            service = serviceFactory.getService();
         }
+
         req.setAttribute("items", service.commandsList());
 
         if (action.startsWith("/menu")) {
@@ -188,6 +210,7 @@ public class MainServlet extends HttpServlet {
     private String getExceptionDescription(Exception exception) {
         String result;
         try {
+            exception.printStackTrace();
             throw exception;
         } catch (CommandException | MissingAnyDataException | NeedExitException e) {
             result = e.getMessage();
