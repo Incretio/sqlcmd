@@ -1,5 +1,7 @@
 package ru.incretio.juja.sqlcmd.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.model.data.JDBCConnectable;
 import ru.incretio.juja.sqlcmd.model.query.Queryable;
@@ -12,14 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+@Component
 public class Model {
     private Connection connection;
-    private final Queryable queryable;
-
-    public Model(Queryable queryable) {
-        this.queryable = queryable;
-    }
-
+    @Autowired
+    private Queryable queryable;
 
     public boolean isConnected() {
         try {

@@ -1,5 +1,6 @@
 package ru.incretio.juja.sqlcmd.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.incretio.juja.sqlcmd.conroller.command.list.utils.MissingTableHelper;
 import ru.incretio.juja.sqlcmd.conroller.command.list.utils.ResultSetTableFormatter;
@@ -7,6 +8,7 @@ import ru.incretio.juja.sqlcmd.conroller.utils.HelpCommand;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.model.Model;
 import ru.incretio.juja.sqlcmd.model.query.QueryFactory;
+import ru.incretio.juja.sqlcmd.model.query.Queryable;
 import ru.incretio.juja.sqlcmd.utils.logger.AppLogger;
 
 import java.sql.ResultSet;
@@ -19,11 +21,8 @@ import java.util.function.Consumer;
 @Component
 public class ServiceImpl implements Service {
 
-    private final Model model;
-
-    public ServiceImpl() {
-        model = new Model(QueryFactory.makePostgreSQLQuery());
-    }
+    @Autowired
+    private Model model;
 
     @Override
     public List<String> commandsList() {

@@ -25,11 +25,6 @@ import java.util.List;
 import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
 public class MainServlet extends HttpServlet {
-
-    public void setService(Service service) {
-        this.service = service;
-    }
-
     @Autowired
     private Service service;
 
