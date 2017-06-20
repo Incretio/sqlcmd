@@ -10,9 +10,4 @@
     <context:annotation-config/>
     <context:component-scan base-package="ru.incretio.juja.sqlcmd"/>
 
-    <bean id="serviceFactory" class="ru.incretio.juja.sqlcmd.service.ServiceFactory">
-        <constructor-arg ref="dummyServiceImpl"/>
-    </bean>
-
-
 </beans>

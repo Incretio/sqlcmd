@@ -1,7 +1,6 @@
 package ru.incretio.juja.sqlcmd.conroller.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import ru.incretio.juja.sqlcmd.conroller.utils.HelpCommand;
 import ru.incretio.juja.sqlcmd.exceptions.CommandException;
@@ -9,8 +8,6 @@ import ru.incretio.juja.sqlcmd.exceptions.MissingAnyDataException;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.exceptions.NeedExitException;
 import ru.incretio.juja.sqlcmd.service.Service;
-import ru.incretio.juja.sqlcmd.service.ServiceFactory;
-import ru.incretio.juja.sqlcmd.service.ServiceImpl;
 import ru.incretio.juja.sqlcmd.utils.logger.AppLogger;
 
 import javax.servlet.ServletConfig;
@@ -34,7 +31,6 @@ public class MainServlet extends HttpServlet {
     }
 
     @Autowired
-    private ServiceFactory serviceFactory;
     private Service service;
 
     @Override
@@ -51,8 +47,6 @@ public class MainServlet extends HttpServlet {
         Service sessionService = (Service) req.getSession().getAttribute("service");
         if (sessionService != null) {
             service = sessionService;
-        } else {
-            service = serviceFactory.getService();
         }
 
         req.setAttribute("items", service.commandsList());

@@ -2,7 +2,6 @@ package ru.incretio.juja.sqlcmd.conroller.utils;
 
 import ru.incretio.juja.sqlcmd.conroller.command.Command;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
