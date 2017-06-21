@@ -26,10 +26,6 @@ public class ServiceImpl implements Service {
     @Autowired
     private Model model;
 
-    public void setModel(Model model) {
-        this.model = model;
-    }
-
     @Override
     public List<String> commandsList() {
         return Arrays.asList(
