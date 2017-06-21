@@ -8,6 +8,7 @@ import ru.incretio.juja.sqlcmd.exceptions.MissingAnyDataException;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.exceptions.NeedExitException;
 import ru.incretio.juja.sqlcmd.service.Service;
+import ru.incretio.juja.sqlcmd.service.ServiceFactory;
 import ru.incretio.juja.sqlcmd.utils.logger.AppLogger;
 
 import javax.servlet.ServletConfig;
@@ -26,12 +27,9 @@ import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
 public class MainServlet extends HttpServlet {
 
-    @Autowired
     private Service service;
-
-    public void setService(Service service) {
-        this.service = service;
-    }
+    @Autowired
+    private ServiceFactory serviceFactory;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -47,6 +45,8 @@ public class MainServlet extends HttpServlet {
         Service sessionService = (Service) req.getSession().getAttribute("service");
         if (sessionService != null) {
             service = sessionService;
+        } else {
+            service = serviceFactory.makeService();
         }
 
         req.setAttribute("items", service.commandsList());
