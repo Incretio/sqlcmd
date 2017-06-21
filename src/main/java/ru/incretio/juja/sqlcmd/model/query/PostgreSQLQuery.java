@@ -1,11 +1,13 @@
 package ru.incretio.juja.sqlcmd.model.query;
 
+import org.springframework.stereotype.Component;
 import ru.incretio.juja.sqlcmd.model.data.JDBCConnectionType;
 
 import java.util.List;
 
 import static java.lang.String.format;
 
+@Component
 public class PostgreSQLQuery implements Queryable {
     private final JDBCConnectionType jdbcConnectionType = JDBCConnectionType.PostgreSQL;
     private final static String SELECT_QUERY_PATTERN = "SELECT * FROM public.\"%s\"";

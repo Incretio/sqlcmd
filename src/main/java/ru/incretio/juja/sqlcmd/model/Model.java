@@ -1,7 +1,5 @@
 package ru.incretio.juja.sqlcmd.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.model.data.JDBCConnectable;
 import ru.incretio.juja.sqlcmd.model.query.Queryable;

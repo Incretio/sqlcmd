@@ -1,6 +1,7 @@
 package ru.incretio.juja.sqlcmd.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.incretio.juja.sqlcmd.conroller.command.list.utils.MissingTableHelper;
 import ru.incretio.juja.sqlcmd.conroller.command.list.utils.ResultSetTableFormatter;
@@ -18,8 +19,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
+@Component
+@Scope(value = "prototype")
 public class ServiceImpl implements Service {
 
+    @Autowired
     private Model model;
 
     public void setModel(Model model) {

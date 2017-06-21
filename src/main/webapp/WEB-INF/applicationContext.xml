@@ -10,18 +10,8 @@
     <context:annotation-config/>
     <context:component-scan base-package="ru.incretio.juja.sqlcmd"/>
 
-    <bean id="serviceFactory" class="ru.incretio.juja.sqlcmd.service.ServiceFactory">
-        <lookup-method name="makeService" bean="serviceImpl"/>
-    </bean>
-
-    <bean id="serviceImpl" class="ru.incretio.juja.sqlcmd.service.ServiceImpl" scope="prototype">
-        <property name="model" ref="model"/>
-    </bean>
-
     <bean id="model" class="ru.incretio.juja.sqlcmd.model.Model" scope="prototype">
         <property name="queryable" ref="postgreSQLQuery"/>
     </bean>
-
-    <bean id="postgreSQLQuery" class="ru.incretio.juja.sqlcmd.model.query.PostgreSQLQuery"/>
 
 </beans>
