@@ -37,18 +37,27 @@ public class ServiceImpl implements Service {
     }
 
     @Override
-    public void connect(String serverName, String dbName, String userName, String password) throws ServiceException {
+    public String connect(String serverName, String dbName, String userName, String password) throws ServiceException {
+        String result = "";
         try {
-            model.connect(serverName, dbName, userName, password);
+            try {
+                model.connect(serverName, dbName, userName, password);
+                result = String.format(takeCaption("connectionSuccessPattern"), dbName);
+            } catch (ClassNotFoundException e) {
+                throw new ClassNotFoundException(takeCaption("driverLoadingErrorText"));
+            }
         } catch (Exception e) {
             throw new ServiceException("Connect error", e);
         }
+
+        return result;
     }
 
     @Override
-    public void closeConnection() throws ServiceException {
+    public String closeConnection() throws ServiceException {
         try {
             model.closeConnection();
+            return takeCaption("connectionClosed");
         } catch (Exception e) {
             throw new ServiceException("Close connection error", e);
         }

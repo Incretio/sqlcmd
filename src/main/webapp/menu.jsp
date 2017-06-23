@@ -7,6 +7,7 @@
     </head>
     <body>
         <%@include file="includes/commandList.jsp" %><br>
+        ${message}<br>
         <%@include file="includes/footer.jsp" %><br>
     </body>
 </html>

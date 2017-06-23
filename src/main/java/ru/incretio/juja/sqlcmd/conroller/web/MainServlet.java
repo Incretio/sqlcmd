@@ -34,21 +34,16 @@ public class MainServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = getActionName(req);
 
-        Service sessionService = (Service) req.getSession().getAttribute("service");
-        if (sessionService != null) {
-            service = sessionService;
-        } else {
-            service = serviceFactory.makeService();
-        }
+        updateService(req);
 
-        req.setAttribute("items", service.commandsList());
+        setMenuToAttribute(req);
 
         if (action.startsWith("/menu")) {
             req.getRequestDispatcher("menu.jsp").forward(req, resp);
         } else if (action.startsWith("/closeConnection")) {
             try {
-                service.closeConnection();
-                resp.sendRedirect(resp.encodeRedirectURL("menu"));
+                String message = service.closeConnection();
+                openMenuPage(req, resp, message);
             } catch (ServiceException e) {
                 openErrorPage(req, resp, e);
             }
@@ -93,10 +88,21 @@ public class MainServlet extends HttpServlet {
         }
     }
 
+    private void updateService(HttpServletRequest req) {
+        Service sessionService = (Service) req.getSession().getAttribute("service");
+        if (sessionService != null) {
+            service = sessionService;
+        } else {
+            service = serviceFactory.makeService();
+        }
+    }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        updateService(req);
         String action = getActionName(req);
+        setMenuToAttribute(req);
 
         if (action.startsWith("/connect")) {
             String serverName = req.getParameter("serverName");
@@ -105,8 +111,8 @@ public class MainServlet extends HttpServlet {
             String password = req.getParameter("password");
             try {
                 req.getSession().setAttribute("service", service);
-                service.connect(serverName, dbName, userName, password);
-                resp.sendRedirect(resp.encodeRedirectURL("menu"));
+                String message = service.connect(serverName, dbName, userName, password);
+                openMenuPage(req, resp, message);
             } catch (Exception e) {
                 openErrorPage(req, resp, e);
             }
@@ -178,6 +184,11 @@ public class MainServlet extends HttpServlet {
         }
     }
 
+    private void openMenuPage(HttpServletRequest req, HttpServletResponse resp, String message) throws ServletException, IOException {
+        req.setAttribute("message", message);
+        req.getRequestDispatcher("menu.jsp").forward(req, resp);
+    }
+
     private void openErrorPage(HttpServletRequest req, HttpServletResponse resp, Exception e) throws ServletException, IOException {
         e.printStackTrace();
         req.setAttribute("message", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
@@ -197,5 +208,9 @@ public class MainServlet extends HttpServlet {
     private String getActionName(HttpServletRequest req) {
         String requestURI = req.getRequestURI();
         return requestURI.substring(req.getContextPath().length(), requestURI.length());
+    }
+
+    private void setMenuToAttribute(HttpServletRequest req) {
+        req.setAttribute("items", service.commandsList());
     }
 }

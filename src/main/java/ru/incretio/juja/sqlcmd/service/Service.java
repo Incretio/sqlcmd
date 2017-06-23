@@ -7,9 +7,9 @@ import java.util.List;
 public interface Service {
     List<String> commandsList();
 
-    void connect(String serverName, String dbName, String userName, String password) throws ServiceException;
+    String connect(String serverName, String dbName, String userName, String password) throws ServiceException;
 
-    void closeConnection() throws ServiceException;
+    String closeConnection() throws ServiceException;
 
     void createDB(String dbName) throws ServiceException;
 

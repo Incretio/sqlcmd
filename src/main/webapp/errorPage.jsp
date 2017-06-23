@@ -8,7 +8,7 @@
     <body>
         <%@include file="includes/commandList.jsp" %>
 
-        Что-то пошло не так!<br>
+        <b>ERROR!</b><br>
         ${message}<br>
 
         <%@include file="includes/footer.jsp" %>
