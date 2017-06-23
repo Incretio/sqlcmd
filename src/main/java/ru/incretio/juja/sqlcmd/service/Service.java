@@ -1,39 +1,36 @@
 package ru.incretio.juja.sqlcmd.service;
 
 import ru.incretio.juja.sqlcmd.conroller.utils.HelpCommand;
-import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface Service {
     List<String> commandsList();
 
-    void connect(String serverName, String dbName, String userName, String password) throws SQLException, MissingConnectionException, ClassNotFoundException;
+    void connect(String serverName, String dbName, String userName, String password) throws ServiceException;
 
-    void closeConnection() throws MissingConnectionException, SQLException;
+    void closeConnection() throws ServiceException;
 
-    void createDB(String dbName) throws MissingConnectionException, SQLException;
+    void createDB(String dbName) throws ServiceException;
 
-    void dropDB(String dbName) throws MissingConnectionException, SQLException;
+    void dropDB(String dbName) throws ServiceException;
 
-    List<String> takeTablesList() throws MissingConnectionException, SQLException;
+    List<String> takeTablesList() throws ServiceException;
 
-    void createTable(String tableName, List<String> columns) throws MissingConnectionException, SQLException;
+    void createTable(String tableName, List<String> columns) throws ServiceException;
 
-    void insert(String tableName, List<String> columns, List<String> values)
-            throws MissingConnectionException, SQLException;
+    void insert(String tableName, List<String> columns, List<String> values) throws ServiceException;
 
     void update(String tableName, String whereColumnName, String whereColumnValue, String setColumnName, String setColumnValue)
-            throws MissingConnectionException, SQLException;
+            throws ServiceException;
 
-    void delete(String tableName, String whereColumnName, String whereColumnValue) throws MissingConnectionException, SQLException;
+    void delete(String tableName, String whereColumnName, String whereColumnValue) throws ServiceException;
 
-    List<List<String>> select(String tableName) throws Exception;
+    List<List<String>> select(String tableName) throws ServiceException;
 
-    void clear(String tableName) throws MissingConnectionException, SQLException;
+    void clear(String tableName) throws ServiceException;
 
-    void dropTable(String tableName) throws MissingConnectionException, SQLException;
+    void dropTable(String tableName) throws ServiceException;
 
     HelpCommand getHelp();
 }
