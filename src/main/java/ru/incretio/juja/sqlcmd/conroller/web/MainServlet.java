@@ -33,60 +33,158 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = getActionName(req);
-
         updateService(req);
-
         setMenuToAttribute(req);
 
-        if (action.startsWith("/menu")) {
-            req.getRequestDispatcher("menu.jsp").forward(req, resp);
-        } else if (action.startsWith("/closeConnection")) {
-            try {
-                String message = service.closeConnection();
-                openMenuPage(req, resp, message);
-            } catch (ServiceException e) {
-                openErrorPage(req, resp, e);
+        try {
+            if (action.equals("/menu")) {
+                forwardJSP("menu", req, resp);
+            } else if (action.equals("/closeConnection")) {
+                doCloseConnection(req, resp);
+            } else if (action.equals("/help")) {
+                doHelp(req, resp);
+            } else if (action.equals("/connect")) {
+                forwardJSP("connect", req, resp);
+            } else if (action.equals("/select")) {
+                doSelect(req, resp);
+            } else if (action.equals("/takeTablesList")) {
+                doTakeTablesList(req, resp);
+            } else if (action.equals("/createTable")) {
+                forwardJSP("createTable", req, resp);
+            } else if (action.equals("/dropTable")) {
+                forwardJSP("dropTable", req, resp);
+            } else if (action.equals("/insert")) {
+                forwardJSP("insert", req, resp);
+            } else if (action.equals("/update")) {
+                forwardJSP("update", req, resp);
+            } else if (action.equals("/delete")) {
+                forwardJSP("delete", req, resp);
+            } else if (action.equals("/clear")) {
+                forwardJSP("clear", req, resp);
+            } else if (action.equals("/errorPage")) {
+                forwardJSP("errorPage", req, resp);
+            } else {
+                forwardJSP("missingPage", req, resp);
             }
-        } else if (action.startsWith("/help")) {
-            HelpCommand helpCommand = service.getHelp();
-            req.setAttribute("helpHeader", helpCommand.getHeader());
-            req.setAttribute("commandsDescriptions", helpCommand.getCommandsDescriptions());
-            req.getRequestDispatcher("help.jsp").forward(req, resp);
-        } else if (action.startsWith("/connect")) {
-            req.getRequestDispatcher("connect.jsp").forward(req, resp);
-        } else if (action.startsWith("/select")) {
-            String tableName = req.getParameter("tableName");
-            try {
-                req.setAttribute("table", service.select(tableName));
-                req.getRequestDispatcher("select.jsp").forward(req, resp);
-            } catch (Exception e) {
-                openErrorPage(req, resp, e);
-            }
-        } else if (action.startsWith("/takeTablesList")) {
-            try {
-                req.setAttribute("tablesList", service.takeTablesList());
-                req.getRequestDispatcher("takeTablesList.jsp").forward(req, resp);
-            } catch (ServiceException e) {
-                openErrorPage(req, resp, e);
-            }
-        } else if (action.startsWith("/createTable")) {
-            req.getRequestDispatcher("createTable.jsp").forward(req, resp);
-        } else if (action.startsWith("/dropTable")) {
-            req.getRequestDispatcher("dropTable.jsp").forward(req, resp);
-        } else if (action.startsWith("/insert")) {
-            req.getRequestDispatcher("insert.jsp").forward(req, resp);
-        } else if (action.startsWith("/update")) {
-            req.getRequestDispatcher("update.jsp").forward(req, resp);
-        } else if (action.startsWith("/delete")) {
-            req.getRequestDispatcher("delete.jsp").forward(req, resp);
-        } else if (action.startsWith("/clear")) {
-            req.getRequestDispatcher("clear.jsp").forward(req, resp);
-        } else if (action.startsWith("/errorPage")) {
-            req.getRequestDispatcher("errorPage.jsp").forward(req, resp);
-        } else {
-            req.getRequestDispatcher("missingPage.jsp").forward(req, resp);
+        } catch (ServiceException e) {
+            toProcessServiceException(e, req, resp);
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        updateService(req);
+        String action = getActionName(req);
+        setMenuToAttribute(req);
+        try {
+            if (action.equals("/connect")) {
+                doConnect(req, resp);
+            } else if (action.equals("/createTable")) {
+                doCreateTable(req, resp);
+            } else if (action.equals("/insert")) {
+                doInsert(req, resp);
+            } else if (action.equals("/update")) {
+                doUpdate(req, resp);
+            } else if (action.equals("/delete")) {
+                doDeleteRecord(req, resp);
+            } else if (action.equals("/clear")) {
+                doClear(req, resp);
+            } else if (action.equals("/dropTable")) {
+                doDropTable(req, resp);
+            }
+        } catch (ServiceException e) {
+            toProcessServiceException(e, req, resp);
+        }
+    }
+
+    private void toProcessServiceException(ServiceException e, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        openErrorPage(req, resp, e);
+    }
+
+    private void doDropTable(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException, ServiceException {
+        String tableName = req.getParameter("tableName");
+        service.dropTable(tableName);
+        redirectToMenu(resp);
+    }
+
+    private void doClear(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException, ServiceException {
+        String tableName = req.getParameter("tableName");
+        service.clear(tableName);
+        redirectToMenu(resp);
+    }
+
+    private void doDeleteRecord(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException, ServiceException {
+        String tableName = req.getParameter("tableName");
+        String whereColumnName = req.getParameter("whereColumnName");
+        String whereColumnValue = req.getParameter("whereColumnValue");
+        service.delete(tableName, whereColumnName, whereColumnValue);
+        redirectToMenu(resp);
+    }
+
+    private void doUpdate(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException, ServiceException {
+        String tableName = req.getParameter("tableName");
+        String whereColumnName = req.getParameter("whereColumnName");
+        String whereColumnValue = req.getParameter("whereColumnValue");
+        String setColumnName = req.getParameter("setColumnName");
+        String setColumnValue = req.getParameter("setColumnValue");
+        service.update(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue);
+        redirectToMenu(resp);
+    }
+
+    private void doInsert(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException, ServiceException {
+        String tableName = req.getParameter("tableName");
+        List<String> columns = removeNullAndEmptyValues(req.getParameterValues("columns"));
+        List<String> values = removeNullAndEmptyValues(req.getParameterValues("values"));
+        service.insert(tableName, columns, values);
+        redirectToMenu(resp);
+    }
+
+    private void doCreateTable(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException, ServiceException {
+        String tableName = req.getParameter("tableName");
+        List<String> columns = removeNullAndEmptyValues(req.getParameterValues("columns"));
+        columns.removeAll(Collections.singleton(null));
+        service.createTable(tableName, columns);
+        redirectToMenu(resp);
+    }
+
+    private void doConnect(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
+        String serverName = req.getParameter("serverName");
+        String dbName = req.getParameter("dbName");
+        String userName = req.getParameter("userName");
+        String password = req.getParameter("password");
+        req.getSession().setAttribute("service", service);
+        String message = service.connect(serverName, dbName, userName, password);
+        openMenuPage(req, resp, message);
+    }
+
+    private void doTakeTablesList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
+        req.setAttribute("tablesList", service.takeTablesList());
+        String pageName = "takeTablesList";
+        forwardJSP(pageName, req, resp);
+    }
+
+    private void doSelect(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
+        String tableName = req.getParameter("tableName");
+        req.setAttribute("table", service.select(tableName));
+        forwardJSP("select", req, resp);
+    }
+
+    private void doHelp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HelpCommand helpCommand = service.getHelp();
+        req.setAttribute("helpHeader", helpCommand.getHeader());
+        req.setAttribute("commandsDescriptions", helpCommand.getCommandsDescriptions());
+        forwardJSP("help", req, resp);
+    }
+
+    private void doCloseConnection(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
+        String message = service.closeConnection();
+        openMenuPage(req, resp, message);
+    }
+
+    private void forwardJSP(String pageName, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher(pageName + ".jsp").forward(req, resp);
+    }
+
 
     private void updateService(HttpServletRequest req) {
         Service sessionService = (Service) req.getSession().getAttribute("service");
@@ -97,91 +195,8 @@ public class MainServlet extends HttpServlet {
         }
     }
 
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        updateService(req);
-        String action = getActionName(req);
-        setMenuToAttribute(req);
-
-        if (action.startsWith("/connect")) {
-            String serverName = req.getParameter("serverName");
-            String dbName = req.getParameter("dbName");
-            String userName = req.getParameter("userName");
-            String password = req.getParameter("password");
-            try {
-                req.getSession().setAttribute("service", service);
-                String message = service.connect(serverName, dbName, userName, password);
-                openMenuPage(req, resp, message);
-            } catch (Exception e) {
-                openErrorPage(req, resp, e);
-            }
-
-        } else if (action.startsWith("/createTable")) {
-            String tableName = req.getParameter("tableName");
-            List<String> columns = removeNullAndEmptyValues(req.getParameterValues("columns"));
-            columns.removeAll(Collections.singleton(null));
-            try {
-                service.createTable(tableName, columns);
-                resp.sendRedirect(resp.encodeRedirectURL("menu"));
-            } catch (ServiceException e) {
-                openErrorPage(req, resp, e);
-            }
-
-        } else if (action.startsWith("/insert")) {
-            String tableName = req.getParameter("tableName");
-            List<String> columns = removeNullAndEmptyValues(req.getParameterValues("columns"));
-            List<String> values = removeNullAndEmptyValues(req.getParameterValues("values"));
-            try {
-                service.insert(tableName, columns, values);
-                resp.sendRedirect(resp.encodeRedirectURL("menu"));
-            } catch (ServiceException e) {
-                openErrorPage(req, resp, e);
-            }
-
-        } else if (action.startsWith("/update")) {
-            String tableName = req.getParameter("tableName");
-            String whereColumnName = req.getParameter("whereColumnName");
-            String whereColumnValue = req.getParameter("whereColumnValue");
-            String setColumnName = req.getParameter("setColumnName");
-            String setColumnValue = req.getParameter("setColumnValue");
-            try {
-                service.update(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue);
-                resp.sendRedirect(resp.encodeRedirectURL("menu"));
-            } catch (ServiceException e) {
-                openErrorPage(req, resp, e);
-            }
-
-        } else if (action.startsWith("/delete")) {
-            String tableName = req.getParameter("tableName");
-            String whereColumnName = req.getParameter("whereColumnName");
-            String whereColumnValue = req.getParameter("whereColumnValue");
-            try {
-                service.delete(tableName, whereColumnName, whereColumnValue);
-                resp.sendRedirect(resp.encodeRedirectURL("menu"));
-            } catch (ServiceException e) {
-                openErrorPage(req, resp, e);
-            }
-
-        } else if (action.startsWith("/clear")) {
-            String tableName = req.getParameter("tableName");
-            try {
-                service.clear(tableName);
-                resp.sendRedirect(resp.encodeRedirectURL("menu"));
-            } catch (ServiceException e) {
-                openErrorPage(req, resp, e);
-            }
-
-        } else if (action.startsWith("/dropTable")) {
-            String tableName = req.getParameter("tableName");
-            try {
-                service.dropTable(tableName);
-                resp.sendRedirect(resp.encodeRedirectURL("menu"));
-            } catch (ServiceException e) {
-                openErrorPage(req, resp, e);
-            }
-
-        }
+    private void redirectToMenu(HttpServletResponse resp) throws IOException {
+        resp.sendRedirect(resp.encodeRedirectURL("menu"));
     }
 
     private void openMenuPage(HttpServletRequest req, HttpServletResponse resp, String message) throws ServletException, IOException {
