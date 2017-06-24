@@ -32,39 +32,51 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String action = getActionName(req);
-        updateService(req);
-        setMenuToAttribute(req);
+        configureRequest(req);
 
         try {
-            if (action.equals("/menu")) {
-                forwardJSP("menu", req, resp);
-            } else if (action.equals("/closeConnection")) {
-                doCloseConnection(req, resp);
-            } else if (action.equals("/help")) {
-                doHelp(req, resp);
-            } else if (action.equals("/connect")) {
-                forwardJSP("connect", req, resp);
-            } else if (action.equals("/select")) {
-                doSelect(req, resp);
-            } else if (action.equals("/takeTablesList")) {
-                doTakeTablesList(req, resp);
-            } else if (action.equals("/createTable")) {
-                forwardJSP("createTable", req, resp);
-            } else if (action.equals("/dropTable")) {
-                forwardJSP("dropTable", req, resp);
-            } else if (action.equals("/insert")) {
-                forwardJSP("insert", req, resp);
-            } else if (action.equals("/update")) {
-                forwardJSP("update", req, resp);
-            } else if (action.equals("/delete")) {
-                forwardJSP("delete", req, resp);
-            } else if (action.equals("/clear")) {
-                forwardJSP("clear", req, resp);
-            } else if (action.equals("/errorPage")) {
-                forwardJSP("errorPage", req, resp);
-            } else {
-                forwardJSP("missingPage", req, resp);
+            switch (getActionName(req)) {
+                case "/menu":
+                    forwardJSP("menu", req, resp);
+                    break;
+                case "/closeConnection":
+                    doCloseConnection(req, resp);
+                    break;
+                case "/help":
+                    doHelp(req, resp);
+                    break;
+                case "/connect":
+                    forwardJSP("connect", req, resp);
+                    break;
+                case "/select":
+                    doSelect(req, resp);
+                    break;
+                case "/takeTablesList":
+                    doTakeTablesList(req, resp);
+                    break;
+                case "/createTable":
+                    forwardJSP("createTable", req, resp);
+                    break;
+                case "/dropTable":
+                    forwardJSP("dropTable", req, resp);
+                    break;
+                case "/insert":
+                    forwardJSP("insert", req, resp);
+                    break;
+                case "/update":
+                    forwardJSP("update", req, resp);
+                    break;
+                case "/delete":
+                    forwardJSP("delete", req, resp);
+                    break;
+                case "/clear":
+                    forwardJSP("clear", req, resp);
+                    break;
+                case "/errorPage":
+                    forwardJSP("errorPage", req, resp);
+                    break;
+                default:
+                    forwardJSP("menu", req, resp);
             }
         } catch (ServiceException e) {
             toProcessServiceException(e, req, resp);
@@ -73,28 +85,40 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        updateService(req);
-        String action = getActionName(req);
-        setMenuToAttribute(req);
+        configureRequest(req);
+
         try {
-            if (action.equals("/connect")) {
-                doConnect(req, resp);
-            } else if (action.equals("/createTable")) {
-                doCreateTable(req, resp);
-            } else if (action.equals("/insert")) {
-                doInsert(req, resp);
-            } else if (action.equals("/update")) {
-                doUpdate(req, resp);
-            } else if (action.equals("/delete")) {
-                doDeleteRecord(req, resp);
-            } else if (action.equals("/clear")) {
-                doClear(req, resp);
-            } else if (action.equals("/dropTable")) {
-                doDropTable(req, resp);
+            switch (getActionName(req)) {
+                case "/connect":
+                    doConnect(req, resp);
+                    break;
+                case "/createTable":
+                    doCreateTable(req, resp);
+                    break;
+                case "/insert":
+                    doInsert(req, resp);
+                    break;
+                case "/update":
+                    doUpdate(req, resp);
+                    break;
+                case "/delete":
+                    doDeleteRecord(req, resp);
+                    break;
+                case "/clear":
+                    doClear(req, resp);
+                    break;
+                case "/dropTable":
+                    doDropTable(req, resp);
+                    break;
             }
         } catch (ServiceException e) {
             toProcessServiceException(e, req, resp);
         }
+    }
+
+    private void configureRequest(HttpServletRequest req) {
+        updateService(req);
+        setMenuToAttribute(req);
     }
 
     private void toProcessServiceException(ServiceException e, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -212,6 +236,11 @@ public class MainServlet extends HttpServlet {
 
     private List<String> removeNullAndEmptyValues(String[] array) {
         List<String> result = new ArrayList<>();
+
+        if (array == null) {
+            return result;
+        }
+
         for (String value : array) {
             if (value != null && !value.isEmpty()) {
                 result.add(value);
