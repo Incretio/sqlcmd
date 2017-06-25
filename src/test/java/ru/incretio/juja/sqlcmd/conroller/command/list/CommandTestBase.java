@@ -31,30 +31,26 @@ public class CommandTestBase {
     protected final static String USERNAME = "userName";
     protected final static String PASSWORD = "password";
     protected final static String HELP = "Список доступных комманд:\n" +
-            "\tconnect serverName dbName username password:\n" +
-            "\t\tподключиться к базе данных;\n" +
-            "\ttables:\n" +
-            "\t\tпоказать список таблиц базы данных;\n" +
-            "\tcreate tableName column1 [column2] [columnN]:\n" +
-            "\t\tдобавить новую таблицу (имя столбца не может начинаться с цифры);\n" +
-            "\tdrop tableName:\n" +
-            "\t\tудалить указанную таблицу;\n" +
-            "\tinsert tableName column1 value1 [column2 value2] [columnN valueN]:\n" +
-            "\t\tдобавить запись в указанную таблицу;\n" +
-            "\tupdate tableName whereColumn whereValue setColumn setValue:\n" +
-            "\t\tобновить записи, удовлетворяющие условию в указанной таблице;\n" +
-            "\tselect tableName:\n" +
-            "\t\tпоказать содержимое указанной таблицы;\n" +
-            "\tdelete tableName whereColumn whereValue:\n" +
-            "\t\tудалить записи, удовлетворяющие условию;\n" +
-            "\tclear tableName:\n" +
-            "\t\tочистить содержимое указанной таблицы;\n" +
-            "\tclose:\n" +
-            "\t\tзакрыть соединение с базой данных;\n" +
-            "\texit:\n" +
-            "\t\tзакрыть соединение и выйти из программы;\n" +
-            "\tgetHelp:\n" +
-            "\t\tпоказать список команд и их описаниями;\n" +
-            "\texecute \"textQuery\":\n" +
-            "\t\tвыполнить пользовательский запрос (должен быть указан в двойных ковычках);\n";
+            "connect serverName dbName username password:\n" +
+            "\tподключиться к базе данных;\n" +
+            "close:\n" +
+            "\tзакрыть соединение с базой данных;\n" +
+            "tables:\n" +
+            "\tпоказать список таблиц базы данных;\n" +
+            "create tableName column1 [column2] [columnN]:\n" +
+            "\tдобавить новую таблицу (имя столбца не может начинаться с цифры);\n" +
+            "insert tableName column1 value1 [column2 value2] [columnN valueN]:\n" +
+            "\tдобавить запись в указанную таблицу;\n" +
+            "update tableName whereColumn whereValue setColumn setValue:\n" +
+            "\tобновить записи, удовлетворяющие условию в указанной таблице;\n" +
+            "delete tableName whereColumn whereValue:\n" +
+            "\tудалить записи, удовлетворяющие условию;\n" +
+            "find tableName:\n" +
+            "\tпоказать содержимое указанной таблицы;\n" +
+            "clear tableName:\n" +
+            "\tочистить содержимое указанной таблицы;\n" +
+            "drop tableName:\n" +
+            "\tудалить указанную таблицу;\n" +
+            "help:\n" +
+            "\tпоказать список команд и их описаниями;\n";
 }
