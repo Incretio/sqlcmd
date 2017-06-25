@@ -11,6 +11,7 @@ public class IntegrationTest {
     private final static TestInputStream in = new TestInputStream();
     private final static TestOutputStream out = new TestOutputStream();
 
+    /*
     @Before
     public void setupTest() {
         System.setIn(in);
@@ -189,6 +190,8 @@ public class IntegrationTest {
     private void assertEqualsWithLineSeparatorReplace(String expected, String actual){
         assertEquals(expected.replace("\n", System.lineSeparator()), actual);
     }
+
+    */
 
 }
 
