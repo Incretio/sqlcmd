@@ -3,7 +3,7 @@ package ru.incretio.juja.sqlcmd.conroller.command.list;
 import ru.incretio.juja.sqlcmd.conroller.command.interfaces.Checkable;
 import ru.incretio.juja.sqlcmd.conroller.command.interfaces.Notationable;
 import ru.incretio.juja.sqlcmd.conroller.command.list.utils.MissingTableHelper;
-import ru.incretio.juja.sqlcmd.conroller.command.list.utils.ResultSetTableFormatter;
+import ru.incretio.juja.sqlcmd.model.ResultSetTableFormatter;
 import ru.incretio.juja.sqlcmd.model.Model;
 import ru.incretio.juja.sqlcmd.utils.logger.AppLogger;
 import ru.incretio.juja.sqlcmd.view.View;
@@ -29,16 +29,7 @@ public class SelectTable extends Base {
         new MissingTableHelper(model, view)
                 .throwExceptionIfTableNotExist(tableName);
 
-        ResultSetTableFormatter resultSetTableFormatter = new ResultSetTableFormatter();
-        Consumer<ResultSet> resultSetConsumer = resultSet -> {
-            try {
-                resultSetTableFormatter.setResultSet(resultSet);
-            } catch (SQLException e) {
-                AppLogger.warning(e);
-            }
-        };
-
-        model.find(resultSetConsumer, tableName);
+        ResultSetTableFormatter resultSetTableFormatter = model.find(tableName);
 
         if (resultSetTableFormatter.getColumnsNames() != null &&
                 !resultSetTableFormatter.getColumnsNames().isEmpty()) {

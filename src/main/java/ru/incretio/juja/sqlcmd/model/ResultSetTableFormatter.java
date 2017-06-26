@@ -1,4 +1,4 @@
-package ru.incretio.juja.sqlcmd.conroller.command.list.utils;
+package ru.incretio.juja.sqlcmd.model;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -14,7 +14,7 @@ public class ResultSetTableFormatter {
     private List<List<String>> data;
     private List<String> columnsNames;
 
-    public void setResultSet(ResultSet resultSet) throws SQLException {
+    public ResultSetTableFormatter(ResultSet resultSet) throws SQLException {
         this.resultSet = resultSet;
         initAll();
     }

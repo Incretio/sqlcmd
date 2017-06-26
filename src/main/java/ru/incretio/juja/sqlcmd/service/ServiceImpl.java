@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.incretio.juja.sqlcmd.conroller.command.list.utils.MissingTableHelper;
-import ru.incretio.juja.sqlcmd.conroller.command.list.utils.ResultSetTableFormatter;
+import ru.incretio.juja.sqlcmd.model.ResultSetTableFormatter;
 import ru.incretio.juja.sqlcmd.conroller.utils.HelpCommand;
 import ru.incretio.juja.sqlcmd.exceptions.CommandException;
 import ru.incretio.juja.sqlcmd.exceptions.MissingAnyDataException;
@@ -27,6 +27,10 @@ public class ServiceImpl implements Service {
 
     @Autowired
     private Model model;
+
+    public ServiceImpl(Model model) {
+        this.model = model;
+    }
 
     @Override
     public List<String> commandsList() {
@@ -132,19 +136,10 @@ public class ServiceImpl implements Service {
     @Override
     public List<List<String>> select(String tableName) throws ServiceException {
         try {
-            new MissingTableHelper(model)
-                    .throwExceptionIfTableNotExist(tableName);
+//            new MissingTableHelper(model)
+//                    .throwExceptionIfTableNotExist(tableName);
 
-            ResultSetTableFormatter resultSetTableFormatter = new ResultSetTableFormatter();
-            Consumer<ResultSet> resultSetConsumer = resultSet -> {
-                try {
-                    resultSetTableFormatter.setResultSet(resultSet);
-                } catch (SQLException e) {
-                    AppLogger.warning(e);
-                }
-            };
-
-            model.find(resultSetConsumer, tableName);
+            ResultSetTableFormatter resultSetTableFormatter = model.find(tableName);
 
             if (resultSetTableFormatter.getColumnsNames() != null &&
                     !resultSetTableFormatter.getColumnsNames().isEmpty()) {

@@ -22,7 +22,7 @@ public class SelectTableTest extends CommandTestBase {
         selectTable.perform(model, view, params);
 
         verify(model).takeTablesList();
-        verify(model).find(any(), eq(TABLE_NAME));
+        //verify(model).find(any(), eq(TABLE_NAME));
         verify(view).write(String.format(takeCaption("tableEmptyPattern"), TABLE_NAME));
     }
 }

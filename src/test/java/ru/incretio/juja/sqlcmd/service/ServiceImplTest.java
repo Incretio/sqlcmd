@@ -1,25 +1,45 @@
 package ru.incretio.juja.sqlcmd.service;
 
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import ru.incretio.juja.sqlcmd.model.Model;
+import ru.incretio.juja.sqlcmd.model.ResultSetTableFormatter;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"/testApplicationContext.xml"})
-public class ServiceImplTest {
+public class ServiceImplTest extends CommandTestBase{
 
-    @Autowired
-    private Service service;
+    @InjectMocks
+    private ServiceImpl service;
+
+    @Mock
+    private Model model;
+
+    @Before
+    public void initMocks() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
-    public void select() throws Exception {
+    public void select_correct_test() throws Exception {
+        // given
+        ResultSetTableFormatter resultSetTableFormatter = mock(ResultSetTableFormatter.class);
+        when(resultSetTableFormatter.getColumnsNames()).thenReturn(COLUMNS_LIST);
+        when(resultSetTableFormatter.getData()).thenReturn(DATA);
+        when(model.find(TABLE_NAME)).thenReturn(resultSetTableFormatter);
+
         // when
+        List<List<String>> data = service.select(TABLE_NAME);
 
         // then
+        assertEquals(DATA_WITH_COLUMNS, data);
     }
 
 }

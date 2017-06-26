@@ -5,6 +5,7 @@ import org.mockito.Mockito;
 import ru.incretio.juja.sqlcmd.exceptions.EmptyColumnsNamesTableFormatterException;
 import ru.incretio.juja.sqlcmd.exceptions.EmptyDataTableFormatterException;
 import ru.incretio.juja.sqlcmd.exceptions.IncorrectDataTableFormatterException;
+import ru.incretio.juja.sqlcmd.model.ResultSetTableFormatter;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -20,8 +21,7 @@ public class ResultSetTableFormatterTest {
     public void columnsNames_correct_test() throws Exception {
         ResultSetMetaData resultSetMetaDataMock = takeResultSetMetaDataMock();
         ResultSet resultSetMock = takeResultSet(resultSetMetaDataMock);
-        ResultSetTableFormatter resultSetTableFormatter = new ResultSetTableFormatter();
-        resultSetTableFormatter.setResultSet(resultSetMock);
+        ResultSetTableFormatter resultSetTableFormatter = new ResultSetTableFormatter(resultSetMock);
 
         List<String> expectedColumnsNames = Arrays.asList("id", "name", "value");
         List<String> actualColumnsNames = resultSetTableFormatter.getColumnsNames();
@@ -32,8 +32,7 @@ public class ResultSetTableFormatterTest {
     public void data_correct_test() throws SQLException, EmptyDataTableFormatterException, IncorrectDataTableFormatterException, EmptyColumnsNamesTableFormatterException {
         ResultSetMetaData resultSetMetaDataMock = takeResultSetMetaDataMock();
         ResultSet resultSetMock = takeResultSet(resultSetMetaDataMock);
-        ResultSetTableFormatter resultSetTableFormatter = new ResultSetTableFormatter();
-        resultSetTableFormatter.setResultSet(resultSetMock);
+        ResultSetTableFormatter resultSetTableFormatter = new ResultSetTableFormatter(resultSetMock);
 
         List<List<String>> expectedData = Arrays.asList(
                 Arrays.asList("1", "name1", "value1"),

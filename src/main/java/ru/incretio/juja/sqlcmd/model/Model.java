@@ -110,11 +110,11 @@ public class Model {
         return result;
     }
 
-    public void find(Consumer<ResultSet> resultSetConsumer, String tableName) throws SQLException, MissingConnectionException {
+    public ResultSetTableFormatter find(String tableName) throws SQLException, MissingConnectionException {
         throwExceptionIfConnectionClose();
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(queryable.takeSelectQuery(tableName));
-            resultSetConsumer.accept(resultSet);
+            return new ResultSetTableFormatter(resultSet);
         }
     }
 
