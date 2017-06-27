@@ -2,9 +2,11 @@ package ru.incretio.juja.sqlcmd.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
 import ru.incretio.juja.sqlcmd.model.Model;
 import ru.incretio.juja.sqlcmd.model.ResultSetTableFormatter;
 
@@ -14,6 +16,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ServiceImplTest extends CommandTestBase{
 
     @InjectMocks
@@ -22,13 +25,8 @@ public class ServiceImplTest extends CommandTestBase{
     @Mock
     private Model model;
 
-    @Before
-    public void initMocks() {
-        MockitoAnnotations.initMocks(this);
-    }
-
     @Test
-    public void select_correct_test() throws Exception {
+    public void select_correctData_test() throws Exception {
         // given
         ResultSetTableFormatter resultSetTableFormatter = mock(ResultSetTableFormatter.class);
         when(resultSetTableFormatter.getColumnsNames()).thenReturn(COLUMNS_LIST);
