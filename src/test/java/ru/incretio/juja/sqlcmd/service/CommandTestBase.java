@@ -1,9 +1,6 @@
 package ru.incretio.juja.sqlcmd.service;
 
-import ru.incretio.juja.sqlcmd.conroller.command.interfaces.Checkable;
-import ru.incretio.juja.sqlcmd.conroller.command.interfaces.Notationable;
 import ru.incretio.juja.sqlcmd.model.Model;
-import ru.incretio.juja.sqlcmd.view.View;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,11 +10,6 @@ import static org.mockito.Mockito.mock;
 
 public class CommandTestBase {
     protected Model model = mock(Model.class);
-    protected View view = mock(View.class);
-
-    protected static final Checkable CHECKABLE_MOCK = mock(Checkable.class);
-    protected static final Notationable NOTATIONABLE_MOCK = mock(Notationable.class);
-    protected List<String> params;
 
     protected final static String TABLE_NAME = "testTableName";
     protected final static String COLUMN_ONE_NAME = "testColumnOne";

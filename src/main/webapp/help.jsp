@@ -9,10 +9,9 @@
     <body>
         <%@include file="includes/commandList.jsp" %>
 
-        <h3>${helpHeader}</h3>
-        <c:forEach var="command" items="${commandsDescriptions}">
-            <pre>${command}</pre>
-        </c:forEach>
+
+        <h3>Помощь по работе с программой</h3>
+        <pre>${helpText}</pre>
 
         <%@include file="includes/footer.jsp" %>
     </body>

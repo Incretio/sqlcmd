@@ -16,7 +16,7 @@
 
     <servlet>
         <servlet-name>MainServlet</servlet-name>
-        <servlet-class>ru.incretio.juja.sqlcmd.conroller.web.MainServlet</servlet-class>
+        <servlet-class>ru.incretio.juja.sqlcmd.controller.MainServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

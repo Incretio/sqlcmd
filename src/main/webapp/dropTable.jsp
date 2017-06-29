@@ -8,7 +8,7 @@
     <body>
         <%@include file="includes/commandList.jsp" %>
 
-        <h3>Очистить таблицу</h3>
+        <h3>Удалить таблицу</h3>
         <form action="dropTable" method="post">
             <table>
                 <tr>
