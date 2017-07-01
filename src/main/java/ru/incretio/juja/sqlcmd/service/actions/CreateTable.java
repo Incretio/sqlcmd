@@ -17,10 +17,9 @@ public class CreateTable extends Action {
     public void doPost() {
         String tableName = getTableName();
         List<String> columns = removeNullAndEmptyValues(request.getParameterValues("columns"));
-        columns.removeAll(Collections.singleton(null));
         try {
-            service.createTable(tableName, columns);
-            redirectToMenu();
+            String message = service.createTable(tableName, columns);
+            openMenuPage(message);
         } catch (Exception e) {
             toProcessServiceException(e);
         }

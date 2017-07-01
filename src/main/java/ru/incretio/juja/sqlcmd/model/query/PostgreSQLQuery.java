@@ -10,7 +10,7 @@ import static java.lang.String.format;
 @Component
 public class PostgreSQLQuery implements Queryable {
     private final JDBCConnectionType jdbcConnectionType = JDBCConnectionType.PostgreSQL;
-    private final static String SELECT_QUERY_PATTERN = "SELECT * FROM public.\"%s\"";
+    private final static String SELECT_QUERY_PATTERN = "SELECT * FROM public.\"%s\" ORDER BY 1";
     private final static String INSERT_QUERY_PATTERN = "INSERT INTO \"%s\" (%s) VALUES (%s)";
     private final static String UPDATE_QUERY_PATTERN = "UPDATE \"%s\" SET %s='%s' WHERE %s='%s'";
     private final static String DELETE_QUERY_PATTERN = "DELETE FROM \"%s\" WHERE %s='%s'";

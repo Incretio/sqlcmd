@@ -19,8 +19,8 @@ public class UpdateRecord extends Action {
         String setColumnName = getSetColumnName();
         String setColumnValue = getSetColumnValue();
         try {
-            service.update(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue);
-            redirectToMenu();
+            String message = service.update(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue);
+            openMenuPage(message);
         } catch (Exception e) {
             toProcessServiceException(e);
         }

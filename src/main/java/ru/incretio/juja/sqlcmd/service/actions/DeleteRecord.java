@@ -17,8 +17,8 @@ public class DeleteRecord extends Action {
         String whereColumnName = getWhereColumnName();
         String whereColumnValue = getWhereColumnValue();
         try {
-            service.delete(tableName, whereColumnName, whereColumnValue);
-            redirectToMenu();
+            String message = service.delete(tableName, whereColumnName, whereColumnValue);
+            openMenuPage(message);
         } catch (Exception e) {
             toProcessServiceException(e);
         }

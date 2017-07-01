@@ -116,12 +116,13 @@ public class ServiceImpl implements Service {
     }
 
     @Override
-    public void update(String tableName, String whereColumnName, String whereColumnValue, String setColumnName, String setColumnValue)
+    public String update(String tableName, String whereColumnName, String whereColumnValue, String setColumnName, String setColumnValue)
             throws ServiceException {
         try {
             // try table exists
             // try columns exist
             model.executeUpdateRecords(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue);
+            return String.format(takeCaption("recordUpdated"));
         } catch (Exception e) {
             throw new ServiceException("Update error", e);
         }
@@ -206,7 +207,7 @@ public class ServiceImpl implements Service {
             if (columns.contains(columnName)) {
                 return true;
             } else {
-                throw new MissingColumnException(columnName);
+                return false;
             }
         } catch (Exception e) {
             throw new ServiceException("Column exists error", e);
@@ -219,7 +220,7 @@ public class ServiceImpl implements Service {
             if (tables.contains(tableName)) {
                 return true;
             } else {
-                throw new MissingTableException(tableName);
+                return false;
             }
         } catch (Exception e) {
             throw new ServiceException("Column exists error", e);

@@ -15,8 +15,8 @@ public class ClearTable extends Action {
     public void doPost() {
         String tableName = getTableName();
         try {
-            service.clear(tableName);
-            redirectToMenu();
+            String message = service.clear(tableName);
+            openMenuPage(message);
         } catch (Exception e) {
             toProcessServiceException(e);
         }

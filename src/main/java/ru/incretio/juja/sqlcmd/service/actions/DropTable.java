@@ -15,8 +15,8 @@ public class DropTable extends Action {
     public void doPost() {
         String tableName = request.getParameter("tableName");
         try {
-            service.dropTable(tableName);
-            redirectToMenu();
+            String message = service.dropTable(tableName);
+            openMenuPage(message);
         } catch (Exception e) {
             toProcessServiceException(e);
         }

@@ -19,7 +19,7 @@ public interface Service {
 
     String insert(String tableName, List<String> columns, List<String> values) throws ServiceException;
 
-    void update(String tableName, String whereColumnName, String whereColumnValue, String setColumnName, String setColumnValue)
+    String update(String tableName, String whereColumnName, String whereColumnValue, String setColumnName, String setColumnValue)
             throws ServiceException;
 
     String delete(String tableName, String whereColumnName, String whereColumnValue) throws ServiceException;

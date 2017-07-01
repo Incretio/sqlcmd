@@ -2,8 +2,11 @@ package ru.incretio.juja.sqlcmd.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import ru.incretio.juja.sqlcmd.exceptions.UnsupportedActionException;
 import ru.incretio.juja.sqlcmd.service.Service;
 import ru.incretio.juja.sqlcmd.service.ServiceFactory;
+import ru.incretio.juja.sqlcmd.service.actions.Action;
+import ru.incretio.juja.sqlcmd.service.actions.ActionList;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -28,13 +31,23 @@ public class MainServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         configureRequest(req);
-        new CommandPerformer(service).performGetFunction(req, resp);
+        try {
+            Action action = ActionList.getAction(getActionName(req), service, req, resp);
+            action.doGet();
+        } catch (UnsupportedActionException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         configureRequest(req);
-        new CommandPerformer(service).performPostFunction(req, resp);
+        try{
+            Action action = ActionList.getAction(getActionName(req), service, req, resp);
+            action.doPost();
+        } catch (UnsupportedActionException e){
+            e.printStackTrace();
+        }
     }
 
     private void configureRequest(HttpServletRequest req) {
@@ -53,5 +66,10 @@ public class MainServlet extends HttpServlet {
 
     private void setMenuToAttribute(HttpServletRequest req) {
         req.setAttribute("items", service.commandsList());
+    }
+
+    private String getActionName(HttpServletRequest req) {
+        String requestURI = req.getRequestURI();
+        return requestURI.substring(req.getContextPath().length(), requestURI.length());
     }
 }

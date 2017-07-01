@@ -3,6 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <script type="text/javascript" src="scripts/dynamicPage.js"></script>
         <title>SQLCmd</title>
     </head>
     <body>
@@ -10,37 +11,11 @@
 
         <h3>Добавить таблицу</h3>
         <form action="createTable" method="post">
-            <table>
-                <tr>
-                    <td>Имя таблицы</td>
-                    <td><input type="text" name='tableName'/></td>
-                </tr>
-                <tr>
-                    <td>Столбец 1</td>
-                    <td><input type="text" name="columns"/></td>
-                </tr>
-                <tr>
-                    <td>Столбец 2</td>
-                    <td><input type="text" name="columns"/></td>
-                </tr>
-                <tr>
-                    <td>Столбец 3</td>
-                    <td><input type="text" name="columns"/></td>
-                </tr>
-                <tr>
-                    <td>Столбец 4</td>
-                    <td><input type="text" name="columns"/></td>
-                </tr>
-                <tr>
-                    <td>Столбец 5</td>
-                    <td><input type="text" name="columns"/></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" name="createTable"/></td>
-                </tr>
-            </table>
-        </form>
+            <p id="main">
+                    	Имя таблицы: <input type="text" name='tableName'/>
+            </p>
+            <input id="clickMe" type="button" value="Добавить поле" onclick="addFieldName('main');" />
+            <td><input type="submit" name="createTable"/></td>
 
         <%@include file="includes/footer.jsp" %>
     </body>

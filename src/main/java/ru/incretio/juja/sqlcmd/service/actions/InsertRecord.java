@@ -18,8 +18,8 @@ public class InsertRecord extends Action {
         List<String> columns = removeNullAndEmptyValues(request.getParameterValues("columns"));
         List<String> values = removeNullAndEmptyValues(request.getParameterValues("values"));
         try {
-            service.insert(tableName, columns, values);
-            redirectToMenu();
+            String message = service.insert(tableName, columns, values);
+            openMenuPage(message);
         } catch (Exception e) {
             toProcessServiceException(e);
         }
