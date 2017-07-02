@@ -11,7 +11,7 @@
 
         <h3>Список таблиц</h3>
         <c:forEach var="table" items="${tablesList}">
-            <pre>${table}</pre>
+            <a href="select?tableName=${table}">${table}</a><br>
         </c:forEach>
 
         <%@include file="includes/footer.jsp" %>

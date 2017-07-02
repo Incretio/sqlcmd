@@ -3,6 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <script type="text/javascript" src="scripts/dynamicPage.js"></script>
         <title>SQLCmd</title>
     </head>
     <body>
@@ -10,48 +11,15 @@
 
         <h3>Добавить запись</h3>
         <form action="insert" method="post">
-            <table>
-                <tr>
-                    <td>Имя таблицы</td>
-                    <td><input type="text" name='tableName'/></td>
-                </tr>
-                <tr>
-                    <td>Имя столбца</td>
-                    <td><input type="text" name="columns"/></td>
-                    <td>Значение</td>
-                    <td><input type="text" name="values"/></td>
-                </tr>
-                <tr>
-                    <td>Имя столбца</td>
-                    <td><input type="text" name="columns"/></td>
-                    <td>Значение</td>
-                    <td><input type="text" name="values"/></td>
-                </tr>
-                <tr>
-                    <td>Имя столбца</td>
-                    <td><input type="text" name="columns"/></td>
-                    <td>Значение</td>
-                    <td><input type="text" name="values"/></td>
-                </tr>
-                <tr>
-                    <td>Имя столбца</td>
-                    <td><input type="text" name="columns"/></td>
-                    <td>Значение</td>
-                    <td><input type="text" name="values"/></td>
-                </tr>
-                <tr>
-                    <td>Имя столбца</td>
-                    <td><input type="text" name="columns"/></td>
-                    <td>Значение</td>
-                    <td><input type="text" name="values"/></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><input type="submit" name="insert"/></td>
-                </tr>
-            </table>
-        </form>
+             <p id="main">
+                Имя таблицы: <input type="text" name='tableName'/>
+             </p>
 
+            <input id="clickMe" type="button" value="Добавить поле" onclick="addLine('main');" />
+            <br><br>
+            <input type="submit" name="insert"/>
+
+        </form>
         <%@include file="includes/footer.jsp" %>
     </body>
 </html>

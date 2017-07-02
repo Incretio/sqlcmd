@@ -30,7 +30,9 @@ public class ServiceImpl implements Service {
     public List<String> commandsList() {
         return Arrays.asList(
                 "connect", "closeConnection",
-                "takeTablesList", "createTable", "insert", "update", "delete", "select", "clear", "dropTable",
+                "createTable", "dropTable",
+                "takeTablesList",
+                "insert", "update", "delete", "clear",
                 "help");
     }
 
@@ -99,6 +101,15 @@ public class ServiceImpl implements Service {
             }
         } catch (Exception e) {
             throw new ServiceException("Create table error", e);
+        }
+    }
+
+    private boolean tableExists(String tableName) throws Exception {
+        List<String> tables = model.takeTablesList();
+        if (tables.contains(tableName)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -205,19 +216,6 @@ public class ServiceImpl implements Service {
             // try table exists
             List<String> columns = model.takeTableColumns(tableName);
             if (columns.contains(columnName)) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            throw new ServiceException("Column exists error", e);
-        }
-    }
-
-    private boolean tableExists(String tableName) throws ServiceException {
-        try {
-            List<String> tables = model.takeTablesList();
-            if (tables.contains(tableName)) {
                 return true;
             } else {
                 return false;

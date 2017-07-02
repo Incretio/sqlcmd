@@ -53,8 +53,12 @@ public class PostgreSQLQuery implements Queryable {
             columnsString.append(columns.get(i)).append(", ");
             valuesString.append("'").append(values.get(i)).append("'").append(", ");
         }
-        columnsString = new StringBuilder(columnsString.substring(0, columnsString.length() - 2));
-        valuesString = new StringBuilder(valuesString.substring(0, valuesString.length() - 2));
+        if (!columns.isEmpty()) {
+            columnsString = new StringBuilder(columnsString.substring(0, columnsString.length() - 2));
+        }
+        if (!values.isEmpty()) {
+            valuesString = new StringBuilder(valuesString.substring(0, valuesString.length() - 2));
+        }
         return format(INSERT_QUERY_PATTERN, tableName, columnsString.toString(), valuesString.toString());
     }
 
