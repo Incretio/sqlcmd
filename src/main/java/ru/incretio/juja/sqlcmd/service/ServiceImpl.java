@@ -5,7 +5,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.incretio.juja.sqlcmd.exceptions.*;
 import ru.incretio.juja.sqlcmd.model.Model;
-import ru.incretio.juja.sqlcmd.model.ResultSetTableFormatter;
+import ru.incretio.juja.sqlcmd.model.utils.ResultSetTableFormatter;
+import ru.incretio.juja.sqlcmd.service.exceptions.ServiceException;
 import ru.incretio.juja.sqlcmd.utils.logger.AppLogger;
 
 import java.sql.SQLException;
@@ -166,7 +167,7 @@ public class ServiceImpl implements Service {
                 return table;
             }
         } catch (Exception e) {
-            throw new ServiceException("Select error", e);
+            throw new ServiceException(e.getMessage(), e);
         }
 
         return Collections.emptyList();
@@ -192,23 +193,6 @@ public class ServiceImpl implements Service {
         } catch (Exception e) {
             throw new ServiceException("Drop table error", e);
         }
-    }
-
-    private String getExceptionDescription(Exception exception) {
-        String result;
-        try {
-            exception.printStackTrace();
-            throw exception;
-        } catch (CommandException | MissingAnyDataException | NeedExitException e) {
-            result = e.getMessage();
-        } catch (SQLException e) {
-            result = String.format(takeCaption("sqlErrorPattern"),
-                    e.getMessage().replace("\n", System.lineSeparator()));
-        } catch (Exception e) {
-            result = takeCaption("badAppConfiguration");
-            AppLogger.warning(e.getMessage().concat(": ").concat(Arrays.toString(e.getStackTrace())));
-        }
-        return result;
     }
 
     private boolean columnExists(String tableName, String columnName) throws ServiceException {

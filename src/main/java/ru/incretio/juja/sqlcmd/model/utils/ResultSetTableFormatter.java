@@ -1,4 +1,4 @@
-package ru.incretio.juja.sqlcmd.model;
+package ru.incretio.juja.sqlcmd.model.utils;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

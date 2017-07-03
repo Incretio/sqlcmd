@@ -4,6 +4,7 @@ import ru.incretio.juja.sqlcmd.model.Model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
@@ -33,6 +34,10 @@ public class CommandTestBase {
                     Arrays.asList("1", "name1", "value1"),
                     Arrays.asList("2", "name2", "value2"),
                     Arrays.asList("3", "name3", "value3")));
+    protected final static List<List<String>> DATA_ONLY_COLUMNS =
+            new ArrayList(Arrays.asList(
+                    Arrays.asList(COLUMN_ONE_NAME, COLUMN_TWO_NAME, COLUMN_THREE_NAME)));
+    protected final static List<String> EMPTY_DATA = Collections.EMPTY_LIST;
     protected final static String HELP = "Список доступных комманд:\n" +
             "connect serverName dbName username password:\n" +
             "\tподключиться к базе данных;\n" +

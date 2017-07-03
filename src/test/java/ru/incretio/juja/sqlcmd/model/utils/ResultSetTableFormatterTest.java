@@ -1,11 +1,11 @@
-package ru.incretio.juja.sqlcmd.controller.command.list.utils;
+package ru.incretio.juja.sqlcmd.model.utils;
 
 import org.junit.Test;
 import org.mockito.Mockito;
 import ru.incretio.juja.sqlcmd.exceptions.EmptyColumnsNamesTableFormatterException;
 import ru.incretio.juja.sqlcmd.exceptions.EmptyDataTableFormatterException;
 import ru.incretio.juja.sqlcmd.exceptions.IncorrectDataTableFormatterException;
-import ru.incretio.juja.sqlcmd.model.ResultSetTableFormatter;
+import ru.incretio.juja.sqlcmd.model.utils.ResultSetTableFormatter;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;

@@ -3,6 +3,7 @@ package ru.incretio.juja.sqlcmd.model;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.model.data.JDBCConnectable;
 import ru.incretio.juja.sqlcmd.model.query.Queryable;
+import ru.incretio.juja.sqlcmd.model.utils.ResultSetTableFormatter;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
