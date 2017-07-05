@@ -4,7 +4,6 @@ import ru.incretio.juja.sqlcmd.service.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
 import java.util.List;
 
 public class CreateTable extends Action {

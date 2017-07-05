@@ -18,7 +18,7 @@ public class Connect extends Action {
         String userName = getUserName();
         String password = getPassword();
         request.getSession().setAttribute("service", service);
-        String message = null;
+        String message;
         try {
             message = service.connect(serverName, dbName, userName, password);
             openMenuPage(message);
