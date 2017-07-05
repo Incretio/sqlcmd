@@ -55,7 +55,7 @@ public class MainServlet extends HttpServlet {
         setMenuToAttribute(req);
     }
 
-    private void updateService(HttpServletRequest req) {
+    protected void updateService(HttpServletRequest req) {
         Service sessionService = (Service) req.getSession().getAttribute("service");
         if (sessionService != null) {
             service = sessionService;
@@ -68,7 +68,7 @@ public class MainServlet extends HttpServlet {
         req.setAttribute("items", service.commandsList());
     }
 
-    private String getActionName(HttpServletRequest req) {
+    protected String getActionName(HttpServletRequest req) {
         String requestURI = req.getRequestURI();
         return requestURI.substring(req.getContextPath().length(), requestURI.length());
     }

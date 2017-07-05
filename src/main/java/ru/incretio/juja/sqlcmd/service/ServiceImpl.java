@@ -3,13 +3,10 @@ package ru.incretio.juja.sqlcmd.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import ru.incretio.juja.sqlcmd.exceptions.*;
 import ru.incretio.juja.sqlcmd.model.Model;
 import ru.incretio.juja.sqlcmd.model.utils.ResultSetTableFormatter;
 import ru.incretio.juja.sqlcmd.service.exceptions.ServiceException;
-import ru.incretio.juja.sqlcmd.utils.logger.AppLogger;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -39,7 +36,7 @@ public class ServiceImpl implements Service {
 
     @Override
     public String connect(String serverName, String dbName, String userName, String password) throws ServiceException {
-        String result = "";
+        String result;
         try {
             try {
                 model.connect(serverName, dbName, userName, password);
@@ -107,11 +104,7 @@ public class ServiceImpl implements Service {
 
     private boolean tableExists(String tableName) throws Exception {
         List<String> tables = model.takeTablesList();
-        if (tables.contains(tableName)) {
-            return true;
-        } else {
-            return false;
-        }
+        return tables.contains(tableName);
     }
 
     @Override
@@ -199,11 +192,7 @@ public class ServiceImpl implements Service {
         try {
             // try table exists
             List<String> columns = model.takeTableColumns(tableName);
-            if (columns.contains(columnName)) {
-                return true;
-            } else {
-                return false;
-            }
+            return columns.contains(columnName);
         } catch (Exception e) {
             throw new ServiceException("Column exists error", e);
         }
