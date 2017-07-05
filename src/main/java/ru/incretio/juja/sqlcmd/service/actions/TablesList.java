@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 public class TablesList extends Action {
 
     public TablesList(Service service, HttpServletRequest request, HttpServletResponse response) {
-        super("/takeTablesList", service, request, response);
+        super(service, request, response);
     }
 
     @Override

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ClearTable extends Action {
 
     public ClearTable(Service service, HttpServletRequest request, HttpServletResponse response) {
-        super("/clearTable", service, request, response);
+        super(service, request, response);
     }
 
     @Override

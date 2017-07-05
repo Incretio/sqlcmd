@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DeleteRecord extends Action {
 
     public DeleteRecord(Service service, HttpServletRequest request, HttpServletResponse response) {
-        super("/delete", service, request, response);
+        super(service, request, response);
     }
 
     @Override

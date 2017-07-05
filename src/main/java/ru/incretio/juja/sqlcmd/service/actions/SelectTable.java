@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SelectTable extends Action {
 
     public SelectTable(Service service, HttpServletRequest request, HttpServletResponse response) {
-        super("/select", service, request, response);
+        super(service, request, response);
     }
 
     @Override

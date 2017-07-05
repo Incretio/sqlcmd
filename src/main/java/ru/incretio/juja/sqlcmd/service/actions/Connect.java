@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Connect extends Action {
 
     public Connect(Service service, HttpServletRequest request, HttpServletResponse response) {
-        super("/connect", service, request, response);
+        super(service, request, response);
     }
 
     @Override

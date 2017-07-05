@@ -9,7 +9,7 @@ import java.util.List;
 public class InsertRecord extends Action {
 
     public InsertRecord(Service service, HttpServletRequest request, HttpServletResponse response) {
-        super("/insert", service, request, response);
+        super(service, request, response);
     }
 
     @Override

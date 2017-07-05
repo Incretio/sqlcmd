@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DropTable extends Action {
 
     public DropTable(Service service, HttpServletRequest request, HttpServletResponse response) {
-        super("/dropTable", service, request, response);
+        super(service, request, response);
     }
 
     @Override

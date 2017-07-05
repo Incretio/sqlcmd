@@ -8,13 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Action {
-    protected final String url;
     protected final Service service;
     protected final HttpServletRequest request;
     protected final HttpServletResponse response;
 
-    public Action(String url, Service service, HttpServletRequest request, HttpServletResponse response) {
-        this.url = url;
+    public Action(Service service, HttpServletRequest request, HttpServletResponse response) {
         this.service = service;
         this.request = request;
         this.response = response;
@@ -123,8 +121,4 @@ public abstract class Action {
         return request.getParameter("serverName");
     }
 
-    @Override
-    public String toString() {
-        return url;
-    }
 }

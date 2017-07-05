@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UpdateRecord extends Action {
 
     public UpdateRecord(Service service, HttpServletRequest request, HttpServletResponse response) {
-        super("/update", service, request, response);
+        super(service, request, response);
     }
 
     @Override

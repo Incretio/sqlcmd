@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ErrorPage extends Action {
 
     public ErrorPage(Service service, HttpServletRequest request, HttpServletResponse response) {
-        super("/errorPage", service, request, response);
+        super(service, request, response);
     }
 
     @Override

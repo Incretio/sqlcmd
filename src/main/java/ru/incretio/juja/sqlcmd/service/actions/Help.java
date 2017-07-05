@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Help extends Action {
 
     public Help(Service service, HttpServletRequest request, HttpServletResponse response) {
-        super("/help", service, request, response);
+        super(service, request, response);
     }
 
     @Override

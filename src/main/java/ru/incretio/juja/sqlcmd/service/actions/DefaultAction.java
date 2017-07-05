@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class DefaultAction extends Action{
     public DefaultAction(Service service, HttpServletRequest req, HttpServletResponse resp) {
-        super("/menu", service, req, resp);
+        super(service, req, resp);
     }
 
     @Override

@@ -10,7 +10,7 @@ import java.util.List;
 public class CreateTable extends Action {
 
     public CreateTable(Service service, HttpServletRequest request, HttpServletResponse response) {
-        super("/createTable", service, request, response);
+        super(service, request, response);
     }
 
     @Override

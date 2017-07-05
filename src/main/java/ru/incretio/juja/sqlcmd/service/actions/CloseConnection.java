@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CloseConnection extends Action {
 
     public CloseConnection(Service service, HttpServletRequest request, HttpServletResponse response) {
-        super("/closeConnection", service, request, response);
+        super(service, request, response);
     }
 
     @Override
