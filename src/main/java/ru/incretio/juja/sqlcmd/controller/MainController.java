@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import ru.incretio.juja.sqlcmd.service.Service;
 import ru.incretio.juja.sqlcmd.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 public class MainController {
@@ -18,7 +20,6 @@ public class MainController {
 
     @RequestMapping(value = {"/", "/menu"}, method = RequestMethod.GET)
     public String menu(HttpServletRequest request) {
-        configureRequest(request);
         return "menu";
     }
 
