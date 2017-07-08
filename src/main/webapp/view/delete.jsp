@@ -22,7 +22,6 @@
                     <td><input type="text" name="whereColumnValue"/></td>
                 </tr>
                 <tr>
-                    <td></td>
                     <td><input type="submit" name="delete"/></td>
                 </tr>
             </table>

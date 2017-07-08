@@ -18,7 +18,7 @@ import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 public class ServiceImpl implements Service {
 
     @Autowired
-    private Model model;
+    private final Model model;
 
     public ServiceImpl(Model model) {
         this.model = model;
@@ -127,7 +127,7 @@ public class ServiceImpl implements Service {
             // try table exists
             // try columns exist
             model.executeUpdateRecords(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue);
-            return String.format(takeCaption("recordUpdated"));
+            return String.format(takeCaption("recordUpdated"), tableName);
         } catch (Exception e) {
             throw new ServiceException("Update error", e);
         }
@@ -186,6 +186,11 @@ public class ServiceImpl implements Service {
         } catch (Exception e) {
             throw new ServiceException("Drop table error", e);
         }
+    }
+
+    @Override
+    public String help(){
+        return "It's enjoy project.";
     }
 
     private boolean columnExists(String tableName, String columnName) throws ServiceException {

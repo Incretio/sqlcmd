@@ -16,7 +16,6 @@
                     <td><input type="text" name='tableName'/></td>
                 </tr>
                 <tr>
-                    <td></td>
                     <td><input type="submit" name="clear"/></td>
                 </tr>
             </table>

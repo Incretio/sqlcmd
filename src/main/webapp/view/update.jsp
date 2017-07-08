@@ -28,7 +28,6 @@
                     <td><input type="text" name="setColumnValue"/></td>
                 </tr>
                 <tr>
-                    <td></td>
                     <td><input type="submit" name="update"/></td>
                 </tr>
             </table>

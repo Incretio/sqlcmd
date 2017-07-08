@@ -31,4 +31,6 @@ public interface Service {
     String clear(String tableName) throws ServiceException;
 
     String dropTable(String tableName) throws ServiceException;
+
+    String help();
 }

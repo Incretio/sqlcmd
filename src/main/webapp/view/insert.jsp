@@ -3,10 +3,10 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <script type="text/javascript" src="scripts/dynamicPage.js"></script>
+        <script type="text/javascript" src="view/scripts/dynamicPage.js"></script>
         <title>SQLCmd</title>
     </head>
-    <body>
+    <body onload="addLine('main');">
         <%@include file="includes/commandList.jsp" %>
 
         <h3>Добавить запись</h3>

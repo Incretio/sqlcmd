@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultSetTableFormatter {
-    private ResultSet resultSet;
+    private final ResultSet resultSet;
     private final int firstColumnIndex = 1;
     private int lastColumnIndex;
     private ResultSetMetaData metaData;
