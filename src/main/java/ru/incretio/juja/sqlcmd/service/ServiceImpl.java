@@ -4,11 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ru.incretio.juja.sqlcmd.model.Model;
-import ru.incretio.juja.sqlcmd.model.utils.ResultSetTableFormatter;
 import ru.incretio.juja.sqlcmd.service.exceptions.ServiceException;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
@@ -150,20 +148,12 @@ public class ServiceImpl implements Service {
     public List<List<String>> select(String tableName) throws ServiceException {
         try {
             // try table exists
-            ResultSetTableFormatter resultSetTableFormatter = model.find(tableName);
-
-            if (resultSetTableFormatter.getColumnsNames() != null &&
-                    !resultSetTableFormatter.getColumnsNames().isEmpty()) {
-                List<List<String>> table = resultSetTableFormatter.getData();
-                List<String> columnsNames = resultSetTableFormatter.getColumnsNames();
-                table.add(0, columnsNames);
-                return table;
-            }
+            return model.find(tableName);
         } catch (Exception e) {
             throw new ServiceException(e.getMessage(), e);
         }
 
-        return Collections.emptyList();
+        //return Collections.emptyList();
     }
 
     @Override
@@ -189,7 +179,7 @@ public class ServiceImpl implements Service {
     }
 
     @Override
-    public String help(){
+    public String help() {
         return "It's enjoy project.";
     }
 

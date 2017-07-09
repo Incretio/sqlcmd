@@ -1,20 +1,19 @@
 package ru.incretio.juja.sqlcmd.model;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import ru.incretio.juja.sqlcmd.exceptions.MissingConnectionException;
 import ru.incretio.juja.sqlcmd.model.data.JDBCConnectable;
 import ru.incretio.juja.sqlcmd.model.query.Queryable;
-import ru.incretio.juja.sqlcmd.model.utils.ResultSetTableFormatter;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Model {
-    private Connection connection;
-
+    private JdbcTemplate jdbcTemplate;
     private Queryable queryable;
 
     public void setQueryable(Queryable queryable) {
@@ -23,26 +22,29 @@ public class Model {
 
     public boolean isConnected() {
         try {
-            return connection != null && !connection.isClosed();
+            return getObjectConnection() != null && !getObjectConnection().isClosed();
         } catch (SQLException e) {
             return false;
         }
     }
 
-    public void setConnection(Connection connection) {
-        this.connection = connection;
+    private Connection getObjectConnection() throws SQLException {
+        if (jdbcTemplate != null && jdbcTemplate.getDataSource() != null) {
+            return jdbcTemplate.getDataSource().getConnection();
+        } else {
+            return null;
+        }
     }
 
-    public Connection getConnection() throws MissingConnectionException {
+    private Connection getConnection() throws MissingConnectionException, SQLException {
         if (!isConnected()) {
             throw new MissingConnectionException();
         }
-        return connection;
+        return getObjectConnection();
     }
 
     public void closeConnection() throws MissingConnectionException, SQLException {
         getConnection().close();
-        connection = null;
     }
 
     public void executeCreateDB(String dbName) throws SQLException, MissingConnectionException {
@@ -55,9 +57,7 @@ public class Model {
 
     public void execute(String query) throws SQLException, MissingConnectionException {
         throwExceptionIfConnectionClose();
-        try (Statement statement = connection.createStatement()) {
-            statement.execute(query);
-        }
+        jdbcTemplate.execute(query);
     }
 
     public void connect(String serverName, String dbName, String userName, String password) throws MissingConnectionException, SQLException, ClassNotFoundException {
@@ -67,7 +67,8 @@ public class Model {
 
         JDBCConnectable jdbcConnectable = new JDBCConnectable(
                 queryable.getJdbcConnectionType(), serverName, dbName);
-        setConnection(jdbcConnectable.getConnection(userName, password));
+        Connection connection = jdbcConnectable.getConnection(userName, password);
+        jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(connection, false));
     }
 
     public void executeCreateTable(String tableName, List<String> columns) throws SQLException, MissingConnectionException {
@@ -100,22 +101,49 @@ public class Model {
 
     private List<String> takeDataFromFirstColumn(String query) throws SQLException, MissingConnectionException {
         throwExceptionIfConnectionClose();
-        List<String> result = new ArrayList<>();
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-            while (resultSet.next()) {
-                result.add(resultSet.getString(1));
-            }
-        }
+        return jdbcTemplate.query(query, (resultSet, i) -> resultSet.getString(1));
+    }
+
+    public List<List<String>> find(String tableName) throws SQLException, MissingConnectionException {
+        throwExceptionIfConnectionClose();
+        List<String> columns = jdbcTemplate.query(
+                queryable.takeSelectQuery(tableName),
+                this::getColumnsNames);
+
+        List<List<String>> result = jdbcTemplate.query(
+                queryable.takeSelectQuery(tableName),
+                (resultSet, i) -> getLineFromData(resultSet));
+
+        result.add(0, columns);
+
         return result;
     }
 
-    public ResultSetTableFormatter find(String tableName) throws SQLException, MissingConnectionException {
-        throwExceptionIfConnectionClose();
-        try (Statement statement = connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery(queryable.takeSelectQuery(tableName));
-            return new ResultSetTableFormatter(resultSet);
+    private List<String> getColumnsNames(ResultSet resultSet) throws SQLException {
+        int firstColumnIndex = 1;
+        int lastColumnIndex = resultSet.getMetaData().getColumnCount();
+
+        List<String> columnsNames = new ArrayList<>();
+        for (int i = firstColumnIndex; i <= lastColumnIndex; i++) {
+            columnsNames.add(resultSet.getMetaData().getColumnLabel(i));
         }
+
+        return columnsNames;
+    }
+
+    private List<String> getLineFromData(ResultSet resultSet) throws SQLException {
+        List<String> line = new ArrayList<>();
+
+        int firstColumnIndex = 1;
+        int lastColumnIndex = resultSet.getMetaData().getColumnCount();
+        for (int columnIndex = firstColumnIndex; columnIndex <= lastColumnIndex; columnIndex++) {
+            String value = resultSet.getString(columnIndex);
+            value = (value == null) ? "" : value;
+
+            line.add(value);
+        }
+
+        return line;
     }
 
     public void executeUpdateRecords(String tableName,
