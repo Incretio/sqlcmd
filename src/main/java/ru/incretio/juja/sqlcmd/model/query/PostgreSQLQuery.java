@@ -1,6 +1,7 @@
 package ru.incretio.juja.sqlcmd.model.query;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import ru.incretio.juja.sqlcmd.model.data.JDBCConnectionType;
 
 import java.util.List;
@@ -47,19 +48,10 @@ public class PostgreSQLQuery implements Queryable {
 
     @Override
     public String takeInsertQuery(String tableName, List<String> columns, List<String> values) {
-        StringBuilder columnsString = new StringBuilder();
-        StringBuilder valuesString = new StringBuilder();
-        for (int i = 0; i < columns.size(); i++) {
-            columnsString.append(columns.get(i)).append(", ");
-            valuesString.append("'").append(values.get(i)).append("'").append(", ");
-        }
-        if (!columns.isEmpty()) {
-            columnsString = new StringBuilder(columnsString.substring(0, columnsString.length() - 2));
-        }
-        if (!values.isEmpty()) {
-            valuesString = new StringBuilder(valuesString.substring(0, valuesString.length() - 2));
-        }
-        return format(INSERT_QUERY_PATTERN, tableName, columnsString.toString(), valuesString.toString());
+        String columnsString = StringUtils.collectionToDelimitedString(columns, ", ");
+        String valuesString = StringUtils.collectionToDelimitedString(values, ", ", "\'", "\'");
+
+        return format(INSERT_QUERY_PATTERN, tableName, columnsString, valuesString);
     }
 
     @Override
@@ -91,12 +83,8 @@ public class PostgreSQLQuery implements Queryable {
 
     @Override
     public String takeCreateTableQuery(String tableName, List<String> columns) {
-        StringBuilder columnsString = new StringBuilder();
-        for (String column : columns) {
-            columnsString.append(column).append(" varchar(20),");
-        }
-        columnsString = new StringBuilder(columnsString.substring(0, columnsString.length() - 1));
-        return format(CREATE_TABLE_QUERY_PATTERN, tableName, columnsString.toString());
+        String columnsString = StringUtils.collectionToDelimitedString(columns, ", ", "", " varchar(20)");
+        return format(CREATE_TABLE_QUERY_PATTERN, tableName, columnsString);
     }
 
     @Override
