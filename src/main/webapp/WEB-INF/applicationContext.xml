@@ -14,4 +14,18 @@
         <property name="queryable" ref="postgreSQLQuery"/>
     </bean>
 
+    <bean id="userActionDao" class="ru.incretio.juja.sqlcmd.model.UserActionsDAOImpl">
+        <property name="dataSource" ref="logDataSource"/>
+    </bean>
+
+    <bean id="logDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${log.jdbc.driverClassName}"/>
+        <property name="url" value="${log.jdbc.url}"/>
+        <property name="username" value="${log.jdbc.username}"/>
+        <property name="password" value="${log.jdbc.password}"/>
+    </bean>
+
+    <context:property-placeholder location="log.jdbc.properties"/>
+
+
 </beans>
