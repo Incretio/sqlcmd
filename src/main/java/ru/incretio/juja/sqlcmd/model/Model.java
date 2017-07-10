@@ -65,8 +65,7 @@ public class Model {
             closeConnection();
         }
 
-        JDBCConnectable jdbcConnectable = new JDBCConnectable(
-                queryable.getJdbcConnectionType(), serverName, dbName);
+        JDBCConnectable jdbcConnectable = new JDBCConnectable(queryable.getJdbcConnectionType(), serverName, dbName);
         Connection connection = jdbcConnectable.getConnection(userName, password);
         jdbcTemplate = new JdbcTemplate(new SingleConnectionDataSource(connection, false));
     }
