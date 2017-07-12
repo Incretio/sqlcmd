@@ -2,24 +2,21 @@ package ru.incretio.juja.sqlcmd.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
 
-@Repository
 public class UserActionsDAOImpl implements UserActionsDAO {
-    private JdbcTemplate template;
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
-        this.template = new JdbcTemplate(dataSource);
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
     public void log(String userName, String dbName, String action) {
-        template.update(
+        jdbcTemplate.update(
                 "INSERT INTO public.user_actions " +
                         "(user_name, db_name, action) " +
                         "VALUES (?, ?, ?)",
@@ -28,7 +25,7 @@ public class UserActionsDAOImpl implements UserActionsDAO {
 
     @Override
     public List<UserAction> getAllFor(String userName) {
-        return template.query("SELECT * FROM public.user_actions WHERE user_name = ?",
+        return jdbcTemplate.query("SELECT * FROM public.user_actions WHERE user_name = ?",
                 new Object[]{userName},
                 (resultSet, i) -> {
                     UserAction result = new UserAction();

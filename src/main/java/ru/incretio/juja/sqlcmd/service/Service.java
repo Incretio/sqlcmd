@@ -1,5 +1,6 @@
 package ru.incretio.juja.sqlcmd.service;
 
+import ru.incretio.juja.sqlcmd.model.UserAction;
 import ru.incretio.juja.sqlcmd.service.exceptions.ServiceException;
 
 import java.util.List;
@@ -33,4 +34,8 @@ public interface Service {
     String dropTable(String tableName) throws ServiceException;
 
     String help();
+
+    List<UserAction> getAllFor(String userName);
+
+    List<UserAction> getAllForCurrentUser();
 }
