@@ -20,6 +20,32 @@ public class Model {
         this.queryable = queryable;
     }
 
+    public String getDbName() {
+        try {
+            if (jdbcTemplate != null && jdbcTemplate.getDataSource() != null &&
+                    jdbcTemplate.getDataSource().getConnection() != null) {
+                return jdbcTemplate.getDataSource().getConnection().getCatalog();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public String getUserName() {
+        try {
+            if (jdbcTemplate != null && jdbcTemplate.getDataSource() != null &&
+                    jdbcTemplate.getDataSource().getConnection() != null &&
+                    !jdbcTemplate.getDataSource().getConnection().isClosed()) {
+                return jdbcTemplate.getDataSource().getConnection().getMetaData().getUserName();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
     public boolean isConnected() {
         try {
             return getObjectConnection() != null && !getObjectConnection().isClosed();
