@@ -2,23 +2,47 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                            http://www.springframework.org/schema/context
-                           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/data/jpa
+                           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
     <context:annotation-config/>
+
+    <context:component-scan base-package="ru.incretio.juja.sqlcmd.model"/>
     <context:component-scan base-package="ru.incretio.juja.sqlcmd"/>
 
     <bean id="model" class="ru.incretio.juja.sqlcmd.model.Model" scope="prototype">
         <property name="queryable" ref="postgreSQLQuery"/>
     </bean>
 
-    <bean id="userActionDao" class="ru.incretio.juja.sqlcmd.model.UserActionsDAOImpl">
-        <property name="dataSource" ref="logDataSource"/>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="emf" />
     </bean>
 
-    <bean id="logDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <jpa:repositories base-package="ru.incretio.juja.sqlcmd.model" entity-manager-factory-ref="emf"/>
+
+    <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="packagesToScan" value="ru.incretio.juja.sqlcmd.model.entity" />
+        <property name="dataSource" ref="dataSource" />
+
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</prop>
+            </props>
+        </property>
+
+        <property name="persistenceProvider">
+            <bean class="org.hibernate.jpa.HibernatePersistenceProvider" />
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${log.jdbc.driverClassName}"/>
         <property name="url" value="${log.jdbc.url}"/>
         <property name="username" value="${log.jdbc.username}"/>

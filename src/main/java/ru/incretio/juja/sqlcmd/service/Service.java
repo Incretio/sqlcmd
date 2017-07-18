@@ -1,6 +1,6 @@
 package ru.incretio.juja.sqlcmd.service;
 
-import ru.incretio.juja.sqlcmd.model.UserAction;
+import ru.incretio.juja.sqlcmd.model.entity.UserAction;
 import ru.incretio.juja.sqlcmd.service.exceptions.ServiceException;
 
 import java.util.List;

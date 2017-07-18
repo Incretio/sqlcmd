@@ -2,11 +2,10 @@ package ru.incretio.juja.sqlcmd.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.incretio.juja.sqlcmd.model.Model;
-import ru.incretio.juja.sqlcmd.model.UserAction;
-import ru.incretio.juja.sqlcmd.model.UserActionsDAO;
-import ru.incretio.juja.sqlcmd.model.UserActionsDAOImpl;
+import ru.incretio.juja.sqlcmd.model.entity.UserAction;
+import ru.incretio.juja.sqlcmd.model.UserActionsRepository;
 import ru.incretio.juja.sqlcmd.service.exceptions.ServiceException;
 
 import java.util.Arrays;
@@ -14,14 +13,14 @@ import java.util.List;
 
 import static ru.incretio.juja.sqlcmd.utils.ResourcesLoader.takeCaption;
 
-@Component
+@Repository
 @Scope(value = "prototype")
 public class ServiceImpl implements Service {
 
     @Autowired
     private final Model model;
     @Autowired
-    private UserActionsDAO userActionsDAO;
+    private UserActionsRepository userActionsRepository;
 
     public ServiceImpl(Model model) {
         this.model = model;
@@ -44,7 +43,7 @@ public class ServiceImpl implements Service {
         try {
             try {
                 model.connect(serverName, dbName, userName, password);
-                userActionsDAO.log(userName, dbName, "connect");
+                doLog("connect");
                 result = String.format(takeCaption("connectionSuccessPattern"), dbName);
             } catch (ClassNotFoundException e) {
                 throw new ClassNotFoundException(takeCaption("driverLoadingErrorText"));
@@ -60,7 +59,7 @@ public class ServiceImpl implements Service {
     public String closeConnection() throws ServiceException {
         try {
             if (model.isConnected()) {
-                userActionsDAO.log(model.getUserName(), model.getDbName(), "closeConnection");
+                doLog("closeConnection");
             }
             model.closeConnection();
             return takeCaption("connectionClosed");
@@ -73,7 +72,7 @@ public class ServiceImpl implements Service {
     public void createDB(String dbName) throws ServiceException {
         try {
             model.executeCreateDB(dbName);
-            userActionsDAO.log(model.getUserName(), model.getDbName(), "createDB");
+            doLog("createDB");
         } catch (Exception e) {
             throw new ServiceException("Create database error", e);
         }
@@ -83,7 +82,7 @@ public class ServiceImpl implements Service {
     public void dropDB(String dbName) throws ServiceException {
         try {
             model.executeDropDB(dbName);
-            userActionsDAO.log(model.getUserName(), model.getDbName(), "dropDB");
+            doLog("dropDB");
         } catch (Exception e) {
             throw new ServiceException("Drop database error", e);
         }
@@ -93,7 +92,7 @@ public class ServiceImpl implements Service {
     public List<String> takeTablesList() throws ServiceException {
         try {
             List<String> result = model.takeTablesList();
-            userActionsDAO.log(model.getUserName(), model.getDbName(), "takeTableList");
+            doLog("takeTableList");
             return result;
         } catch (Exception e) {
             throw new ServiceException("Get tables actions error", e);
@@ -107,7 +106,7 @@ public class ServiceImpl implements Service {
                 return String.format(takeCaption("tableAlreadyExistsPattern"), tableName);
             } else {
                 model.executeCreateTable(tableName, columns);
-                userActionsDAO.log(model.getUserName(), model.getDbName(), "createTable");
+                doLog("createTable");
                 return String.format(takeCaption("tableAddedPattern"), tableName);
             }
         } catch (Exception e) {
@@ -127,7 +126,7 @@ public class ServiceImpl implements Service {
             // try table exists
             // try columns exist
             model.executeInsertRecord(tableName, columns, values);
-            userActionsDAO.log(model.getUserName(), model.getDbName(), "insert");
+            doLog("insert");
             return String.format(takeCaption("recordInsertedPattern"), tableName);
         } catch (Exception e) {
             throw new ServiceException("Insert error", e);
@@ -141,7 +140,7 @@ public class ServiceImpl implements Service {
             // try table exists
             // try columns exist
             model.executeUpdateRecords(tableName, whereColumnName, whereColumnValue, setColumnName, setColumnValue);
-            userActionsDAO.log(model.getUserName(), model.getDbName(), "update");
+            doLog("update");
             return String.format(takeCaption("recordUpdated"), tableName);
         } catch (Exception e) {
             throw new ServiceException("Update error", e);
@@ -155,7 +154,7 @@ public class ServiceImpl implements Service {
             // try table exists
             // try columns exist
             model.executeDeleteRecords(tableName, whereColumnName, whereColumnValue);
-            userActionsDAO.log(model.getUserName(), model.getDbName(), "delete");
+            doLog("delete");
             return String.format(takeCaption("recordDeletedPattern"), tableName);
         } catch (Exception e) {
             throw new ServiceException("Delete error", e);
@@ -167,7 +166,7 @@ public class ServiceImpl implements Service {
         try {
             // try table exists
             List<List<String>> data = model.find(tableName);
-            userActionsDAO.log(model.getUserName(), model.getDbName(), "select");
+            doLog("select");
             return data;
         } catch (Exception e) {
             throw new ServiceException(e.getMessage(), e);
@@ -179,7 +178,7 @@ public class ServiceImpl implements Service {
         try {
             // try table exists
             model.executeClearTable(tableName);
-            userActionsDAO.log(model.getUserName(), model.getDbName(), "clear");
+            doLog("clear");
             return String.format(takeCaption("tableCleared"), tableName);
         } catch (Exception e) {
             throw new ServiceException("Clear table error", e);
@@ -191,7 +190,7 @@ public class ServiceImpl implements Service {
         try {
             // try table exists
             model.executeDropTable(tableName);
-            userActionsDAO.log(model.getUserName(), model.getDbName(), "dropTable");
+            doLog("dropTable");
             return String.format(takeCaption("tableDeletedPattern"), tableName);
         } catch (Exception e) {
             throw new ServiceException("Drop table error", e);
@@ -200,7 +199,7 @@ public class ServiceImpl implements Service {
 
     @Override
     public String help() {
-        userActionsDAO.log(model.getUserName(), model.getDbName(), "help");
+        doLog("help");
         return "It's enjoy project.";
     }
 
@@ -217,7 +216,7 @@ public class ServiceImpl implements Service {
     public String createDatabase(String dbName) throws ServiceException {
         try {
             model.executeCreateDB(dbName);
-            userActionsDAO.log(model.getUserName(), model.getDbName(), "createDatabase");
+            doLog("createDatabase");
             return String.format(takeCaption("dbCreatedPattern"), dbName);
         } catch (Exception e) {
             throw new ServiceException("Column exists error", e);
@@ -227,7 +226,7 @@ public class ServiceImpl implements Service {
     public String dropDatabase(String dbName) throws ServiceException {
         try {
             model.executeDropDB(dbName);
-            userActionsDAO.log(model.getUserName(), model.getDbName(), "dropDataBase");
+            doLog("dropDataBase");
             return String.format(takeCaption("dbDeletedPattern"), dbName);
         } catch (Exception e) {
             throw new ServiceException("", e);
@@ -239,7 +238,7 @@ public class ServiceImpl implements Service {
         if (userName == null) {
             throw new IllegalArgumentException("User name can't be null!");
         }
-        return userActionsDAO.getAllFor(model.getUserName());
+        return userActionsRepository.findByUserName(model.getUserName());
     }
 
     @Override
@@ -248,7 +247,12 @@ public class ServiceImpl implements Service {
         if (userName == null) {
             throw new IllegalArgumentException("User name can't be null!");
         }
-        return userActionsDAO.getAllFor(userName);
+        return userActionsRepository.findByUserName(userName);
+    }
+
+    private void doLog(String actionName) {
+        userActionsRepository.save(
+                new UserAction(model.getUserName(), model.getDbName(), actionName));
     }
 
 }

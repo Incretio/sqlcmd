@@ -1,7 +1,12 @@
-package ru.incretio.juja.sqlcmd.model;
+package ru.incretio.juja.sqlcmd.model.entity;
 
+import javax.persistence.*;
+
+@Entity
 public class UserAction {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
     private String userName;
     private String dbName;
     private String action;
@@ -40,11 +45,11 @@ public class UserAction {
         this.action = action;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Integer getId() {
+        return id;
     }
 
-    public int getId() {
-        return id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
