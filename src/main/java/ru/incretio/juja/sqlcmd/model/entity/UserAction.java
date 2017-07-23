@@ -1,4 +1,4 @@
-package ru.incretio.juja.sqlcmd.model;
+package ru.incretio.juja.sqlcmd.model.entity;
 
 import javax.persistence.*;
 
@@ -45,11 +45,11 @@ public class UserAction {
         this.action = action;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Integer getId() {
+        return id;
     }
 
-    public int getId() {
-        return id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

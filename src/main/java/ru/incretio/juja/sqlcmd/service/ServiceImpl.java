@@ -2,10 +2,9 @@ package ru.incretio.juja.sqlcmd.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import ru.incretio.juja.sqlcmd.model.Model;
-import ru.incretio.juja.sqlcmd.model.UserAction;
+import ru.incretio.juja.sqlcmd.model.entity.UserAction;
 import ru.incretio.juja.sqlcmd.model.UserActionsRepository;
 import ru.incretio.juja.sqlcmd.service.exceptions.ServiceException;
 
